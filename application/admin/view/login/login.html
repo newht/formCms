@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>后台登录</title> 
+<link href="/static/admin-login/css/login.css" type="text/css" rel="stylesheet">
+    <style>
+
+        input[type=text]:focus, select:focus {
+            /*border: 1px solid #3879d9;*/
+            outline: none;
+        }
+    </style>
+</head> 
+<body> 
+
+<div class="login">
+    <div class="message">登录</div>
+    <div id="darkbannerwrap"></div>
+    <form>
+		<input name="action" value="login" type="hidden">
+		<input name="name" placeholder="账号" required="required" autocomplete="off" type="text">
+		<hr class="hr15">
+		<input name="password" placeholder="密码" required="required" autocomplete="off" type="password">
+		<hr class="hr15">
+		<input value="登录" style="width:100%;" id="submit" onclick="return false;" type="submit">
+		<hr class="hr20">
+		<a onClick="alert('请联系管理员')">忘记密码</a>
+	</form>
+</div>
+<div class="copyright">© 2020-11-23</div>
+</body>
+<script src="/static/jquery.min.js"></script>
+<script src="/static/layui/layui.js"></script>
+<script>
+	$(function () {
+        layui.use('layer',function () {
+            let layer = layui.layer;
+        });
+
+		$("#submit").click(function () {
+            let data = $("form").serializeArray();
+            $.ajax({
+                url:"/in",
+                type:"post",
+                dataType:"json",
+                data:data,
+                success:function(e){
+                    console.log(e)
+                    if(e.code === 0){
+                        layer.open({content:e.msg,icon:5});
+					}
+					if(e.code === 1){
+					    location.href = e.href
+					}
+                }
+            })
+        });
+    })
+</script>
+</html>

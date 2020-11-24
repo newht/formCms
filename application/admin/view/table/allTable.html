@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有表单</title>
+    <link rel="stylesheet" href="/static/bootstrap-4.5.0/css/bootstrap.css">
+    <style>
+        * {
+            margin: 0 auto;
+        }
+
+        .div01 {
+            float: left;
+            width: 90%;
+            margin: 20px 50px;
+            border-radius: 10px;
+            border: 1px solid rgba(180, 180, 180, 0.16);
+            padding: 5px;
+            background: rgba(180, 180, 180, 0.16);
+            /*text-align: center;*/
+        }
+
+        /*阴影*/
+        .div01:hover {
+            -webkit-box-shadow: rgba(180, 180, 180, 0.71) 0px 0px 10px;
+            -moz-box-shadow: rgba(180, 180, 180, 0.71) 0px 0px 10px;
+            box-shadow: rgba(180, 180, 180, 0.71) 0px 0px 10px;
+            cursor: pointer;
+        }
+
+        .div01_in {
+            background: white;
+            border: 1px solid rgba(180, 180, 180, 0.16);
+            border-radius: 5px;
+            padding: 8px;
+            /*height: 50px;*/
+        }
+
+        .div_top {
+            /*background: #ECF1F6;*/
+            font-size: 13px;
+            line-height: 30px;
+            /*padding-left: 2%;*/
+        }
+
+        .div_title {
+            line-height: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body style="padding: 10px">
+<div class="div_top">
+    <span>所有表格(点击修改表单):</span>
+</div>
+<div style="">
+    {foreach $data as $k => $v}
+    <div class="div01" tableid="{$v.id}" title="双击进入填写">
+        <div class="div01_in">
+            <div class="div_title"><span><b>&nbsp;&nbsp;&#8226;&nbsp;&nbsp;{$v.fname}</b></span><span style="float: right;font-size: 13px">已报名人数：{$v.count}人</span></div>
+        </div>
+    </div>
+    {/foreach}
+</div>
+
+</body>
+<script src="/static/jquery.min.js"></script>
+<script src="/static/bootstrap-4.5.0/js/bootstrap.js"></script>
+<script>
+    $(function () {
+        $(".div01").dblclick(function () {
+            // let con = confirm('请问你想修改表单还是查看申请数据');
+            // if (con) {
+            //     location.href = '/'
+            // } else {
+                location.href = '/table/' + $(this).attr('tableid');
+            // }
+            //location.href='/table/'+$(this).attr('tableid');
+        })
+    })
+</script>
+</html>

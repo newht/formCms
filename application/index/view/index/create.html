@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>创建表单</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="my-control/css/fileinput.min.css" rel="stylesheet">
+    <link href="my-control/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://www.jq22.com/jquery/font-awesome.4.6.0.css">
+
+    <link href="my-control/form_builder/animate.min.css" rel="stylesheet">
+    <link href="my-control/form_builder/summernote.css" rel="stylesheet">
+
+    <link href="my-control/form_builder/style.min862f.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="my-control/css/index.css">
+
+
+</head>
+
+<body style="background-color:#f7f5f6;">
+<div class="container-fluid" style="padding:0px; margin:0px;">
+    <div class="row-fluid clearfix">
+        <div class="col-md-12 column">
+            <div style="width:1080px; margin:20px auto;">
+                <!--表单设计-->
+                <div class="conference-cont" style=" margin:20px 0;">
+                    <!--<div><span style="padding-left:10px;"表单设置</span></div>-->
+                    <h4 style="margin: 10px 0 0 10px">表单设置</h4>
+                    <div class="wrapper wrapper-content" style="margin-top: -5px;">
+                        <div class="row"
+                             style="border-left: 2px dashed rgba(0,0,0,0.12);border-right: 2px dashed rgba(0,0,0,0.12);border-bottom: 2px dashed rgba(0,0,0,0.12);">
+                            <div id="colzuo" class="col-sm-9" style="border-right: 2px dashed rgba(0,0,0,0.12);">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>拖拽/点击右侧表单项到此区域</h5>
+                                        <!--<div class="ibox-tools">-->
+                                        <!--<button type="submit" class="btn btn-warning" data-clipboard-text="testing" id="copy-to-clipboard">复制代码</button>-->
+                                        <!--<button type="button" class="btn btn-yulan">预览</button>-->
+                                        <!--</div>-->
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="row form-body form-horizontal m-t">
+                                            <div class="col-md-12 droppable sortable ui-droppable ui-sortable">
+                                                <!--添加的文本框-->
+                                                <div class="form-group draggable ui-draggable dropped">
+                                                    <label class="col-sm-2 control-label">表单名称：</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" placeholder="请输入表单名称">
+                                                    </div>
+                                                </div>
+                                                <!--添加的文本框-->
+                                                <div class="form-group draggable ui-draggable dropped">
+                                                    <label class="col-sm-2 control-label">胡涛：</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" placeholder="请输入你的姓名">
+                                                    </div>
+                                                    <p class="tools col-sm-3">
+                                                        <a class="edit-link" name="text" title="设置"><i
+                                                                class="fa fa-cog fa-fw"></i></a>
+                                                        <a class="remove-link"><i class="fa fa-trash-o"></i></a>
+                                                        <label class="labcheck"><input type="checkbox"> 必填</label>
+                                                    </p>
+                                                </div>
+                                                <!--添加的下拉框-->
+                                                <div class="form-group draggable ui-draggable dropped">
+                                                    <label class="col-sm-2 control-label">下拉框：</label>
+                                                    <div class="col-sm-7">
+                                                        <select class="form-control">
+                                                            <option>请选择</option>
+                                                            <option>默认</option>
+                                                        </select></div>
+                                                    <p class="tools col-sm-3">
+                                                        <a class="edit-link" name="select" title="设置"><i
+                                                                class="fa fa-cog fa-fw"></i></a>
+                                                        <a class="remove-link"><i class="fa fa-trash-o"></i></a>
+                                                        <label class="labcheck"><input type="checkbox"> 必填</label>
+                                                    </p>
+                                                </div>
+                                                <!--添加的单选框-->
+                                                <div class="form-group draggable ui-draggable dropped">
+                                                    <label class="col-sm-2 control-label">单选：</label>
+                                                    <div class="col-sm-7">
+                                                        <label class="radio-inline"><input type="radio" value="默认1"
+                                                                                           name="rad84468" checked="">
+                                                            默认1</label>
+                                                        <label class="radio-inline"><input type="radio" name="rad84468"
+                                                                                           value="默认2"> 默认2</label>
+                                                    </div>
+                                                    <p class="tools col-sm-3">
+                                                        <a class="edit-link" name="radio" title="设置"><i
+                                                                class="fa fa-cog fa-fw"></i></a>
+                                                        <a class="remove-link"><i class="fa fa-trash-o"></i></a>
+                                                    </p>
+                                                </div>
+                                                <!--添加的多选框-->
+                                                <div class="form-group draggable ui-draggable dropped" style="">
+                                                    <label class="col-sm-2 control-label">多选：</label>
+                                                    <div class="col-sm-7">
+                                                        <label class="radio-inline" style="padding-left:0px;"><input
+                                                                type="checkbox" name="默认1"> 默认1</label>
+                                                        <label class="radio-inline" style="padding-left:0px;"><input
+                                                                type="checkbox" name="默认2"> 默认2</label>
+                                                    </div>
+                                                    <p class="tools col-sm-3">
+                                                        <a class="edit-link" name="checkbox" title="设置"><i
+                                                                class="fa fa-cog fa-fw"></i></a>
+                                                        <a class="remove-link"><i class="fa fa-trash-o"></i></a>
+                                                    </p>
+                                                </div>
+                                                <!--添加的多行文本框-->
+                                                <div class="form-group draggable ui-draggable dropped">
+                                                    <label class="col-sm-2 control-label">多行文本：</label>
+                                                    <div class="col-sm-7">
+                                                        <textarea class="form-control" placeholder="请输入文本"></textarea>
+                                                    </div>
+                                                    <p class="tools col-sm-3">
+                                                        <a class="edit-link" name="textarea" title="设置"><i
+                                                                class="fa fa-cog fa-fw"></i></a>
+                                                        <a class="remove-link"><i class="fa fa-trash-o"></i></a>
+                                                        <label class="labcheck"><input type="checkbox"> 必填</label>
+                                                    </p>
+                                                </div>
+                                                <!--添加的时间框-->
+                                                <div class="form-group draggable ui-draggable dropped" style="">
+                                                    <label class="col-sm-2 control-label">文本：</label>
+                                                    <div class="col-sm-7">
+                                                        <input readonly="" class="form-control form_datetime"
+                                                               type="text" style="border: 1px solid #e5e6e7;">
+                                                    </div>
+                                                    <p class="tools col-sm-3">
+                                                        <a class="edit-link" name="datetime" title="设置"><i
+                                                                class="fa fa-cog fa-fw"></i></a>
+                                                        <a class="remove-link"><i class="fa fa-trash-o"></i></a>
+                                                    </p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="colyou" class="col-sm-3">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>自定义表单项</h5>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <form role="form" class="form-horizontal m-t">
+                                            <p><b>常用项</b></p>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div id="name" class="draggable ui-draggable btntexts">
+                                                            姓名
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div id="phone" class="draggable ui-draggable btntexts">
+                                                            电话
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div id="email" class="draggable ui-draggable btntexts">
+                                                            邮箱
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div id="card" class="draggable ui-draggable btntexts">
+                                                            身份证
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div id="www" class="draggable ui-draggable btntexts">
+                                                            个人网站
+                                                        </div>
+                                                    </td>
+                                                    <!--<td>-->
+                                                    <!--<div id="logo" class="draggable ui-draggable btntexts">-->
+                                                    <!--上传Logo-->
+                                                    <!--</div>-->
+                                                    <!--</td>-->
+                                                    <td>
+                                                        <div id="profile" class="draggable ui-draggable btntexts">
+                                                            个人简介
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div id="sex" class="draggable ui-draggable btntexts">
+                                                            性别
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div id="occupation" class="draggable ui-draggable btntexts">
+                                                            职位
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                            </table>
+                                            <p><b>自定义项</b></p>
+                                            <div id="text" class="form-group draggable ui-draggable btntext">
+                                                <label class="col-sm-12"><i class="fa fa-arrows"></i> 文本框 <img
+                                                        src="my-control/image/add_form_img01.png"></label>
+                                            </div>
+                                            <div id="select" class="form-group draggable ui-draggable btntext">
+                                                <label class="col-sm-12"><i class="fa fa-arrows"></i> 下拉框 <img
+                                                        src="my-control/image/add_form_img05.png"></label>
+                                            </div>
+                                            <div id="radio" class="form-group draggable ui-draggable btntext">
+                                                <label class="col-sm-12"><i class="fa fa-arrows"></i> 单选 <img
+                                                        src="my-control/image/add_form_img03.png"></label>
+                                            </div>
+                                            <div id="checkbox" class="form-group draggable ui-draggable btntext">
+                                                <label class="col-sm-12"><i class="fa fa-arrows"></i> 多选 <img
+                                                        src="my-control/image/add_form_img04.png"></label>
+                                            </div>
+                                            <div id="textarea" class="form-group draggable ui-draggable btntext">
+                                                <label class="col-sm-12"><i class="fa fa-arrows"></i> 多行文本 <img
+                                                        src="my-control/image/add_form_img02.png"></label>
+                                            </div>
+                                            <div id="datetime" class="form-group draggable ui-draggable btntext">
+                                                <label class="col-sm-12"><i class="fa fa-arrows"></i> 时间 <img
+                                                        src="my-control/image/add_form_img06.png"></label>
+                                            </div>
+                                            <!--<div id="file" class="form-group draggable ui-draggable btntext">-->
+                                            <!--<label class="col-sm-12"><i class="fa fa-arrows"></i> 上传 <img src="my-control/image/add_form_img07.png"></label>-->
+                                            <!--</div>-->
+                                            <!--<div id="picker" class="form-group draggable ui-draggable btntext">
+                                                <label class="col-sm-12"><i class="fa fa-arrows"></i> 省市区 <img src="image/add_form_img08.png"></label>
+                                            </div>-->
+                                        </form>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style='text-align:center'>
+                    <button class="btn btn-primary" id="sub">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/static/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="my-control/javascript/fileinput.min.js"></script>
+<script src="my-control/javascript/bootstrap-datetimepicker.min.js"></script>
+<script src="my-control/javascript/distpicker.data.min.js"></script>
+<script src="my-control/javascript/distpicker.min.js"></script>
+<script src="my-control/javascript/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="my-control/javascript/zh.js"></script>
+<script src="https://cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="my-control/form_builder/beautifyhtml.js"></script>
+<script src="my-control/javascript/index.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        function inputType(obj) {
+            let type = '';
+            if (obj.is('input:checkbox')) {
+                type = 'checkbox'
+            } else if (obj.is('input:radio')) {
+                type = 'radio'
+            } else {
+                type = 'text';
+            }
+            return type;
+        }
+
+        $('#sub').click(function () {
+            let data = [];
+            let fname = '';
+            $('.ibox-content').children('.form-body').children('.droppable').children('.draggable').each(function () {
+                let objData = {};
+                let label = $(this).children('label');
+                let labelText = label.text().replace('：', '');
+                if (labelText !== '表单名称') {
+                    objData['comment'] = labelText;
+                } else {
+                    fname = label.next().children(':first').val();
+                    return true;
+                }
+                let labelNext = label.next();
+                let type = '';
+                let labelArray = [];
+                let optionArray = [];
+                labelNext.children().each(function () {
+                    type = $(this).prop('tagName').toLocaleLowerCase();
+                    if (type === 'label') {
+                        let temp = {};
+                        temp['label_chid_type'] = $(this).children(":first").prop('tagName').toLocaleLowerCase();
+                        if (temp['label_chid_type'] === 'input') {
+                            temp['label_chid_type'] = inputType($(this).children(":first"));
+                            type = temp['label_chid_type'];
+                        }
+                        temp['label_chid_text'] = $(this).text();
+                        labelArray.push(temp);
+                        objData['label'] = labelArray;
+                    } else if (type === 'input') {
+                        type = inputType($(this));
+                    } else if (type === 'select') {
+                        $(this).children('option').each(function () {
+                            optionArray.push($(this).text());
+                        })
+                        objData['option'] = optionArray;
+                    }
+                });
+                objData['type'] = type;
+                data.push(objData);
+            })
+
+            console.log(data);
+            $.ajax({
+                url: "{:url('index/index/insertTable')}",
+                type: "post",
+                dataType: "json",
+                data: {fname: fname, content: data},
+                success: function (e) {
+                    console.log(e)
+                }
+            })
+        });
+    });
+</script>
+</html>

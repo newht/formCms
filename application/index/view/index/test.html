@@ -1,0 +1,114 @@
+<html>
+	<head>
+		<title>自定义表单</title>
+        <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <!--<link rel="stylesheet" href="/static/bootstrap-4.5.0/css/bootstrap.css">-->
+        <style>
+            *{margin: 0 auto}
+            .max_div{width: 60%;border: 1px solid white;margin-top:20px;padding: 30px 10px 30px 10px;background: white;border-radius: 10px;min-width:850px}
+        </style>
+	</head>
+	<body style="background: #F7F8FA">
+    <div class="max_div">
+        <h1 style="text-align: center">{$data.fname}</h1>
+        <form >
+            <input type="hidden" name="tb_name" value="{$data.tb_name}">
+            {foreach $data.content as $k => $v}
+            {if $v['type'] eq 'text'}
+            <div class="col-md-12" style="padding:10px 10%;margin: 10px 0">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label text-right">{$v.comment}：</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="fie_{$k}" class="form-control" placeholder="请输入你的姓名">
+                    </div>
+                </div>
+            </div>
+            {elseif $v['type'] eq 'textarea' /}
+            <div class="col-md-12" style="padding:10px 10%;height: 60px">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label text-right" >{$v.comment}：</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" name="fie_{$k}" placeholder="请输入文本"></textarea>
+                    </div>
+                </div>
+            </div>
+            {elseif $v['type'] eq 'select' /}
+            <div class="col-md-12" style="padding:10px 10%;margin: 20px 0">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label text-right">{$v.comment}：</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="fie_{$k}" >
+                            {foreach $v['option'] as $m => $n}
+                            <option value="{$n}">{$n}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            {elseif $v['type'] eq 'radio' /}
+            <div class="col-md-12" style="padding:10px 10%;margin: 10px 0">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label text-right">单选：</label>
+                    <div class="col-sm-9">
+                        {foreach $v['label'] as $m => $n}
+                        <label class="radio-inline">
+                            <input type="radio" value="{$n['label_chid_text']}" name="fie_{$k}" >{$n['label_chid_text']}
+                        </label>
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+            {elseif $v['type'] eq 'checkbox' /}
+            <div class="col-md-12" style="padding:10px 10%;margin: 10px 0">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label text-right">多选：</label>
+                    <div class="col-sm-9">
+                        {foreach $v['label'] as $m => $n}
+                        <label class="radio-inline" style="padding-left:0px;"><input type="checkbox" name="fie_{$k}" value="{$n['label_chid_text']}" >{$n['label_chid_text']}</label>
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+            {/if}
+            {/foreach}
+            <div class="text-center" style="margin-top: 30px">
+                <btn id="submit" class="btn btn-info" data-loading-text="信息保存中" >保存</btn>
+            </div>
+        </form>
+    </div>
+    </body>
+    <script type="text/javascript" src="/static/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<script src="/static/bootstrap-4.5.0/js/bootstrap.js"></script>-->
+    <script>
+        let historyhref = window.document.referrer;
+        console.log(historyhref);
+        $(function () {
+            // $('.btn').button('loading');
+            $('#submit').click(function () {
+                let obj = $(this);
+                obj.button('loading');
+                let data = $("form").serializeArray();
+                for(let i=0 ; i<data.length ; i++ ){
+                    if(i > 1 && data[i].name === data[i-1].name ){
+                        data[i].value += "," + data[i-1].value;
+                    }
+                    data[i].value = data[i].value.replace(/\s+/g, "");
+                }
+                $.ajax({
+                    url:"{:url('index/user/insert')}",
+                    type:"post",
+                    dataType:"json",
+                    data:data,
+                    success:function(e){
+                        if(e.code === 0){
+                            alert('保存成功');
+                            location.href = '/user/null';
+                        }
+                    }
+                })
+            })
+        })
+
+    </script>
+</html>
