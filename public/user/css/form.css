@@ -1,0 +1,19 @@
+*{margin: 0 auto;font-family: '微软雅黑';}
+.max{width: 50%;height: calc(81vh);padding: 5px;min-width: 600px}
+.logo{height: 60px;margin: 30px 0;}
+.title{text-align: left;margin-bottom: 50px;}
+.form{font-size: 13px}
+.form form div{padding:10px 0}
+.form form div span{display: inline-block;width: 11%}
+.form form div input{width: 87.5%;outline:none;border:0;border-bottom: 1px solid #ccc;padding: 3px;}
+.forget{text-align: right;font-size: 12px;padding: 5px 20px 35px 0}
+.submit{background: #66A381;text-align: center;padding: 13px 0;font-size: 17px;color: white}
+.submit:hover{cursor: pointer;}
+.registered{background: white;text-align: center;padding: 13px 0;font-size: 16px;color: #5d5d5d;margin: 15px 0;border: 1px solid #5d5d5d}
+a{text-decoration: none;}
+.checkbox{margin-right: 10px;}
+.checkbox input{vertical-align:middle;}
+.checkbox label{vertical-align:middle;margin:5px;cursor: pointer;}
+/*注册页面*/
+.chengnuo{margin: 10px 0;margin-bottom: 50px}
+.chengnuo p{color: red;margin: 10px 0}

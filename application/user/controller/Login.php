@@ -9,7 +9,22 @@
 namespace app\user\controller;
 
 
-class Login
-{
+use think\Controller;
 
+class Login extends Controller
+{
+    public function index()
+    {
+        return $this -> fetch("login/index");
+    }
+
+    public function login()
+    {
+        return $this -> fetch("login/login");
+    }
+
+    public function register()
+    {
+        return $this -> fetch("login/register");
+    }
 }

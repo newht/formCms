@@ -1,12 +1,15 @@
 <?php
-Route::get("/",'user/Index/index');
+Route::get("/",'user/Login/index');
 
 Route::get('forms',"index/Index/allTable");
 
 Route::get('table/:id','index/Index/showTable');
 
 Route::group('user',function (){
-    Route::rule('/','user/Index/index','get');
+    Route::rule('/','user/Login/index','get');
+    Route::rule("login",'user/Login/login','get');
+    Route::rule("register",'user/Login/register','get');
+    Route::rule("index",'user/Index/index','get');
     Route::rule('user','user/Index/user',"get");
     Route::rule('null','user/Index/null','get');
 });

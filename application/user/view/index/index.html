@@ -2,44 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>首页</title>
+    <title>教育报名系统</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
     <style>
-        *{margin: 0 auto;font-family: '微软雅黑';}
-        .max{width: 50%;height: calc(81vh);padding: 5px;min-width: 600px}
+        /**{margin: 0 auto;font-family: 微软雅黑}*/
+        .max{width: 60%;min-width: 460px;padding: 5px;margin: 0 auto;margin-bottom: 80px}
         .logo{height: 60px;margin: 30px 0;}
-        .title{text-align: center;margin-bottom: 50px;}
-        .login{margin: 20px 0;text-align: center;}
-        .login span{background: #66A381;margin: 5px 0;display: inline-block;width: 100%;font-size: 18px;padding: 10px 0;}
-        .affirm{border: 1px solid red;padding: 5px;}
-        .bottom{text-align: center;font-size: 13px;padding: 30px;}
-        #affirm{white-space: pre-wrap;font-size: 13px}
-        a{text-decoration:none;color: white}
+        .wlcome{font-size: 12px;color: #8f8f8f;border-bottom: 1px solid #cccccc;padding-bottom: 30px}
+        .wlcome i{font-size: 12px}
+        .wlcomeright{float: right}
+        .info{width: 97%;margin: 0 auto;margin-bottom: 20px}
+        .infoTitle{padding: 15px 0;border-bottom: 1px solid #e8e8e8;font-size: 12px;color:#8f8f8f}
+        .info ul li{padding: 15px 0;border-bottom: 1px solid #e8e8e8;font-size: 14px;}
+        .infobottom{padding: 15px 0;font-size: 13px;}
+        .infobottom a{color: red}
+        .infoOther{margin-bottom: 10px;}
+        .infoOther a span{width: 33.1%;display: inline-block;text-align: center;border: 1px solid #e8e8e8;padding: 20px 0;margin-right: -1px;border-bottom:0}
+        .infoOther a span:hover{background: #fcfcfc}
+
+        .webbottom{position: fixed;bottom: 0;width: 100%;min-width: 460px;}
+        .webbottom ul li{float: left;width: 33.33%;padding: 10px 0;text-align: center;background: #e5e5e5}
     </style>
 </head>
 <body>
-<div class="max">
-    <div class="logo">
-
+    <div class="max">
+        <div class="logo"></div>
+        <div class="wlcome">
+            <span class="wlcomeleft"><i class="layui-icon">&#xe66f; </i>欢迎您：胡涛</span>
+            <span class="wlcomeright"><i class="layui-icon" >&#xe682; </i>退出</span>
+        </div>
+        <div class="info">
+            <div class="infoTitle">基本信息</div>
+            <ul>
+                <li>真实姓名：胡涛</li>
+                <li>身份证号：511325198508134319 </li>
+                <li>联系电话：15608051613</li>
+                <li>出生日期：1985-08-13</li>
+                <li>性别：男</li>
+            </ul>
+            <div class="infobottom">
+                <a href="">修改密码</a>
+            </div>
+        </div>
+        <div class="infoOther">
+            <a href=""><span>完善个人信息</span></a><a href=""><span>填写完善工作单位信息</span></a><a href=""><span>还没有想好</span></a>
+        </div>
+        <div>
+            请准确填写完善以上信息后报名
+        </div>
     </div>
-    <div class="title">
-        <h2>报名缴费系统</h2>
+    <div class="webbottom">
+        <ul>
+            <li>
+                <div><i class="layui-icon-user layui-icon" style="font-size: 30px"></i></div>个人信息
+            </li>
+            <li>
+                <div><i class="layui-icon-edit layui-icon" style="font-size: 30px"></i></div>课程报名
+            </li>
+            <li>
+                <div><i class="layui-icon-log layui-icon" style="font-size: 30px"></i></div>报名记录
+            </li>
+        </ul>
     </div>
-    <div class="login">
-        <a href=""><span>登录</span></a>
-        <a href=""><span>注册</span></a>
-    </div>
-    <div class="affirm" >
-        <p id="affirm"></p>
-    </div>
-    <div class="bottom">
-        联系我们：QQ 1666588717
-    </div>
-</div>
 </body>
 <script src="/static/jquery.min.js"></script>
-<script>
-    $.get('affirm.text',{},function(res){
-        document.getElementById('affirm').innerHTML = res;
-    });
-</script>
+<script src="/static/layui/layui.js"></script>
 </html>
