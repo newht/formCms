@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教育报名系统</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/user/css/indexTable.css">
+</head>
+<body>
+<div class="max">
+    <div class="logo"></div>
+    <div class="wlcome">
+        <span class="wlcomeleft"><i class="layui-icon">&#xe66f; </i>欢迎您：胡涛</span>
+        <span class="wlcomeright"><a href="/user/drop"><i class="layui-icon" >&#xe682; </i>退出</a></span>
+    </div>
+    <div class="info">
+        <div class="infoTitle">
+            个人信息设置
+        </div>
+        <ul>
+            <li><div><label for="email">电子邮件</label><input type="text" id="email" autocomplete="off"></div></li>
+            <li><div><label for="location">所在地区</label><input type="text" id="location" name="location" autocomplete="off"></div></li>
+            <li><div><label for="address">联系地址</label><input type="text" id="address" name="address" autocomplete="off"></div></li>
+            <li><div><label for="school">毕业院校</label><input type="text" id="school" autocomplete="off"></div></li>
+            <li><div><label for="major">专业名称</label><input type="text" id="major" name="major" autocomplete="off"></div></li>
+            <li><div><label for="education">学历</label><input type="text" id="education" name="education" autocomplete="off"></div></li>
+            <li><div><label for="Scan1">学历证书扫描件</label><input type="file" id="Scan1" name="Scan1"></div></li>
+            <li><div><label for="Scan2">工作证明扫描件（盖单位鲜章）</label><input type="file" id="Scan2" name="Scan2" ></div></li>
+            <li><div><label for="contactname">紧急联系人姓名</label><input type="text" id="contactname" name="contactname" autocomplete="off"></div></li>
+            <li><div><label for="contactphone">紧急联系人电话</label><input type="text" id="contactphone" name="contactphone" autocomplete="off"></div></li>
+            <li><div><label for="pwdproblem">密码找回问题</label><input type="text" id="pwdproblem" name="pwdproblem" autocomplete="off"></div></li>
+            <li><div><label for="pwdanswer">密码找回答案</label><input type="text" id="pwdanswer" name="pwdanswer" autocomplete="off"></div></li>
+        </ul>
+    </div>
+</div>
+<div class="webbottom">
+    <ul>
+        <li><div><a href="/user/index"><i class="layui-icon-user layui-icon" style="font-size: 30px"></i></a></div>个人信息</li>
+        <li><div><a href=""><i class="layui-icon-edit layui-icon" style="font-size: 30px"></i></a></div>课程报名</li>
+        <li><div><a href=""><i class="layui-icon-log layui-icon" style="font-size: 30px"></i></a></div>报名记录</li>
+    </ul>
+</div>
+</body>
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+<script>
+    $(function () {
+        $('.info ul li').click(function () {
+            $(this).children('div').children('input').focus();
+        })
+        $('.info ul li:last').css('border',0)
+    })
+</script>
+</html>

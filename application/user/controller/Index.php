@@ -9,6 +9,22 @@ class Index extends Controller
         return $this -> fetch("index/index");
     }
 
+    public function goInfo()
+    {
+        return $this -> fetch("index/userInfo");
+    }
+
+    public function goWorkInfo()
+    {
+        return $this -> fetch('index/workInfo');
+    }
+
+    public function drop()
+    {
+        $login = new Login();
+        return $login -> index();
+    }
+
     public function user()
     {
         return $this -> fetch('index/user');

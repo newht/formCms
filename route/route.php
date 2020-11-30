@@ -10,6 +10,9 @@ Route::group('user',function (){
     Route::rule("login",'user/Login/login','get');
     Route::rule("register",'user/Login/register','get');
     Route::rule("index",'user/Index/index','get');
+    Route::rule("drop",'user/Index/drop','get');
+    Route::rule("userinfo",'user/Index/goInfo','get');
+    Route::rule("workinfo",'user/Index/goWorkInfo','get');
     Route::rule('user','user/Index/user',"get");
     Route::rule('null','user/Index/null','get');
 });
