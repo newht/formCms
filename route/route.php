@@ -13,6 +13,7 @@ Route::group('user',function (){
     Route::rule("drop",'user/Index/drop','get');
     Route::rule("userinfo",'user/Index/goInfo','get');
     Route::rule("workinfo",'user/Index/goWorkInfo','get');
+    Route::rule("signup",'user/Index/signUp','get');
     Route::rule('user','user/Index/user',"get");
     Route::rule('null','user/Index/null','get');
 });
