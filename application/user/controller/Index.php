@@ -19,6 +19,11 @@ class Index extends Controller
         return $this -> fetch('index/info/work');
     }
 
+    public function signUp()
+    {
+        return $this -> fetch('index/course/signup');
+    }
+
     public function drop()
     {
         $login = new Login();
