@@ -1,0 +1,94 @@
+.ul_title {
+    border-bottom: 1px solid #eaeff5;
+}
+.ul_title a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #328AD1;
+}
+.ul_list {
+    padding: 8px 8px 8px 0px;
+    overflow: hidden;
+}
+.ul_list li {
+    padding: 13px 0px;
+    background: url(../images/ver2/icon.png) -32px -1762px no-repeat;
+}
+.ul_list li a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #000000;
+    display: inline-block;
+    width: 740px;
+    padding-left: 25px;
+}
+.ul_list li a:hover {
+    color: #EE5B2E;
+}
+.bg-hide {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.2;
+    z-index: 999;
+}
+.bg-box {
+    position: fixed;
+    top: 20%;
+    left: calc(50% - 300px);
+    width: 600px;
+    background-color: #fff;
+    z-index: 9999;
+    height:400px;
+}
+
+.bg-box .bg-title {
+    width: 580px;
+    padding: 10px;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    background: #ff0000;
+    color: #fff;
+}
+
+.bg-box .bg-title span {
+    float: left;
+    font-size: 14px;
+}
+
+.bg-box .bg-title a {
+    float: right;
+    color: #fff;
+}
+
+.bg-box .bg-content {
+    width: 580px;
+    padding: 10px;
+    text-align: left;
+}
+
+.bg-box .bg-content .item-input {
+    width: 60%;
+}
+
+.bg-box .bg-content .item-input select {
+    height: 30px;
+    border-radius: unset;
+    width: 200px;
+}
+
+.bg-box .bg-content .btn-plan {
+    padding: 10px 28px;
+}
+
+.bg-box .bg-content .ta-c {
+    padding-bottom: 20px;
+}
+.hide {
+    display: none;
+}

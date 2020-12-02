@@ -1,0 +1,84 @@
+#preview_fake
+{
+    margin-left:20px;
+    margin-right:auto;
+    margin-top:8px;
+    margin-bottom:10px;
+    float:left;
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale);
+    width:120px;
+    overflow: hidden;
+}
+#preview_size_fake
+{
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);
+    width:120px;
+    visibility:hidden;
+    overflow: hidden;
+}
+#preview
+{
+    width:120px;
+    height:150px;
+    overflow: hidden;
+}
+.tools
+{
+    width: 100%;
+    height: 25px;
+    background-image: url('../images/topmap-1.gif');
+    text-align: left;
+    line-height: 25px;
+    display: block;
+    color: #ffffff;
+    font-weight: bold;
+    z-index: 10;
+    cursor: move;
+}
+.subsm
+{
+    width: 100%;
+    padding: 10px 10px 10px 10px;
+    z-index: 9;
+    display: block;
+}
+.divmaster
+{
+    width:100%;
+    float:left;
+    text-align:left;
+}
+.divmaster_half
+{
+    width:50%;
+    float:left;
+    text-align:left;
+}
+.showsubname_s
+{
+    width:65px; height:33px; float:left; padding-top:4px;
+}
+.showsubname_l
+{
+    width:85px; height:33px; float:left; padding-top:4px;
+}
+.showsubvalue_s
+{
+    width:150px; height:30px; float:left
+}
+.showsubvalue_l
+{
+    width:363px; height:30px; float:left
+}
+.input_s
+{
+    width: 150px; height: 22px; padding-left:2px; padding-top:3px; border: #ececec 1px solid;
+}
+.input_l
+{
+    width: 385px; height: 22px; padding-left:2px; padding-top:3px; border: #ececec 1px solid;
+}
+.select_s
+{
+    width: 152px; height: 22px; padding-left:2px; border: #ececec 1px solid;
+}

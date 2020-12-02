@@ -1,0 +1,17 @@
+.max{width: 60%;min-width: 460px;padding: 5px;margin: 0 auto;margin-bottom: 80px}
+.logo{height: 60px;margin: 30px 0;}
+.wlcome{font-size: 12px;color: #8f8f8f;padding-bottom: 30px}
+.wlcome i{font-size: 12px}
+.wlcomeright{float: right}
+
+.info{margin: 0 auto;margin-bottom: 20px;border-top: 1px solid #cccccc;padding: 0 15px}
+.infoTitle{padding: 15px 0;border-bottom: 1px solid #e8e8e8;font-size: 12px;color:#8f8f8f}
+.info ul li{padding: 15px 0;border-bottom: 1px solid #e8e8e8;font-size: 14px;}
+.infobottom{padding: 15px 0;font-size: 13px;}
+.infobottom a{color: red}
+.infoOther{margin-bottom: 10px;}
+.infoOther a span{width: 49.85%;display: inline-block;text-align: center;border: 1px solid #e8e8e8;padding: 20px 0;margin-right: -1px;border-bottom:0}
+.infoOther a span:hover{background: #fcfcfc}
+
+.webbottom{position: fixed;bottom: 0;width: 100%;min-width: 460px;}
+.webbottom ul li{float: left;width: 33.33%;padding: 10px 0;text-align: center;background: #e5e5e5}

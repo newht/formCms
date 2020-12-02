@@ -1,0 +1,155 @@
+*{
+    margin: 0 auto;
+}
+
+body{
+    background: no-repeat url("../images/bg.png") #ecf2f7;
+    background-size:100% 395px;
+}
+
+a{text-decoration: none}
+
+.max{
+    width: 80%;
+    min-width: 1000px;
+    /*border: 1px solid red;*/
+}
+
+.top{
+    /*height: 220px;+*/
+    /*border: 1px solid blue;*/
+}
+
+.top_logo{
+    height: 100px;
+}
+
+.top_user{
+    text-align: right;
+}
+
+.top_user span{
+    padding: 0 5px;
+    font-size: 13.5px;
+}
+
+.top_bottom{
+    height: 50px;
+    line-height: 50px;
+}
+
+.top_bottom ul{
+    padding: 0;
+}
+
+.top_bottom ul li{
+    list-style-type: none;
+    float: left;
+    border-right: 1px solid black;
+    padding: 0 30px;
+    font-size: 22px;
+    background: #0d8ddb;
+    color: white;
+}
+
+.top_bottom ul li a{
+    color: white;
+}
+
+.content{
+    margin: 30px 0;
+    height: 517px;
+    /*border:solid 1px black;*/
+}
+
+.left{
+    float: left;
+    width: 70%;
+    background: white;
+    padding: 10px;
+    height: 95%;
+}
+
+.content_title{
+    padding: 10px 0;
+    border-bottom: 0.5px solid black;
+    margin-bottom: 10px;
+}
+
+.content_title_content{
+    background: #0d8ddb;
+    padding: 5px 30px;
+    color: white;
+    margin: 0 10px 0 0;
+}
+
+.content_title_content_reight{
+    float: right;
+    padding: 0 25px 0 0;
+}
+
+.left ul{
+    padding: 0 25px;
+}
+
+.left ul li{
+    font-size: 14px;
+    margin: 7px 0;
+    opacity: 0.9;
+}
+
+.left ul li a{
+    color: black;
+}
+
+.left ul li a span{
+    float: right;
+}
+
+.right{
+    float: right;
+    /*height: 50%;*/
+    width: 24%;
+    background: white;
+    padding: 10px;
+}
+
+.right_content{
+    border: 0.5px solid #59C5EE;
+}
+
+.right_login{
+    padding: 10px 0;
+    font-size: 14px;
+}
+
+.login_com{
+    padding: 5px;
+}
+
+.login_com label{
+    display: inline-block;
+    width: 85px;
+    text-align: right;
+    opacity: 0.8;
+}
+
+.login_com input{
+    width: 135px;
+    opacity: 0.8;
+}
+
+.login_submit{
+    text-align: center;
+}
+
+.login_com input:focus{
+    outline:none;
+}
+
+.bottom{
+    height: 500px;
+}
+
+/* 上面是 我自己写的页面*/
+
