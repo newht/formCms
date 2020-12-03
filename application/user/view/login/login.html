@@ -32,7 +32,18 @@
 <script>
     $(function () {
         $(".submit").click(function () {
-            location.href = '/user/index';
+            let formdata = $("form").serializeArray();
+            console.log(formdata)
+            $.ajax({
+                url:"/user/loginVerification",
+                type:'post',
+                dataType:"json",
+                data:formdata,
+                success:function(res){
+                    console.log(res);
+                    // location.href = '/user/index';
+                }
+            })
         })
     })
 </script>

@@ -8,6 +8,7 @@ Route::get('table/:id','index/Index/showTable');
 Route::group('user',function (){
     Route::rule('/','user/Login/index','get');
     Route::rule("login",'user/Login/login','get');
+    Route::rule('loginVerification','user/Login/loginVerification','post');
     Route::rule("register",'user/Login/register','get');
     Route::rule("index",'user/Index/index','get');
     Route::rule("drop",'user/Index/drop','get');
