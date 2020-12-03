@@ -14,29 +14,17 @@
         <span class="wlcomeright"><a href="/user/drop"><i class="layui-icon" >&#xe682; </i>退出</a></span>
     </div>
     <div class="info">
-        <div class="infoTitle">报名并缴费</div>
+        <div class="infoTitle">课程报名并缴费</div>
         <ul>
+            {foreach $data as $v}
             <li >
                 <img src="/static/images/user/icon.png" width='60' alt="">
-                <div style="" >
-                    <div>11</div>
-                    <div>22</div>
+                <div>
+                    <div>{$v.fname}</div>
+                    <div>小标题</div>
                 </div>
             </li>
-            <li>
-                <img src="/static/images/user/icon.png" width='60' alt="">
-                <div style="" >
-                    <div>11</div>
-                    <div>22</div>
-                </div>
-            </li>
-            <li>
-                <img src="/static/images/user/icon.png" width='60' alt="">
-                <div style="" >
-                    <div>11</div>
-                    <div>22</div>
-                </div>
-            </li>
+            {/foreach}
         </ul>
     </div>
 </div>
@@ -53,6 +41,7 @@
 <script>
     $(function () {
         $('.info ul li').css({'display':'flex','align-items': 'center'});
+        $('.info ul li').children('div:last').css({'font-size':'13','color':'#919191'})
     })
 </script>
 </html>

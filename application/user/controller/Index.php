@@ -1,5 +1,6 @@
 <?php
 namespace app\user\controller;
+use app\admin\controller\Table;
 use think\Controller;
 
 class Index extends Controller
@@ -21,6 +22,9 @@ class Index extends Controller
 
     public function signUp()
     {
+        $table = new Table();
+        $data = $table -> getTables();
+        $this -> assign('data',$data);
         return $this -> fetch('index/course/signup');
     }
 
