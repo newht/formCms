@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 16665
- * Date: 2020/11/24
- * Time: 16:24
- */
 
 namespace app\user\controller;
 
-
+use app\user\model\User;
 use think\Controller;
 use think\Request;
 
@@ -27,7 +21,9 @@ class Login extends Controller
     public function loginVerification(Request $request)
     {
         if($request -> isAjax()){
-            $user = new \app\model\User;
+            $user = new User;
+            $res = $user -> login(input('cardid'),input('password'));
+            return $res;
         }else{
             return '请求错误';
         }

@@ -10,17 +10,17 @@
     <div class="max">
         <div class="logo"></div>
         <div class="wlcome">
-            <span class="wlcomeleft"><i class="layui-icon">&#xe66f; </i>欢迎您：胡涛</span>
+            <span class="wlcomeleft"><i class="layui-icon">&#xe66f; </i>欢迎您：{$Think.session.user.name}</span>
             <span class="wlcomeright"><a href="/user/drop"><i class="layui-icon" >&#xe682; </i>退出</a></span>
         </div>
         <div class="info">
             <div class="infoTitle">基本信息</div>
             <ul>
-                <li>真实姓名：胡涛</li>
-                <li>身份证号：511325198508134319 </li>
-                <li>联系电话：15608051613</li>
-                <li>出生日期：1985-08-13</li>
-                <li>性别：男</li>
+                <li>真实姓名：{$Think.session.user.name}</li>
+                <li>身份证号：{$Think.session.user.cardid} </li>
+                <li>联系电话：{$Think.session.user.phone}</li>
+                <li>出生日期：<?php echo substr(session('user')['cardid'],6,4).'-'.substr(session('user')['cardid'],10,2).'-'.substr(session('user')['cardid'],12,2) ?></li>
+                <li>性别：<?php echo substr(session('user')['cardid'],-2,1)%2 === 1 ? '男' : '女' ?></li>
             </ul>
             <div class="infobottom">
                 <a href="">修改密码</a>

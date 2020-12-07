@@ -30,13 +30,9 @@ class Index extends Controller
 
     public function drop()
     {
+        session('user',null);
         $login = new Login();
         return $login -> index();
-    }
-
-    public function user()
-    {
-        return $this -> fetch('index/user');
     }
 
     public function null()
