@@ -13,6 +13,7 @@ Route::group('user',function (){
     Route::rule("index",'user/Index/index','get') -> middleware('loginCheck');
     Route::rule("drop",'user/Index/drop','get')-> middleware('loginCheck');
     Route::rule("userinfo",'user/Index/goInfo','get') -> middleware('loginCheck');
+    Route::rule("setuserinfo",'user/Info/setUserInfo','post')->middleware('loginCheck');
     Route::rule("workinfo",'user/Index/goWorkInfo','get') -> middleware('loginCheck');
     Route::rule("signup",'user/Index/signUp','get') -> middleware('loginCheck');
     Route::rule('null','user/Index/null','get');
