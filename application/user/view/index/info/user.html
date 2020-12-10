@@ -9,6 +9,18 @@
         input::placeholder{
             color: red;
         }
+        input[type=file]{
+            display: none;
+        }
+        input[type=button]{
+            width: 80px!important;
+            height: 22px;
+            border-radius: 3px;
+            border: 0;
+        }
+        input[type=button]:hover{
+            border: 1px solid blue;
+        }
     </style>
 </head>
 <body>
@@ -29,9 +41,23 @@
             <li><div><label for="school">毕业院校</label><input type="text" id="school" name="school"  value="{$data.school|default=''}"></div></li>
             <li><div><label for="major">专业名称</label><input type="text" id="major" name="major"  value="{$data.major|default=''}"></div></li>
             <li><div><label for="education">学历</label><input type="text" id="education" name="education"  value="{$data.education|default=''}"></div></li>
-            <li><div><label for="Scan1">学历证书扫描件</label><input type="file" id="Scan1" name="Scan1"></div></li>
-            <li><div><label for="Scan2">工作证明扫描件（盖单位鲜章）</label><input type="file" id="Scan2" name="Scan2" ></div></li>
-            <li><div><label for="contactname">紧急联系人姓名</label><input type="text" id="contactname" name="contactname"  value="{$data.contactname|default=''}"></div></li>
+            <li><div>
+                <label for="Scan1button">学历证书扫描件<span>（请上传小于10M的图片）</span></label>
+                <form id="form1">
+                    <input type="button"  value="{$data.Scan1==''?'上传':'点击查看'}" id="Scan1button" img="{$data.Scan1|default=''}" onclick="this.value==='上传'?Scan1.click():getimgurl(this.id)">
+                    <input type="file" id="Scan1" name="Scan1">
+                    {$data.Scan1==''?'':'<input type="button" onclick="Scan1.click()" value="重新上传">'}
+                </form>
+            </div></li>
+            <li><div>
+                <label for="Scan2button">工作证明扫描件（盖单位鲜章）<span>（请上传小于10M的图片）</span></label>
+                <form id="form2">
+                    <input type="button" value="{$data.Scan2==''?'上传':'点击查看'}"  id="Scan2button" img="{$data.Scan2|default=''}" onclick="this.value==='上传'?Scan2.click():getimgurl(this.id)" >
+                    <input type="file" id="Scan2" name="Scan2" >
+                    {$data.Scan2==''?'':'<input type="button" onclick="Scan2.click()" value="重新上传">'}
+                </form>
+            </div></li>
+            <li><div><label for="contactname">紧急联系人姓名</label> <input type="text" id="contactname" name="contactname"  value="{$data.contactname|default=''}"></div></li>
             <li><div><label for="contactphone">紧急联系人电话</label><input type="text" id="contactphone" name="contactphone"  value="{$data.contactphone|default=''}"></div></li>
             <li><div><label for="pwdproblem">密码找回问题</label><input type="text" id="pwdproblem" name="pwdproblem"  value="{$data.pwdproblem|default=''}"></div></li>
             <li><div><label for="pwdanswer">密码找回答案</label><input type="text" id="pwdanswer"  name="pwdanswer"  value="{$data.pwdanswer|default=''}"></div></li>
@@ -49,14 +75,35 @@
 <script type="text/javascript" src="/static/jquery.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
+
+    layui.use('layer',function () {
+        var layer = layui.layer;
+    })
+
+    function getimgurl(obj){
+        let src = document.getElementById(obj).getAttribute('img');
+        let title = document.getElementById(obj).parentElement.previousElementSibling.textContent;
+        var index = layer.open({
+            type: 1 //Page层类型
+            ,area: ['700px', '500px']
+            ,title: title
+            ,shade: 0.6 //遮罩透明度
+            ,maxmin: true //允许全屏最小化
+            ,shadeClose: true //点击遮罩关闭层
+            ,anim: Math.ceil(Math.random()*10) //0-6的动画形式，-1不开启
+            , btn:[]
+            ,content:'<div style="width: 100%;padding: 20px;box-sizing:border-box;text-align: center"><img style="max-width: 900px" width="100%" src="'+src+'" ></div>',
+        });
+    }
+
     $(function () {
         $("input").prop("autocomplete",'off');
 
         $('.info ul li').click(function () {
             $(this).children('div').children('input').focus();
-        })
+        });
 
-        $('.info ul li:last').css('border',0)
+        $('.info ul li:last').css('border',0);
 
         $(".info input[type=text]").change(function () {
             let data = $(this).val();
@@ -77,6 +124,30 @@
                 }
             })
         })
+
+        $("input[type=file]").change(function () {
+            let obj = $(this);
+            let formid = obj.parent().prop('id');
+            let formdata = new FormData(document.getElementById(formid));
+            $.ajax({
+                url:"/user/setuserinfo",
+                type:"post",
+                dataType:"json",
+                contentType:false,
+                processData:false,
+                data:formdata,
+                success:function(res){
+                    console.log(res)
+                    if(res.code === 0){
+                        layer.open({title:'错误提示','content':res.error,icon:2})
+                    }else if(res.code === 1){
+                        obj.prev().val('点击查看');
+                        obj.prev().attr('img',res.img);
+                    }
+                }
+            })
+        })
+
     })
 </script>
 </html>

@@ -13,9 +13,12 @@
 .info ul li{padding: 15px 15px;border-bottom: 1px solid #e8e8e8;font-size: 12px;}
 .info ul li div{width: 80%;display: inline}
 .info ul li div label{color: #8f8f8f}
-.info ul li div input{border: 0;margin-top: 3px;width: 100%;}
+.info ul li div input[type=text]{border: 0;margin-top: 3px;width: 100%;}
+.info ul li div select{border: 0;margin: 3px 0 0 -4px;width: 100%;padding: 0;box-sizing:border-box;}
+input[type=checkbox],input[type=radio]{vertical-align:middle;}
+.info ul li div div label{vertical-align:middle; margin-right: 10px}
 .info ul li i{font-size: 5px;float: right;}
-
+.info ul li div div textarea{margin: 3px 0 0 0;width: 100%;border: 0}
 /*.infobottom{padding: 15px 0;font-size: 13px;}*/
 /*.infobottom a{color: red}*/
 /*.infoOther{margin-bottom: 10px;}*/

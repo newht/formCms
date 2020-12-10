@@ -20,6 +20,8 @@ class Index extends Controller
 
     public function goWorkInfo()
     {
+        $data = Db::table('employerinfo') -> where('uid',session('user')['id']) -> find();
+        $this -> assign('data',$data);
         return $this -> fetch('index/info/work');
     }
 

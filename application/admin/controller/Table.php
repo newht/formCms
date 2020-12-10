@@ -32,7 +32,7 @@ class Table extends Controller
     public function getTables()
     {
         $data = Db::table("form_info")
-            ->field("id,fname,tb_name")
+            ->field("id,fname,tb_name,subtitle")
             ->select();
         foreach ($data as $k => $v) {
             $data[$k]['count'] = Db::table($v['tb_name'])->count();

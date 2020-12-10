@@ -18,9 +18,9 @@
             工作单位信息设置
         </div>
         <ul>
-            <li><div><label for="email">电子邮件</label><input type="text" id="email" autocomplete="off"></div></li>
-            <li><div><label for="location">所在地区</label><input type="text" id="location" name="location" autocomplete="off"></div></li>
-            <li><div><label for="address">联系地址</label><input type="text" id="address" name="address" autocomplete="off"></div></li>
+            <li><div><label for="name">工作单位名称</label><input type="text" id="name" name="name" value="{$data.name}"></div></li>
+            <li><div><label for="department">所在部门</label><input type="text" id="department" name="department" value="{$data.department}"></div></li>
+            <li><div><label for="position">个人职务</label><input type="text" id="position" name="position" value="{$data.position}"></div></li>
         </ul>
     </div>
 </div>
@@ -36,9 +36,29 @@
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
     $(function () {
-        $('.info ul li:last').css('border',0)
+        $('.info ul li:last').css('border',0);
+        $("input").prop('autocomplete','off');
         $('.info ul li').click(function () {
             $(this).children('div').children('input').focus();
+        })
+
+        $("input[type=text]").change(function () {
+            let name = $(this).prop("name");
+            let text = $(this).val();
+            let formdata = {};
+            formdata[name] = text;
+            if(text){
+                console.log(text)
+                $.ajax({
+                    url:"/user/setemployerinfo",
+                    type:"post",
+                    dataType:"json",
+                    data:formdata,
+                    success:function(res){
+                        console.log(res)
+                    }
+                })
+            }
         })
     })
 </script>

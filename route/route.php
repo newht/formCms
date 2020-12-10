@@ -15,7 +15,10 @@ Route::group('user',function (){
     Route::rule("userinfo",'user/Index/goInfo','get') -> middleware('loginCheck');
     Route::rule("setuserinfo",'user/Info/setUserInfo','post')->middleware('loginCheck');
     Route::rule("workinfo",'user/Index/goWorkInfo','get') -> middleware('loginCheck');
+    Route::rule("setemployerinfo",'user/Info/setEmployerInfo','post')->middleware('loginCheck');
     Route::rule("signup",'user/Index/signUp','get') -> middleware('loginCheck');
+    Route::rule("gowrite/:id",'user/Forms/goWrite','get')->middleware('loginCheck');
+    Route::rule("insert",'user/Forms/insert','post')->middleware('loginCheck');
     Route::rule('null','user/Index/null','get');
 });
 
