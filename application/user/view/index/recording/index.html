@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教育报名系统</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/user/css/indexTable.css">
+</head>
+<body>
+<div class="max">
+    <div class="logo"></div>
+    <div class="wlcome">
+        <span class="wlcomeleft"><i class="layui-icon">&#xe66f; </i>欢迎您：胡涛</span>
+        <span class="wlcomeright"><a href="/user/drop"><i class="layui-icon" >&#xe682; </i>退出</a></span>
+    </div>
+    <div class="info">
+        <div class="infoTitle">
+            报名记录
+        </div>
+        <ul>
+            {foreach $data as $v}
+            <li class="lione">
+                <div style="float: right;display: block;width: 20%;text-align: right">
+                    已报人数：{$v.count}
+                </div>
+                <div style="width: 100%;display: block">
+                    <h3 style="color: #70A989">{$v.fname}</h3>
+                    <h4>{$v.subtitle}</h4>
+                    <label onclick="Unfold($(this));" style="cursor: pointer;user-select: none;">点击查看报名信息</label>
+                    <div>
+                        <ul style="display: none" class="formdatas">
+                            {foreach $v.formdatas as $m=>$n}
+                            <li style="border: 0">
+                                <label>{$m}:</label><span disabled style="background: white" type="text" value="">{$n}</span>
+                            </li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            {/foreach}
+            <!--<li><div><label for="department">所在部门</label><input type="text" id="department" name="department" value="{}"></div></li>-->
+            <!--<li><div><label for="position">个人职务</label><input type="text" id="position" name="position" value="{}"></div></li>-->
+        </ul>
+    </div>
+</div>
+<div class="webbottom">
+    <ul>
+        <li><div><a href="/user/index"><i class="layui-icon-user layui-icon" style="font-size: 30px"></i></a></div>个人信息</li>
+        <li><div><a href="/user/signup"><i class="layui-icon-edit layui-icon" style="font-size: 30px"></i></a></div>课程报名</li>
+        <li><div><a href="/user/gorecording"><i class="layui-icon-log layui-icon" style="font-size: 30px"></i></a></div>报名记录</li>
+    </ul>
+</div>
+</body>
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+<script>
+    function Unfold(obj){
+        let text = obj.text();
+        if(text === '点击查看报名信息'){
+            obj.next().children('.formdatas').show()
+            obj.text('点击隐藏报名信息')
+        }else if(text === '点击隐藏报名信息'){
+            obj.next().children('.formdatas').hide()
+            obj.text('点击查看报名信息')
+        }
+
+
+    }
+
+    $(function () {
+        $("input").prop('autocomplete','off');
+        $('.lione:last').css('border-bottom',0)
+
+        $('.info ul li').click(function () {
+            $(this).children('div').children('input').focus();
+        })
+
+    })
+</script>
+</html>

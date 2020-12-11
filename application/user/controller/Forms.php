@@ -21,6 +21,7 @@ class Forms extends Controller
         $table = input('tb_name');
         $data = input();
         unset($data['tb_name']);
+        $data['id'] = session('user')['id'];
         $num = Db::name($table) -> insert($data);
         return [
             'code' => 0

@@ -19,6 +19,8 @@ Route::group('user',function (){
     Route::rule("signup",'user/Index/signUp','get') -> middleware('loginCheck');
     Route::rule("gowrite/:id",'user/Forms/goWrite','get')->middleware('loginCheck');
     Route::rule("insert",'user/Forms/insert','post')->middleware('loginCheck');
+    Route::rule("gorecording",'user/Recording/goRecording','get')->middleware('loginCheck');
+
     Route::rule('null','user/Index/null','get');
 });
 

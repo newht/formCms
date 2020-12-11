@@ -29,7 +29,8 @@ class User extends Model
 
     public function register($data)
     {
-        $res = User::data($data) -> insert();
+        $res = User::data($data) -> insertGetId();
+        return $res;
         if($res === 1){
             return ['code' => 1,'msg' => '注册成功','url' => '/user/login'];
         }
