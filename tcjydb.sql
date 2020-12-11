@@ -29,15 +29,28 @@ CREATE TABLE `admin` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+/*Table structure for table `employerinfo` */
+
+DROP TABLE IF EXISTS `employerinfo`;
+
+CREATE TABLE `employerinfo` (
+  `uid` int(11) NOT NULL COMMENT '用户id',
+  `name` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '单位名称',
+  `department` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '所在部门',
+  `position` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '个人职务',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 /*Table structure for table `form_info` */
 
 DROP TABLE IF EXISTS `form_info`;
 
 CREATE TABLE `form_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fname` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '表单名字',
-  `content` text COLLATE utf8_unicode_ci COMMENT '内容',
-  `tb_name` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '关联表名',
+  `fname` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '标题',
+  `subtitle` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '副标题',
+  `content` text COLLATE utf8_unicode_ci NOT NULL COMMENT '内容',
+  `tb_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '关联表名',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -46,28 +59,26 @@ CREATE TABLE `form_info` (
 DROP TABLE IF EXISTS `form_tb_0`;
 
 CREATE TABLE `form_tb_0` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `id` int(11) DEFAULT NULL COMMENT 'id',
   `fie_0` text COLLATE utf8_unicode_ci COMMENT '姓名',
   `fie_1` text COLLATE utf8_unicode_ci COMMENT '学历',
   `fie_2` text COLLATE utf8_unicode_ci COMMENT '是否是全日制',
   `fie_3` text COLLATE utf8_unicode_ci COMMENT '爱好',
-  `fie_4` text COLLATE utf8_unicode_ci COMMENT '学习经历',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `fie_4` text COLLATE utf8_unicode_ci COMMENT '学习经历'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `form_tb_1` */
 
 DROP TABLE IF EXISTS `form_tb_1`;
 
 CREATE TABLE `form_tb_1` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `id` int(11) DEFAULT NULL COMMENT 'id',
   `fie_0` text COLLATE utf8_unicode_ci COMMENT '胡涛',
   `fie_1` text COLLATE utf8_unicode_ci COMMENT '下拉框',
   `fie_2` text COLLATE utf8_unicode_ci COMMENT '单选',
   `fie_3` text COLLATE utf8_unicode_ci COMMENT '多选',
   `fie_4` text COLLATE utf8_unicode_ci COMMENT '多行文本',
-  `fie_5` text COLLATE utf8_unicode_ci COMMENT '文本',
-  PRIMARY KEY (`id`)
+  `fie_5` text COLLATE utf8_unicode_ci COMMENT '文本'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `user` */
