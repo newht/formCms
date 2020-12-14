@@ -9,6 +9,7 @@
 namespace app\user\model;
 
 
+use think\Db;
 use think\Model;
 
 class User extends Model
@@ -29,9 +30,9 @@ class User extends Model
 
     public function register($data)
     {
-        $res = User::data($data) -> insertGetId();
-        return $res;
-        if($res === 1){
+        $res = User::insertGetId($data);
+        Db::table('userinfo') -> insert(['uid' => $res]);
+        if($res > 0){
             return ['code' => 1,'msg' => '注册成功','url' => '/user/login'];
         }
         return ['code' => 0,'msg' => '注册失败','url' => null];

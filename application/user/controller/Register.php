@@ -15,7 +15,6 @@ class Register extends Controller
         $data = input();
         unset($data['password2']);
         $res = $user -> register($data);
-        Db::table('userinfo') -> insert(['id' => $res]);
-        return ['code' => 1,'msg' => '注册成功','url' => '/user/login'];;
+        return $res;
     }
 }

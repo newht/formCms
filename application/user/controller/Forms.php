@@ -22,9 +22,10 @@ class Forms extends Controller
         $data = input();
         unset($data['tb_name']);
         $data['id'] = session('user')['id'];
-        $num = Db::name($table) -> insert($data);
-        return [
-            'code' => 0
-        ];
+        if(empty(Db::table($table) -> where('id',$data['id']) -> find())){
+            $num = Db::name($table) -> insert($data);
+            return ['code' => 1,'error' => null];
+        }
+        return ['code' => 0,'error' => '已报名'];
     }
 }

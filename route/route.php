@@ -31,6 +31,8 @@ Route::group("admin",function (){
     Route::rule("admin",'admin/User/show','get');
     Route::rule("drop",'admin/User/drop','get');
     Route::rule("alltable",'admin/Table/allTable','get');
+    Route::rule('gocreate','admin/Table/goCreate','get');
+    Route::rule('addtable','admin/Table/insertTable','post');
 });
 Route::post('in','admin/Login/in');
 

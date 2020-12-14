@@ -96,9 +96,13 @@
                 dataType:"json",
                 data:data,
                 success:function(e){
-                    if(e.code === 0){
-                        layer.open({'title':'提示信息',btn:['确认'],content:'保存成功,点击确认返回上一级'});
+                    let msg;
+                    if(e.code === 1){
+                        msg = '保存成功,点击确认返回上一级';
+                    }else if(e.code === 0){
+                        msg = e.error;
                     }
+                    layer.open({'title':'提示信息',btn:['确认'],content:msg});
                 }
             })
         })
