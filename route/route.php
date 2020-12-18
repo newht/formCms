@@ -33,6 +33,7 @@ Route::group("admin",function (){
     Route::rule("alltable",'admin/Table/allTable','get');
     Route::rule('gocreate','admin/Table/goCreate','get');
     Route::rule('addtable','admin/Table/insertTable','post');
+    Route::rule('auditstates','admin/Index/auditStates','post');
 });
 Route::post('in','admin/Login/in');
 

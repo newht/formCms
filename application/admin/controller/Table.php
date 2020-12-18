@@ -73,8 +73,10 @@ class Table extends Controller
         foreach ($content as $k => $v) {
             $sql .= "fie_" . $k . " text comment '" . $v['comment'] . "' ,";
         }
-        $sql = substr($sql, 0, -1) . ")";
+        $sql.="auditstates varchar(20) comment '审核状态' default '未审核')";
+//        $sql = substr($sql, 0, -1) . ")";
         return Db::execute($sql);
 
     }
+
 }

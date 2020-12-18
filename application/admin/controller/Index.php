@@ -1,8 +1,5 @@
 <?php
-
 namespace app\admin\controller;
-
-
 use app\admin\model\Form_info;
 use think\Controller;
 use think\Db;
@@ -32,5 +29,15 @@ class Index extends Controller
         $this->assign('th', $th);
         $this->assign('data', $data);
         return $this -> fetch("index/tables");
+    }
+
+    public function auditStates()
+    {
+        $tbname = input('tbname');
+        $data = input('data');
+        foreach($data as $v){
+            Db::table($tbname) -> where("id",$v['id']) -> update(['auditstates' => $v['auditstates']]);
+        }
+        return 1;
     }
 }
