@@ -25,9 +25,18 @@ CREATE TABLE `admin` (
   `name` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '账号',
   `password` varbinary(50) DEFAULT NULL COMMENT '密码',
   `nick_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '昵称',
-  `post_id` int(11) NOT NULL COMMENT '角色id',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Table structure for table `admin_post` */
+
+DROP TABLE IF EXISTS `admin_post`;
+
+CREATE TABLE `admin_post` (
+  `admin_id` int(11) DEFAULT NULL COMMENT '管理员id',
+  `post_id` int(11) DEFAULT NULL COMMENT '角色id'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `employerinfo` */
 
@@ -52,34 +61,37 @@ CREATE TABLE `form_info` (
   `content` text COLLATE utf8_unicode_ci NOT NULL COMMENT '内容',
   `tb_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '关联表名',
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Table structure for table `post` */
+
+DROP TABLE IF EXISTS `post`;
+
+CREATE TABLE `post` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '角色名称',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-/*Table structure for table `form_tb_0` */
+/*Table structure for table `post_rbac` */
 
-DROP TABLE IF EXISTS `form_tb_0`;
+DROP TABLE IF EXISTS `post_rbac`;
 
-CREATE TABLE `form_tb_0` (
-  `id` int(11) DEFAULT NULL COMMENT 'id',
-  `fie_0` text COLLATE utf8_unicode_ci COMMENT '姓名',
-  `fie_1` text COLLATE utf8_unicode_ci COMMENT '学历',
-  `fie_2` text COLLATE utf8_unicode_ci COMMENT '是否是全日制',
-  `fie_3` text COLLATE utf8_unicode_ci COMMENT '爱好',
-  `fie_4` text COLLATE utf8_unicode_ci COMMENT '学习经历'
+CREATE TABLE `post_rbac` (
+  `post_id` int(11) DEFAULT NULL COMMENT '角色id',
+  `rbac_id` int(11) DEFAULT NULL COMMENT '路由id'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-/*Table structure for table `form_tb_1` */
+/*Table structure for table `rbac` */
 
-DROP TABLE IF EXISTS `form_tb_1`;
+DROP TABLE IF EXISTS `rbac`;
 
-CREATE TABLE `form_tb_1` (
-  `id` int(11) DEFAULT NULL COMMENT 'id',
-  `fie_0` text COLLATE utf8_unicode_ci COMMENT '胡涛',
-  `fie_1` text COLLATE utf8_unicode_ci COMMENT '下拉框',
-  `fie_2` text COLLATE utf8_unicode_ci COMMENT '单选',
-  `fie_3` text COLLATE utf8_unicode_ci COMMENT '多选',
-  `fie_4` text COLLATE utf8_unicode_ci COMMENT '多行文本',
-  `fie_5` text COLLATE utf8_unicode_ci COMMENT '文本'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `rbac` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `url` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '路由',
+  `remark` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '注释',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `user` */
 
@@ -92,7 +104,7 @@ CREATE TABLE `user` (
   `name` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '姓名',
   `phone` varchar(11) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '电话号码',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `userinfo` */
 
