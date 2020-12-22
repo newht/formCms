@@ -66,7 +66,7 @@ class Rbac extends Controller
         return ['code' => 1 , 'data' => $data];
     }
 
-        public function delete()
+    public function delete()
     {
         $data = input("data");
         foreach($data as $v){
