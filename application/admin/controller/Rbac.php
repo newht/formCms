@@ -1,14 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 16665
- * Date: 2020/12/21
- * Time: 16:37
- */
-
 namespace app\admin\controller;
-
-
 use think\Controller;
 use think\Db;
 use think\Exception;
@@ -78,9 +69,29 @@ class Rbac extends Controller
 
     public function goRbac()
     {
-        $data = Db::name("post") -> select();
+        $rbac = Db::name("rbac") -> select();
+        $this -> assign("rbac",$rbac);
+        $data = Db::query("SELECT id,name,GROUP_CONCAT(rbac_id) AS rbac_id FROM post t1 INNER JOIN post_rbac t2 ON t1.id = t2.post_id GROUP BY t1.id");
+        Db::name("post") -> select();
         $this -> assign("data",$data);
-//        dump($data);
         return $this -> fetch("rbac/rbac");
+    }
+
+    //修改角色权限
+    public function setRbac()
+    {
+        $id = input('id');
+        $data = [];
+        foreach(input() as $k => $v){
+            if($k == 'name'){
+                Db::name("post")->where('id',$id) -> update(['name'=>input('name')]);
+            }else if(substr($k,0,5) == 'rbac_'){
+                $temp = ['rbac_id' => $v,'post_id'=>$id];
+                $data[]=$temp;
+            }
+        }
+        Db::name('post_rbac') -> where('post_id',$id) -> delete();
+        Db::name('post_rbac') -> insertAll($data);
+        return $data;
     }
 }

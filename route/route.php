@@ -35,7 +35,7 @@ Route::group("admin",function (){
     Route::rule('addtable','admin/Table/insertTable','post');
     Route::rule('auditstates','admin/Index/auditStates','post');
     Route::rule('gorbac','admin/Rbac/goRbac','get');
-
+    Route::rule("setrbac","admin/Rbac/setRbac",'post');
     Route::rule('goadmin','admin/Rbac/goAdmin','get');
     Route::rule("insert",'admin/Rbac/insert','post');
     Route::rule("insert/:id",'admin/Rbac/insert','post');
