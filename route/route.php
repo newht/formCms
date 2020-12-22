@@ -34,6 +34,13 @@ Route::group("admin",function (){
     Route::rule('gocreate','admin/Table/goCreate','get');
     Route::rule('addtable','admin/Table/insertTable','post');
     Route::rule('auditstates','admin/Index/auditStates','post');
+    Route::rule('gorbac','admin/Rbac/goRbac','get');
+
+    Route::rule('goadmin','admin/Rbac/goAdmin','get');
+    Route::rule("insert",'admin/Rbac/insert','post');
+    Route::rule("insert/:id",'admin/Rbac/insert','post');
+    Route::rule("getadmininfo/:id",'admin/Rbac/getAdminInfo','post');
+    Route::rule("delete",'admin/Rbac/delete','post');
 });
 Route::post('in','admin/Login/in');
 

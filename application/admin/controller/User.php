@@ -19,20 +19,19 @@ class User extends Controller
 
     public function show()
     {
-        $database =  Config::get('database.database');
+        $database = Config::get('database.database');
         $th = Db::query("SELECT a.table_name '表名', b.column_name '字段名', b.column_comment '字段说明' FROM information_schema. TABLES a LEFT JOIN information_schema.columns b ON a.table_name = b.table_name WHERE a.table_schema = '" . $database . "' and a.table_name = 'admin' ORDER BY a.table_name");
-        $this -> assign('th', $th);
+        $this->assign('th', $th);
         $admin = new Admin();
-        $data = $admin -> getAllData();
-        $this -> assign('data',$data);
-        return $this -> fetch("index/tables");
+        $data = $admin->getAllData();
+        $this->assign('data', $data);
+        return $this->fetch("index/tables");
     }
 
     public function drop()
     {
-        session('user_admin','');
-
+        session('user_admin', '');
         $login = new Login();
-        return $login -> login();
+        return $login->login();
     }
 }

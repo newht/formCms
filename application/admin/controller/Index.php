@@ -40,4 +40,5 @@ class Index extends Controller
         }
         return 1;
     }
+
 }

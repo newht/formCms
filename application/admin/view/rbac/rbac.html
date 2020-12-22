@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理系统</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <style>
+        .top{padding:15px;border-bottom: 1px solid #F2F2F2}
+        .layui-form-select{width: 300px}
+        .rbaccontent{padding:15px 1px;}
+        table{width: 100%; min-height: 35px; line-height: 35px; text-align: center; border-collapse: collapse;font-size: 12px;border: #F2F2F2}
+        .contenttop{padding:0 0 15px 15px}
+        input[type=checkbox]{vertical-align: middle}
+
+    </style>
+</head>
+<body>
+<div class="top">
+    <form class="layui-form">
+            <label class="layui-form-label">角色筛选:</label>
+            <div class="layui-input-block">
+                <select name="interest" lay-filter="rbacselect">
+                    <option value="">全部角色</option>
+                    <option value="超级管理员">超级管理员</option>
+                    <option value="普通管理员">普通管理员</option>
+                </select>
+            </div>
+    </form>
+</div>
+<div class="rbaccontent">
+    <div class="contenttop">
+        <input type="button" value="删除" class="layui-btn ">
+        <input type="button" value="添加" class="layui-btn ">
+    </div>
+    <table border="1">
+        {foreach $data as $k=>$v}
+        {if $k===0}
+        <tr>
+            <td><input type="checkbox" onclick="$('[name=checkbox]').prop('checked',$(this).prop('checked'))"></td>
+            {foreach $v as $m=>$n}
+            <td>{$m}</td>
+            {/foreach}
+            <td>操作</td>
+        </tr>
+        {/if}
+        <tr>
+            <td><input name="checkbox" type="checkbox" ></td>
+            {foreach $v as $m=>$n}
+            <td remark="{$m}">{$n}</td>
+            {/foreach}
+            <td>
+                <input type="button" class="layui-btn layui-btn-xs btn-normal" value="编辑">
+                <input type="button" class="layui-btn layui-btn-xs layui-btn-danger" value="删除">
+            </td>
+        </tr>
+        {/foreach}
+    </table>
+</div>
+</body>
+<script src="/static/jquery.min.js"></script>
+<script src="/static/layui/layui.js"></script>
+<script>
+    layui.use('layer',function () {
+        let layer = layui.layer;
+    });
+    layui.use('form',function () {
+        let form = layui.form;
+        form.on('select(rbacselect)', function(data){
+            let val = data.value;
+            if(val){
+                $("table tr:gt(0)").each(function () {
+                    let thistext = $(this).children("td:eq(2)").text();
+                    if(thistext !== val){
+                        $(this).hide();
+                    }else{
+                        $(this).show();
+                    }
+                })
+            }else{
+                $("table tr:gt(0)").show();
+            }
+        });
+    });
+
+    $(function () {
+
+    })
+</script>
+</html>

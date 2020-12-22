@@ -62,7 +62,8 @@
 <script>
     layui.use('layer',function () {
         let layer = layui.layer;
-    })
+    });
+
     $(function(){
         let auditstates = '';
         let id = '';
@@ -88,10 +89,12 @@
                 }
                 formdata.push(temp);
             });
+
             if(formdata.length === 0){
                 layer.open({title:"提示消息",content:"修改失败，请勾选后重试！",icon:2})
                 return false;
             }
+
             $.ajax({
                 url:"/admin/auditstates",
                 type:"post",
@@ -116,7 +119,7 @@
 
         $("#checkbox").click(function () {
             $("[name=checkbox]").prop('checked',$(this).prop('checked'));
-        })
+        });
         
         $('.layui-btn-danger').click(function () {
             layer.open({
@@ -129,7 +132,6 @@
                 }
             })
         })
-
     })
 </script>
 </html>
