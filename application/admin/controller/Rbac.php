@@ -78,7 +78,7 @@ class Rbac extends Controller
 
     public function goRbac()
     {
-        $data = Db::name("rbac") -> select();
+        $data = Db::name("post") -> select();
         $this -> assign("data",$data);
 //        dump($data);
         return $this -> fetch("rbac/rbac");
