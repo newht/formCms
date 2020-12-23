@@ -18,6 +18,7 @@
             报名记录
         </div>
         <ul>
+            {if count($data) > 0}
             {foreach $data as $v}
             <li class="lione">
                 <div style="float: right;display: block;width: 20%;text-align: right">
@@ -39,6 +40,11 @@
                 </div>
             </li>
             {/foreach}
+            {else /}
+            <li class="lione">
+                暂无报名信息
+            </li>
+            {/if}
             <!--<li><div><label for="department">所在部门</label><input type="text" id="department" name="department" value="{}"></div></li>-->
             <!--<li><div><label for="position">个人职务</label><input type="text" id="position" name="position" value="{}"></div></li>-->
         </ul>

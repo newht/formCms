@@ -21,15 +21,23 @@
     <div class="info">
         <div class="infoTitle">课程报名并缴费</div>
         <ul>
+            {if count($data) > 0}
             {foreach $data as $v}
-            <a href="/user/gowrite/{$v.id}"><li >
-                <img src="/static/images/user/icon.png" width='60' alt="">
-                <div>
-                    <h3>{$v.fname}</h3>
-                    <h4>{$v.subtitle}</h4>
-                </div>
-            </li></a>
+            <a href="/user/gowrite/{$v.id}">
+                <li class="lione">
+                    <img src="/static/images/user/icon.png" width='60' alt="">
+                    <div>
+                        <h3>{$v.fname}</h3>
+                        <h4>{$v.subtitle}</h4>
+                    </div>
+                </li>
+            </a>
             {/foreach}
+            {else /}
+            <li class="lione" style="font-size: 12px;color:#8F8F8F">
+                暂无可报名课程
+            </li>
+            {/if}
         </ul>
     </div>
 </div>
@@ -51,7 +59,7 @@
         },function () {
             $(this).children('div').children('h3').css({'color':'black'});
         })
-
+        $(".lione:last").css('border-bottom','0');
     })
 </script>
 </html>
