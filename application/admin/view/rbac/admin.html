@@ -73,7 +73,7 @@
             <td remark="{$m}">{$n}</td>
             {/foreach}
             <td>
-                <input type="button" fie="{$v.id}" class="layui-btn layui-btn-xs layui-btn-normal" value="编辑">
+                <input type="button" fieid="{$v.id}" class="layui-btn layui-btn-xs layui-btn-normal" value="编辑">
                 <input type="button" class="layui-btn layui-btn-xs layui-btn-danger" value="删除">
             </td>
         </tr>
@@ -127,7 +127,7 @@
             let url = "/admin/insert";
             if(temptitle ===  '编辑'){
                 $("[name=password]").parent().parent().hide();
-                let thisid = $(this).attr('fie');
+                let thisid = $(this).attr('fieid');
                 url = "/admin/insert/"+thisid;
                 $.post("/admin/getadmininfo/"+thisid,function (res) {
                     for(let i in res.data){
@@ -191,7 +191,7 @@
                     content: '你确定要删除这些管理员吗',
                     btn: ['确定', '取消'],
                     yes: function (index) {
-                        $.post('/admin/delete',{data:data},function (res) {
+                        $.post('/admin/delete/admin',{data:data},function (res) {
                             console.log(data)
                             if(res.code === 1){
                                 $("[name=checkbox]:checked").parent().parent().remove();
@@ -204,6 +204,27 @@
                 layer.msg('请选择数据',{time:900})
             }
         });
+
+        $(".layui-btn-danger").click(function () {
+            let obj = $(this);
+            let thisid = obj.prev().attr("fieid");
+            let data = [];
+            data.push(thisid);
+            layer.open({
+                title: '删除提示',
+                content: '你确定要删除管理员 <span style="color:red">'+obj.parent().prev().prev().prev().text()+'</span> 吗',
+                btn: ['确定', '取消'],
+                shadeClose:true,
+                yes: function (index) {
+                    $.post('/admin/delete/admin',{data:data},function(res){
+                        if(res.code === 1){
+                            obj.parent().parent().remove();
+                            layer.close(index)
+                        }
+                    });
+                }
+            })
+        })
     })
 </script>
 </html>

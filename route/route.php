@@ -40,7 +40,8 @@ Route::group("admin",function (){
     Route::rule("insert",'admin/Rbac/insert','post');
     Route::rule("insert/:id",'admin/Rbac/insert','post');
     Route::rule("getadmininfo/:id",'admin/Rbac/getAdminInfo','post');
-    Route::rule("delete",'admin/Rbac/delete','post');
+    Route::rule("delete/:type",'admin/Rbac/delete','post');
+    Route::rule("insertpost","admin/Rbac/insertPost",'post');
 });
 Route::post('in','admin/Login/in');
 

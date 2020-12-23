@@ -29,8 +29,8 @@
 </div>
 <div class="rbaccontent">
     <div class="contenttop">
-        <input type="button" value="删除" class="layui-btn ">
-        <input type="button" value="添加" class="layui-btn ">
+        <input type="button" value="删除" id="delete" class="layui-btn ">
+        <input type="button" value="添加" id="insertrbac" class="layui-btn ">
     </div>
     <table border="1">
         {foreach $data as $k=>$v}
@@ -108,7 +108,7 @@
             form.val('open',formobj);
             form.render("checkbox");
             layer.open({
-                title:"所有权限",
+                title:"编辑",
                 type:1,
                 area: ['500px', '500px'],
                 shadeClose: true,
@@ -116,11 +116,13 @@
                 btn:['确定'],
                 yes:function (index) {
                     let formdata = form.val("open");
-                    console.log(formdata);
                     formdata['id'] = id;
                     $.post('/admin/setrbac',formdata,function (res) {
                         // obj.attr('rbac','1,2,3');
                         console.log(res)
+                        if(res.code === 1){
+                            location.reload();
+                        }
                         // layer.close(index);
                     });
                 },
@@ -130,9 +132,77 @@
                 }
             });
         });
+
+        $("#insertrbac").click(function () {
+            layer.open({
+                title:"添加",
+                content:$("#open"),
+                type:1,
+                area: ['500px', '500px'],
+                shadeClose: true,
+                btn:['确定'],
+                yes:function(index){
+                    let formdata = form.val("open");
+                    $.post('/admin/insertpost',formdata,function (res) {
+                        if(res.code===1){
+                            location.reload();
+                        }
+                    });
+                },
+                end:function(){
+                    $("#open form")[0].reset();
+                    form.render();
+                }
+            })
+        })
     });
     $(function () {
+        $("#delete").click(function () {
+            let data = [];
+            $("[name=checkbox]:checked").each(function () {
+                let tempid = $(this).parent().next().text();
+                data.push(tempid);
+            });
+            if(data.length !== 0){
+                layer.open({
+                    title: '删除提示',
+                    content: '你确定要删除这些角色吗',
+                    btn: ['确定', '取消'],
+                    yes: function (index) {
+                        $.post('/admin/delete/post',{data:data},function (res) {
+                            console.log(data)
+                            if(res.code === 1){
+                                $("[name=checkbox]:checked").parent().parent().remove();
+                                layer.close(index)
+                            }
+                        });
+                    }
+                })
+            }else{
+                layer.msg('请选择数据',{time:900})
+            }
+        });
 
+        $(".layui-btn-danger").click(function () {
+            let obj = $(this);
+            let thisid = obj.prev().attr("fieid");
+            let data = [];
+            data.push(thisid);
+            layer.open({
+                title: '删除提示',
+                content: '你确定要删除管理员 <span style="color:red">'+obj.parent().prev().prev().prev().text()+'</span> 吗',
+                btn: ['确定', '取消'],
+                shadeClose:true,
+                yes: function (index) {
+                    $.post('/admin/delete/post',{data:data},function(res){
+                        if(res.code === 1){
+                            obj.parent().parent().remove();
+                            layer.close(index)
+                        }
+                    });
+                }
+            })
+        })
     })
 </script>
 </html>

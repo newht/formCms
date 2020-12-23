@@ -57,21 +57,39 @@ class Rbac extends Controller
         return ['code' => 1 , 'data' => $data];
     }
 
-    public function delete()
+    public function delete($type)
     {
         $data = input("data");
-        foreach($data as $v){
-            Db::name("admin") -> where('id',$v) -> delete();
-            Db::name("admin_post")-> where('admin_id',$v) -> delete();
+        Db::startTrans();
+        try{
+            if($type == "admin"){
+                foreach($data as $v){
+                    Db::name("admin") -> where('id',$v) -> delete();
+                    Db::name("admin_post")-> where('admin_id',$v) -> delete();
+                }
+                Db::commit();
+            }elseif ($type=="post"){
+                foreach($data as $v){
+                    Db::table("post") -> where('id',$v) -> delete();
+                    Db::table("admin_post")-> where('post_id',$v) -> delete();
+                    Db::table('post_rbac')->where('post_id',$v)->delete();
+                }
+                Db::commit();
+            }else{
+                Db::rollback();
+                return json(["code"=>0,"error"=>'数据格式错误！']);
+            }
+        }catch (Exception $e){
+            return json(["code"=>0,"error"=>$e->getMessage()]);
         }
-        return ['code' =>1,"error"=>null];
+        return json(['code' =>1,"error"=>null]);
     }
 
     public function goRbac()
     {
         $rbac = Db::name("rbac") -> select();
         $this -> assign("rbac",$rbac);
-        $data = Db::query("SELECT id,name,GROUP_CONCAT(rbac_id) AS rbac_id FROM post t1 INNER JOIN post_rbac t2 ON t1.id = t2.post_id GROUP BY t1.id");
+        $data = Db::query("SELECT id,name,GROUP_CONCAT(rbac_id) AS rbac_id FROM post t1 left JOIN post_rbac t2 ON t1.id = t2.post_id GROUP BY t1.id");
         Db::name("post") -> select();
         $this -> assign("data",$data);
         return $this -> fetch("rbac/rbac");
@@ -92,6 +110,28 @@ class Rbac extends Controller
         }
         Db::name('post_rbac') -> where('post_id',$id) -> delete();
         Db::name('post_rbac') -> insertAll($data);
-        return $data;
+        return ["code"=>1,'error'=>null];
+    }
+
+    public function insertPost()
+    {
+        $postname = input('name');
+        Db::startTrans();
+        try{
+            $postid = Db::table("post")->insertGetId(["name"=>$postname]);
+            $data = [];
+            foreach(input() as $k=>$v){
+                if(substr($k,0,5) == 'rbac_'){
+                    $temp = ['rbac_id' => $v,'post_id'=>$postid];
+                    $data[]=$temp;
+                }
+            }
+            Db::name('post_rbac') -> insertAll($data);
+            Db::commit();
+        }catch (Exception $e){
+            Db::rollback();
+            return ['code'=>0,'error'=>$e->getMessage()];
+        }
+        return ['code'=>1,"error"=>null,"data"=>$data];
     }
 }
