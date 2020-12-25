@@ -16,6 +16,12 @@ use think\facade\Config;
 
 class User extends Controller
 {
+    public function webUser()
+    {
+        $data = Db::table("user")->select();
+        $this -> assign('data',$data);
+        return $this -> fetch("user/webuser");
+    }
 
     public function show()
     {
@@ -25,12 +31,12 @@ class User extends Controller
         $admin = new Admin();
         $data = $admin->getAllData();
         $this->assign('data', $data);
-        return $this->fetch("index/tables");
+        return $this->fetch("user/webuser");
     }
 
     public function drop()
     {
-        session('user_admin', '');
+        session('user_admin', null);
         $login = new Login();
         return $login->login();
     }
