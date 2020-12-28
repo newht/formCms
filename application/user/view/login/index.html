@@ -38,8 +38,11 @@
 </body>
 <script src="/static/jquery.min.js"></script>
 <script>
-    $.get('/affirm.text',{},function(res){
-        document.getElementById('affirm').innerHTML = res;
-    });
+    $(function () {
+        $.get('/static/affirm.txt',function(res){
+            document.getElementById('affirm').innerHTML = res;
+        });
+    })
+
 </script>
 </html>
