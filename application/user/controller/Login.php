@@ -27,7 +27,6 @@ class Login extends Controller
         }else{
             return '请求错误';
         }
-
     }
 
     public function register()
