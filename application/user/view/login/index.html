@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>首页</title>
     <style>
+        /* pc width > 1024px */
+        .max{width: 50%;height: calc(81vh);padding: 5px;}
         *{margin: 0 auto;font-family: '微软雅黑';}
-        .max{width: 50%;height: calc(81vh);padding: 5px;min-width: 600px}
         .logo{height: 60px;margin: 30px 0;}
         .title{text-align: center;margin-bottom: 50px;}
         .login{margin: 20px 0;text-align: center;}
@@ -14,6 +15,46 @@
         .bottom{text-align: center;font-size: 13px;padding: 30px;}
         #affirm{white-space: pre-wrap;font-size: 13px}
         a{text-decoration:none;color: white}
+        /* ipad pro */
+        @media screen and (max-width: 1024px) {
+            body {max-width: 1024px;}
+            .max{width: 100%;height: calc(81vh);padding: 5px;box-sizing: border-box;min-width: 320px}
+        }
+        /* ipad */
+        @media screen and (max-width: 768px) {
+            body {
+                max-width: 768px;
+                /*background-color: green;*/
+            }
+        }
+        /* iphone6 7 8 plus */
+        @media screen and (max-width: 414px) {
+            body {
+                max-width: 414px
+                /*background-color: blue;*/
+            }
+        }
+        /* iphoneX */
+        @media screen and (max-width: 375px) and (-webkit-device-pixel-ratio: 3) {
+            body {
+                max-width: 375px
+                /*background-color: #0FF000;*/
+            }
+        }
+        /* iphone6 7 8 */
+        @media screen and (max-width: 375px) and (-webkit-device-pixel-ratio: 2) {
+            body {
+                max-width: 375px
+                /*background-color: #0FF000;*/
+            }
+        }
+        /* iphone5 */
+        @media screen and (max-width: 320px) {
+            body {
+                max-width: 320px
+                /*background-color: #0FF000;*/
+            }
+        }
     </style>
 </head>
 <body>
