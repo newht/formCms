@@ -9,7 +9,7 @@ Route::group('user',function (){
     Route::rule("login",'user/Login/login','get');
     Route::rule('loginVerification','user/Login/loginVerification','post');
     Route::rule("unitlogin",'user/Login/unitIndex','get');
-
+    Route::rule("unitloignverifty",'user/Login/unitLoignVerifty','post');
     Route::rule("unitregister",'user/Register/unitRegister','get');
     Route::rule("unitreg","user/Register/unitReg",'post');
     Route::rule("register",'user/Register/register','get');

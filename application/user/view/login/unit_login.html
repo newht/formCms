@@ -12,7 +12,7 @@
     <div class="form">
         <form>
             <div>
-                <span>单位代码</span><input type="text" name="cardid" id="cardid" placeholder="" autocomplete="off">
+                <span>单位代码</span><input type="text" name="unitcode" id="unitcode" placeholder="" autocomplete="off">
             </div>
             <div>
                 <span>密码</span><input type="password" name="password" id="password" placeholder="" autocomplete="off">
@@ -34,11 +34,12 @@
         $(".submit").click(function () {
             let formdata = $("form").serializeArray();
             $.ajax({
-                url:"/user/loginVerification",
+                url:"/user/unitloignverifty",
                 type:'post',
                 dataType:"json",
                 data:formdata,
                 success:function(res){
+                    console.log(res)
                     if(res.code === 1){
                         location.href = res.url;
                     }
