@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>单位入口</title>
+    <link rel="stylesheet" href="/user/css/form.css">
+</head>
+<body>
+<div class="max">
+    <div class="logo"></div>
+    <div class="title"><h3>教育报名系统</h3></div>
+    <div class="form">
+        <form>
+            <div>
+                <span>单位代码</span><input type="text" name="cardid" id="cardid" placeholder="" autocomplete="off">
+            </div>
+            <div>
+                <span>密码</span><input type="password" name="password" id="password" placeholder="" autocomplete="off">
+            </div>
+        </form>
+        <div class="forget"><a href="">忘记密码</a></div>
+        <div class="submit">
+            登录
+        </div>
+        <a href="/user/unitregister"><div class="registered">
+            前往注册单位账号
+        </div></a>
+    </div>
+</div>
+</body>
+<script src="/static/jquery.min.js"></script>
+<script>
+    $(function () {
+        $(".submit").click(function () {
+            let formdata = $("form").serializeArray();
+            $.ajax({
+                url:"/user/loginVerification",
+                type:'post',
+                dataType:"json",
+                data:formdata,
+                success:function(res){
+                    if(res.code === 1){
+                        location.href = res.url;
+                    }
+                    if(res.code === 0){
+                        let obj = $("[name="+res.errorname+"]");
+                        obj.val('');
+                        obj.prop('placeholder',res.msg);
+                    }
+                }
+            })
+        })
+    })
+</script>
+</html>

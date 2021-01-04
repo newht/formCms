@@ -8,7 +8,11 @@ Route::get('table/:id','index/Index/showTable');
 Route::group('user',function (){
     Route::rule("login",'user/Login/login','get');
     Route::rule('loginVerification','user/Login/loginVerification','post');
-    Route::rule("register",'user/Login/register','get');
+    Route::rule("unitlogin",'user/Login/unitIndex','get');
+
+    Route::rule("unitregister",'user/Register/unitRegister','get');
+    Route::rule("unitreg","user/Register/unitReg",'post');
+    Route::rule("register",'user/Register/register','get');
     Route::rule("registerVerification",'user/Register/registerVerification','post');
     Route::rule("index",'user/Index/index','get') -> middleware('loginCheck');
     Route::rule("drop",'user/Index/drop','get')-> middleware('loginCheck');
