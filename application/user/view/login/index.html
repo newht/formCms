@@ -11,9 +11,9 @@
         .title{text-align: center;margin-bottom: 50px;}
         .login{margin: 20px 0;text-align: center;}
         .login span{background: #66A381;margin: 5px 0;display: inline-block;width: 100%;font-size: 18px;padding: 10px 0;}
-        .affirm{border: 1px solid red;padding: 5px;}
+        .affirm{border: 1px solid #d87b4b;padding: 5px;}
         .bottom{text-align: center;font-size: 13px;padding: 30px;}
-        #affirm{white-space: pre-wrap;font-size: 13px}
+        #affirm{white-space: pre-wrap;font-size: 13px;min-height: calc(50vh)}
         a{text-decoration:none;color: white}
         /* ipad pro */
         @media screen and (max-width: 1024px) {
@@ -68,6 +68,7 @@
     <div class="login">
         <a href="/user/login"><span>登录</span></a>
         <a href="/user/register"><span>暂无账号，前往注册 >></span></a>
+        <a href="/user/unitlogin"><span>单位入口</span></a>
     </div>
     <div class="affirm" >
         <p id="affirm"></p>
@@ -84,6 +85,5 @@
             document.getElementById('affirm').innerHTML = res;
         });
     })
-
 </script>
 </html>

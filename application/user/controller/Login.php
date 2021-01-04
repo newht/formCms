@@ -29,8 +29,10 @@ class Login extends Controller
         }
     }
 
-    public function register()
+    public function unitIndex()
     {
-        return $this -> fetch("login/register");
+        return $this -> fetch("login/unit_login");
     }
+
+
 }
