@@ -24,8 +24,27 @@ Route::group('user',function (){
     Route::rule("gowrite/:id",'user/Forms/goWrite','get')->middleware('loginCheck');
     Route::rule("insert",'user/Forms/insert','post')->middleware('loginCheck');
     Route::rule("gorecording",'user/Recording/goRecording','get')->middleware('loginCheck');
-
     Route::rule('null','user/Index/null','get');
+});
+
+Route::group('unit',function (){
+    Route::rule("register",'unit/Register/register','get');
+    Route::rule("unitregister",'unit/Register/unitRegister','get');
+    Route::rule("login",'unit/Login/login','get');
+    Route::rule("unitloignverifty",'unit/Login/unitLoignVerifty','post');
+    Route::rule("index",'unit/Index/index','get') -> middleware('unitLoginCheck');
+    Route::rule("baseinfo",'unit/Info/baseInfo','get') -> middleware('unitLoginCheck');
+    Route::rule("setbaseinfo",'unit/Info/setBaseInfo','post')->middleware('unitLoginCheck');
+    Route::rule("invoiceinfo",'unit/Info/invoiceInfo','get') -> middleware('unitLoginCheck');
+    Route::rule("setinvoiceinfo",'unit/Info/setInvoiceInfo','post')->middleware('unitLoginCheck');
+
+
+    Route::rule("drop",'user/Index/drop','get')-> middleware('unitLoginCheck');
+    Route::rule("signup",'unit/Index/signUp','get') -> middleware('unitLoginCheck');
+    Route::rule("gowrite/:id",'unit/Forms/goWrite','get')->middleware('unitLoginCheck');
+    Route::rule("insert",'unit/Forms/insert','post')->middleware('unitLoginCheck');
+    Route::rule("gorecording",'unit/Recording/goRecording','get')->middleware('unitLoginCheck');
+    Route::rule('null','unit/Index/null','get');
 });
 
 Route::group("admin",function (){

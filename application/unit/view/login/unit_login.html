@@ -22,7 +22,7 @@
         <div class="submit">
             登录
         </div>
-        <a href="/user/unitregister"><div class="registered">
+        <a href="/unit/register"><div class="registered">
             前往注册单位账号
         </div></a>
     </div>
@@ -34,7 +34,7 @@
         $(".submit").click(function () {
             let formdata = $("form").serializeArray();
             $.ajax({
-                url:"/user/unitloignverifty",
+                url:"/unit/unitloignverifty",
                 type:'post',
                 dataType:"json",
                 data:formdata,

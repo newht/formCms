@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>教育报名系统</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/user/css/indexTable.css">
+</head>
+<body>
+<div class="max">
+    {include file='public/logo' /}
+    {include file='public/wlcome' /}
+    <div class="info">
+        <div class="infoTitle">
+            发票信息
+        </div>
+        <ul>
+            <li><div><label for="invoice">抬头</label><input type="text" id="invoice" name="invoice" value="{$data.invoice}"></div></li>
+            <li><div><label for="phone">电话</label><input type="text" id="phone" name="phone" value="{$data.phone}"></div></li>
+            <li><div><label for="unitcode">税号</label><input type="text" id="unitcode" name="unitcode" value="{$data.unitcode}"></div></li>
+            <li><div><label for="address">地址</label><input type="text" id="address" name="address" value="{$data.address}"></div></li>
+            <li><div><label for="bank">开户行</label><input type="text" id="bank" name="bank" value="{$data.bank}"></div></li>
+            <li><div><label for="bank_account">开户行账号</label><input type="text" id="bank_account" name="bank_account" value="{$data.bank_account}"></div></li>
+        </ul>
+    </div>
+</div>
+{include file='public/webbottom' /}
+</body>
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+<script>
+    $(function () {
+        $('.info ul li:last').css('border',0);
+        $("input").prop('autocomplete','off');
+        $('.info ul li').click(function () {
+            $(this).children('div').children('input').focus();
+        })
+
+        $("input[type=text]").change(function () {
+            let name = $(this).prop("name");
+            let text = $(this).val();
+            let formdata = {};
+            formdata[name] = text;
+            if(text){
+                console.log(text)
+                $.ajax({
+                    url:"/unit/setinvoiceinfo",
+                    type:"post",
+                    dataType:"json",
+                    data:formdata,
+                    success:function(res){
+                        console.log(res)
+                    }
+                })
+            }
+        })
+    })
+</script>
+</html>
