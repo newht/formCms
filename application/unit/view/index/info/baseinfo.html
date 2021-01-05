@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>教育报名系统</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/user/css/indexTable.css">
+    <style>
+        input::placeholder{
+            color: red;
+        }
+        input[type=file]{
+            display: none;
+        }
+        input[type=button]{
+            width: 80px!important;
+            height: 22px;
+            border-radius: 3px;
+            border: 0;
+        }
+        input[type=button]:hover{
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+<div class="max">
+    {include file='public/logo'}
+    {include file='public/wlcome'}
+    <div class="info">
+        <div class="infoTitle">
+            企业信息设置
+        </div>
+        <ul>
+            <li><div><label for="phone">企业电话</label><input type="text" id="phone" name="phone"  value="{$data.phone|default=''}"></div></li>
+            <li><div><label for="address">企业地址</label><input type="text" id="address" name="address"  value="{$data.address|default=''}"></div></li>
+        </ul>
+    </div>
+</div>
+{include file='public/webbottom'}
+</body>
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+<script>
+    $(function () {
+        $("input").prop("autocomplete",'off');
+
+        $('.info ul li').click(function () {
+            $(this).children('div').children('input').focus();
+        });
+
+        $('.info ul li:last').css('border',0);
+
+        $(".info input[type=text]").change(function () {
+            let data = $(this).val();
+            if(data === ''){
+                $(this).prop('placeholder','请填写信息');
+                return false;
+            }
+            let name = $(this).prop('name');
+            let formdata = {};
+            formdata[name] = data;
+            $.ajax({
+                url:"/unit/setbaseinfo",
+                type:"post",
+                dataType:"json",
+                data:formdata,
+                success:function(res){
+                    console.log(res)
+                }
+            })
+        })
+
+
+    })
+</script>
+</html>

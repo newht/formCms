@@ -1,5 +1,5 @@
 <?php
-namespace app\user\controller;
+namespace app\unit\controller;
 use app\admin\controller\Table;
 use think\Controller;
 use think\Db;
@@ -11,20 +11,6 @@ class Index extends Controller
         return $this -> fetch("index/index");
     }
 
-    public function goInfo()
-    {
-        $data = Db::table('userinfo') -> where('uid',session('user')['id']) -> find();
-
-        $this -> assign('data',$data);
-        return $this -> fetch("index/info/user");
-    }
-
-    public function goWorkInfo()
-    {
-        $data = Db::table('employerinfo') -> where('uid',session('user')['id']) -> find();
-        $this -> assign('data',$data);
-        return $this -> fetch('index/info/work');
-    }
 
     public function signUp()
     {
@@ -36,7 +22,7 @@ class Index extends Controller
 
     public function drop()
     {
-        session('user',null);
+        session('unit',null);
         $login = new Login();
         return $login -> index();
     }
