@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>添加员工信息</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/user/css/indexTable.css">
+    <style>
+        .info ul li input[type=button]{padding: 5px 15px}
+    </style>
+</head>
+<body>
+<div class="max">
+
+    {include file='public/logo'}
+    {include file='public/wlcome'}
+    <div class="info">
+        <div class="infoTitle" style="font-size: 13px">
+            添加员工信息<span style="color: #ff7369;font-size: 12px">（密码默认为身份证后六位）</span>
+        </div>
+        <form>
+            <ul>
+                <li><div><label for="cardid">身份证号</label><input type="text" id="cardid" name="cardid" value=""></div></li>
+                <li><div><label for="name">真实姓名</label><input type="text" id="name" name="name" value=""></div></li>
+                <li><div><label for="phone">联系电话</label><input type="text" id="phone" name="phone" value=""></div></li>
+                <li><div><label for="pwdproblem">密码找回问题</label><input type="text" id="pwdproblem" name="pwdproblem" value=""></div></li>
+                <li><div><label for="pwdanswer">密码找回答案</label><input type="text" id="pwdanswer" name="pwdanswer" value=""></div></li>
+                <li><div><input type="button" id="submit" value="保存"></div></li>
+            </ul>
+        </form>
+    </div>
+</div>
+{include file="public/webbottom"}
+</body>
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+<script>
+    layui.use('layer',function () {
+        let layer = layui.layer;
+    })
+    $(function () {
+        $('.info ul li:last').css('border',0);
+        $("input").prop('autocomplete','off');
+
+        $("#submit").click(function () {
+            let obj = $(this);
+            let data = $("form").serializeArray();
+            for(let i=0 ; i<data.length ; i++ ){
+                if(i > 1 && data[i].name === data[i-1].name ){
+                    data[i].value += "," + data[i-1].value;
+                }
+                data[i].value = data[i].value.replace(/\s+/g, "");
+            }
+            $.ajax({
+                url:"/user/insert",
+                type:"post",
+                dataType:"json",
+                data:data,
+                success:function(e){
+                    let msg;
+                    if(e.code === 1){
+                        msg = '保存成功,点击确认返回上一级';
+                    }else if(e.code === 0){
+                        msg = e.error;
+                    }
+                    layer.open({'title':'提示信息',btn:['确认'],content:msg});
+                }
+            })
+        })
+    })
+</script>
+</html>

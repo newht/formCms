@@ -9,6 +9,10 @@
 .info ul li{padding: 15px 0;border-bottom: 1px solid #e8e8e8;font-size: 14px;}
 .info ul li div h4{font-size: 16px;}
 .info ul li div h4{font-size: 13px;color:#919191}
+.lione div{width: 100%}
+.lione div h3 span:last-child{text-align: right}
+.lione div h3 span:first-child{text-align: left}
+.lione div h3 span{display: inline-block;width: 33%;text-align: center}
 .infobottom{padding: 15px 0;font-size: 13px;}
 .infobottom a{color: red}
 .infoOther{margin-bottom: 10px;}
