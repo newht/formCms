@@ -5,6 +5,7 @@
     <title>教育报名系统</title>
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <link rel="stylesheet" href="/static/user/css/index.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_2311555_zva3xoymw78.css">
     <style>
         .info ul li:hover{
             cursor: pointer;
@@ -19,16 +20,19 @@
         <span class="wlcomeright"><a href="/user/drop"><i class="layui-icon" >&#xe682; </i>退出</a></span>
     </div>
     <div class="info">
-        <div class="infoTitle">课程报名并缴费</div>
+        <div class="infoTitle">
+            员工列表
+            <div style="padding: 5px 0">
+                <a href="/unit/showadd"><i class="iconfont icon-tianjiayonghu" style="font-size: 13px;color: #66A381"> 添加员工</i></a>
+            </div>
+        </div>
         <ul>
             {if count($data) > 0}
             {foreach $data as $v}
             <a href="/user/gowrite/{$v.id}">
                 <li class="lione">
-                    <img src="/static/images/user/icon.png" width='60' alt="">
                     <div>
-                        <h3>{$v.fname}</h3>
-                        <h4>{$v.subtitle}</h4>
+                        <h3><span>{$v.name}</span><span>{$v.phone}</span><span><h4>查看 ></h4></span></h3>
                     </div>
                 </li>
             </a>
@@ -41,13 +45,7 @@
         </ul>
     </div>
 </div>
-<div class="webbottom">
-    <ul>
-        <li><div><a href="/user/index"><i class="layui-icon-user layui-icon" style="font-size: 30px"></i></a></div>个人信息</li>
-        <li><div><a href="/user/signup"><i class="layui-icon-edit layui-icon" style="font-size: 30px"></i></a></div>课程报名</li>
-        <li><div><a href="/user/gorecording"><i class="layui-icon-log layui-icon" style="font-size: 30px"></i></a></div>报名记录</li>
-    </ul>
-</div>
+{include file="public/webbottom"}
 </body>
 <script type="text/javascript" src="/static/jquery.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>

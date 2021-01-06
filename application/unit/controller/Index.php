@@ -11,15 +11,6 @@ class Index extends Controller
         return $this -> fetch("index/index");
     }
 
-
-    public function signUp()
-    {
-        $table = new Table();
-        $data = $table -> getTables();
-        $this -> assign('data',$data);
-        return $this -> fetch('index/course/signup');
-    }
-
     public function drop()
     {
         session('unit',null);
