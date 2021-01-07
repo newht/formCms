@@ -39,11 +39,11 @@ Route::group('unit',function (){
     Route::rule("setinvoiceinfo",'unit/Info/setInvoiceInfo','post')->middleware('unitLoginCheck');
     Route::rule("employeelist",'unit/Employee/employeeList','get') -> middleware('unitLoginCheck');
     Route::rule("showadd",'unit/Employee/showAdd','get') -> middleware('unitLoginCheck');
+    Route::rule("adduser",'unit/Employee/adduser','post')->middleware('unitLoginCheck');
 
 
     Route::rule("drop",'user/Index/drop','get')-> middleware('unitLoginCheck');
     Route::rule("gowrite/:id",'unit/Forms/goWrite','get')->middleware('unitLoginCheck');
-    Route::rule("insert",'unit/Forms/insert','post')->middleware('unitLoginCheck');
     Route::rule("gorecording",'unit/Recording/goRecording','get')->middleware('unitLoginCheck');
     Route::rule('null','unit/Index/null','get');
 });

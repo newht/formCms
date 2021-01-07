@@ -8,7 +8,7 @@ class unitLoginCheck
     public function handle(Request $request, \Closure $next)
     {
         if (empty(session('unit'))){
-            return redirect('/user/login');
+            return redirect('/unit/login');
         }
         return $next($request);
     }
