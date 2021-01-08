@@ -13,7 +13,6 @@ class Index extends Controller
     public function drop()
     {
         session('unit',null);
-        $login = new Login();
-        return $login -> login();
+        return redirect('/');
     }
 }

@@ -11,7 +11,16 @@ class Login extends Controller
 {
     public function index()
     {
+        $data = Db::table('announcements') -> where('is_delete', 0) ->select();
+        $this -> assign('data',$data);
         return $this -> fetch("login/index");
+    }
+
+    public function announcepar($id){
+        $data = Db::table('announcements') -> where('id',$id) ->find();
+        $this -> assign('data',$data);
+        return $this->fetch("login/announcepar");
+
     }
 
     public function login()

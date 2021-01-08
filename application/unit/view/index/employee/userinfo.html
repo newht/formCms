@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>教育报名系统</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/user/css/index.css">
+    <style type="text/css">
+        .lione div h3 span{width: 50%}
+    </style>
+</head>
+<body>
+<div class="max">
+    {include file='public/logo'}
+    {include file='public/wlcome'}
+    <div class="info">
+        <div class="infoTitle" >
+            员工基本信息
+        </div>
+        <ul>
+            <li class="lione"><div><h3><span>姓名</span><span>{$data.name|default=''}</span></h3></div></li>
+            <li class="lione"><div><h3><span>身份证号</span><span>{$data.cardid|default=''}</span></h3></div></li>
+            <li class="lione"><div><h3><span>联系电话</span><span>{$data.phone|default=''}</span></h3></div></li>
+            <li class="lione"><div><h3><span>出生日期</span><span>{$data.birthday|default=''}</span></h3></div></li>
+            <li class="lione"><div><h3><span>性别</span><span>{$data.sex|default=''}</span></h3></div></li>
+            <li class="lione"><div><h3><span>注册时间</span><span>{$data.createtime|default=''}</span></h3></div></li>
+            <li class="lione"><div><h3><span>培训报名</span><span><a href="#" style="color: red">去报名</a></span></h3></div></li>
+            <li class="lione"><div><h3><span>填写员工信息</span><span><a href="/unit/gosetuserinfo/{$id}" style="color: #66A381">去填写</a></span></h3></div></li>
+            <li class="lione"><div><h3><span>填写工作单位信息</span><span><a href="/unit/gosetworkinfo/{$id}" style="color: #66A381">去填写</a></span></h3></div></li>
+            <li class="lione"><div><h3><span>填写发票信息</span><span><a href="/unit/gosetinvoiceinfo/{$id}" style="color: #66A381">去填写</a></span></h3></div></li>
+        </ul>
+    </div>
+</div>
+{include file="public/webbottom"}
+</body>
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+<script>
+    $(function () {
+        // $('.info ul li').css({'display':'flex','align-items': 'center'});
+        $(".lione:last").css('border-bottom','0');
+    })
+</script>
+</html>

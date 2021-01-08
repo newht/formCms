@@ -1,0 +1,73 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-01-05 13:56:45
+ * @LastEditTime: 2021-01-06 14:49:28
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \project.com\application\admin\view\announce\announce_edit.html
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>公告内容</title>
+<link rel="stylesheet" href="/static/layui/css/layui.css">
+</head>
+<body>
+<h2>公告内容</h2>
+<form class="layui-form" action="/admin/anon_addAnon" method="POST"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+  <input type="hidden" name="id" placeholder="请输入" autocomplete="off" class="layui-input" value="{$data.id|default=''}">
+  <div class="layui-form-item">
+    <label class="layui-form-label">标题</label>
+    <div class="layui-input-block">
+      <input type="text" name="title" placeholder="请输入" autocomplete="off" class="layui-input" value="{$data.title|default=''}">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">副标题</label>
+    <div class="layui-input-block">
+        <input type="text" name="subtitle" placeholder="请输入" autocomplete="off" class="layui-input" value="{$data.subtitle|default=''}">
+    </div>
+  </div>
+ 
+  <div class="layui-form-item">
+    <label class="layui-form-label">是否启用</label>
+    <div class="layui-input-block">
+      {if empty($data.is_static)}
+      <input name="static" type="checkbox" lay-skin="switch" lay-filter='checkbox'>
+      {else}
+      <input name="static" type="checkbox" checked lay-skin="switch" lay-filter='checkbox'>
+      {/if}
+    </div>
+  </div>
+
+  <div class="layui-form-item layui-form-text"> 
+     
+    <label class="layui-form-label">公告内容</label>
+    <div class="layui-input-block">
+      <textarea name="contents" placeholder="请输入内容" class="layui-textarea">{$data.contents|default=''}</textarea>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button type="submit" class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+  <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
+</form>
+<script src='/static/layui/layui.js'></script>
+<script>
+layui.use('form', function(){
+  var form = layui.form;
+  //各种基于事件的操作，下面会有进一步介绍
+  form.on('switch(checkbox)', function(data){
+    console.log(data.elem.checked); //开关是否开启，true或者false
+    console.log(data.value); //开关value值，也可以通过data.elem.value得到
+  });
+}); 
+
+
+</script>
+</body>
+</html>

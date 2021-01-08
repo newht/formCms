@@ -13,17 +13,17 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => 'localhost',
-//    'hostname'        => 'bm.cdpx.org',
+//    'hostname'        => 'localhost',
+    'hostname'        => 'bm.cdpx.org',
     // 数据库名
-    'database'        => 'tcjydb',
-//    'database'        => 'bm_cdpx_org',
+//    'database'        => 'tcjydb',
+    'database'        => 'bm_cdpx_org',
     // 用户名
-    'username'        => 'root',
-//    'username'        => 'bm_cdpx_org',
+//    'username'        => 'root',
+    'username'        => 'bm_cdpx_org',
     // 密码
-    'password'        => 'adminroot',
-//    'password'        => 'kNa2BNbxjA2PCJAc',
+//    'password'        => 'adminroot',
+    'password'        => 'kNa2BNbxjA2PCJAc',
     // 端口
     'hostport'        => '3306',
     // 连接dsn

@@ -59,9 +59,7 @@
 </head>
 <body>
 <div class="max">
-    <div class="logo">
-
-    </div>
+    {include file='public/logo'}
     <div class="title">
         <h2>报名缴费系统</h2>
     </div>
@@ -70,6 +68,17 @@
         <a href="/user/register"><span>暂无账号，前往注册 >></span></a>
         <a href="/unit/login"><span>单位入口</span></a>
     </div>
+    <div class="annon" style="border: 1px solid red">
+        <pre>
+            <a style="color: black" id="annon_text">
+                公告信息：
+            {foreach $data as $v}
+            <a style="color: black" href="user/announcepar/{$v.id}"><li>{$v.title}</li></a>
+            {/foreach}
+            </a>
+        </pre>
+    </div>
+    <br>
     <div class="affirm" >
         <p id="affirm"></p>
     </div>

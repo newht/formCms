@@ -1,5 +1,5 @@
 .max{width: 60%;padding: 5px 20px;margin: 0 auto;margin-bottom: 80px}
-.logo{height: 60px;margin: 30px 0;}
+.logo{height: 100px;margin: 30px 0;text-align: center}
 .wlcome{font-size: 12px;color: #8f8f8f;padding-bottom: 30px}
 .wlcome i{font-size: 12px}
 .wlcomeright{float: right}
@@ -23,7 +23,7 @@
 /* ipad pro */
 @media screen and (max-width: 1024px) {
     body {max-width: 1024px;}
-    .max{width: 100%;height: calc(81vh);padding: 5px 20px;box-sizing: border-box;min-width: 320px;margin-bottom: 80px }
+    .max{width: 100%;min-height: calc(81vh);padding: 5px 20px;box-sizing: border-box;min-width: 320px;margin-bottom: 80px }
 }
 /* ipad */
 @media screen and (max-width: 768px) {
