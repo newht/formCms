@@ -15,4 +15,5 @@ class Index extends Controller
         session('unit',null);
         return redirect('/');
     }
+
 }

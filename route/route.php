@@ -28,6 +28,12 @@ Route::group('user',function (){
     Route::rule('announce','user/Login/announce','get');
     Route::rule('announcepar/:id','user/Login/announcepar','get');
     Route::rule('null','user/Index/null','get');
+    //忘记密码
+    Route::rule("changepwd",'user/Login/changePwd','get');
+    Route::rule("setpassword",'user/Login/setPassword','post');
+    //修改密码
+    Route::rule('updatepwd','user/Index/updatePwd','get');
+    Route::rule('setupdatepwd','user/Index/setUpdatePwd','post');
 });
 
 Route::group('unit',function (){

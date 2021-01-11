@@ -57,4 +57,31 @@ class Login extends Controller
         }
         return json(['code'=>1,'msg'=>'登录成功','errorname'=>null,'url'=>'/']);
     }
+
+    public function changePwd()
+    {
+        return $this -> fetch("login/changepwd");
+    }
+
+    public function setPassword()
+    {
+
+        $cardid = input('cardid');
+        $problem = input('pwdproblem');
+        $answer = input('pwdanswer');
+        $password = input('password');
+        $data = Db::name('user')->join('userinfo t2','user.id=t2.uid')->where('cardid',$cardid)->find();
+        if($problem == $data['pwdproblem']){
+            if($answer == $data['pwdanswer']){
+                $res = Db::name('user')->where('cardid',$cardid)->update(['password'=>$password]);
+                if($res==1){
+                    return json(['code'=>200,'error'=>null]);
+                }else{
+                    return json(['code'=>201,'error'=>'数据错误，请联系站长']);
+                }
+            }
+            return json(['code'=>201,'error'=>'密码找回答案错误']);
+        }
+        return json(['code'=>201,'error'=>'密码找回问题错误']);
+    }
 }

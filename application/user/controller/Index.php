@@ -41,10 +41,24 @@ class Index extends Controller
         return $login -> index();
     }
 
-    public function null()
+    public function updatePwd()
     {
-        return $this -> fetch('index/null');
+        return $this -> fetch('index/updatepwd');
     }
 
-
+    public function setUpdatePwd()
+    {
+        $password = input('oldpassword');
+        $newpassword = input('newpassword');
+        $user = session('user');
+        $data = Db::name('user')->where('id',$user['id'])->find();
+        if($data['password'] == $password){
+            $res = Db::name('user')->where('id',$user['id'])->update(['password'=>$newpassword]);
+            if($res == 1){
+                return json(['code'=>200,'error'=>null]);
+            }
+            return json(['code'=>201,'error'=>'数据错误，请联系站长']);
+        }
+        return json(['code'=>201,'error'=>'旧密码错误']);
+    }
 }
