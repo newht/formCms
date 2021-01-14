@@ -5,20 +5,28 @@
     <title>首页</title>
     <style>
         /* pc width > 1024px */
-        .max{width: 50%;height: calc(81vh);padding: 5px 20px;}
+        .max{width: 50%;height: calc(81vh);padding: 5px 10px;}
         *{margin: 0 auto;font-family: '微软雅黑';}
         .logo{height: 100px;margin: 30px 0;text-align: center}
         .title{text-align: center;margin-bottom: 50px;}
         .login{margin: 20px 0;text-align: center;}
         .login span{background: #66A381;margin: 5px 0;display: inline-block;width: 100%;font-size: 18px;padding: 10px 0;}
-        .affirm{border: 1px solid #d87b4b;padding: 5px;}
+        .login a{color: white}
+        .affirm{border: 1px solid #4596E8;padding: 5px;}
         .bottom{text-align: center;font-size: 13px;padding: 30px;}
-        #affirm{white-space: pre-wrap;font-size: 13px;min-height: calc(50vh)}
-        a{text-decoration:none;color: white}
+        #affirm{white-space: pre-wrap;font-size: 13px;min-height: calc(50vh);color: #3e3e3e}
+        a{text-decoration:none;}
+        li{margin:10px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size: 13px}
+        ul{padding:0 5px;border: 1px solid #4596E8;}
+        .annon_text{padding: 5px 0}
+        .annon_text span:first-child{background: #4596E8;margin: 5% 0;color:white;width: 65px;text-align: left;padding: 5px 7px;}
+        .annon_text span:last-child{float: right}
+        .annon_text a{color:#4596E8}
+        .annon ul li a{color: #3e3e3e}
         /* ipad pro */
         @media screen and (max-width: 1024px) {
             body {max-width: 1024px;}
-            .max{width: 100%;height: calc(81vh);padding: 5px 20px;box-sizing: border-box;min-width: 320px}
+            .max{width: 100%;height: calc(81vh);padding: 5px 10px;box-sizing: border-box;min-width: 320px}
         }
         /* ipad */
         @media screen and (max-width: 768px) {
@@ -68,13 +76,20 @@
         <a href="/user/register"><span>暂无账号，前往注册 >></span></a>
         <a href="/unit/login"><span>单位入口</span></a>
     </div>
-    <div class="annon" style="border: 1px solid red;padding: 10px 10px">
-        <a style="color: black" id="annon_text">
-            公告信息：
-        </a>
-        {foreach $data as $v}
-        <a href="user/announcepar/{$v.id}"><li style="color: black;margin-top: 10px" >{$v.title}</li></a>
-        {/foreach}
+    <div class="annon">
+        <div class="annon_text">
+            <span class="annon_left_text" id="annon_text">
+                公告信息
+            </span>
+            <span>
+                <a href="#">更多 >></a>
+            </span>
+        </div>
+        <ul>
+            {foreach $data as $v}
+            <li><a href="user/announcepar/{$v.id}">{$v.title}</a></li>
+            {/foreach}
+        </ul>
     </div>
     <br>
     <div class="affirm" >

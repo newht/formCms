@@ -49,7 +49,7 @@ class Index extends Controller
     public function setUpdatePwd()
     {
         $password = input('oldpassword');
-        $newpassword = input('newpassword');
+        $newpassword = md5(input('newpassword'));
         $user = session('user');
         $data = Db::name('user')->where('id',$user['id'])->find();
         if($data['password'] == $password){

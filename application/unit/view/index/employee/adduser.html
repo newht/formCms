@@ -69,6 +69,9 @@
                         msg = '保存成功,点击确认返回上一级';
                     }else if(e.code === 0){
                         msg = '保存失败';
+                        if(e.error === '该用户已存在'){
+                            msg+=','+e.error;
+                        }
                     }
                     layer.open({'title':'提示信息',btn:['确认'],content:msg});
                 }

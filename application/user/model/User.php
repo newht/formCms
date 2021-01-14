@@ -20,7 +20,7 @@ class User extends Model
         if(empty($data)){
             return ['code' => 0, 'errorname' => 'cardid', 'msg' => '用户不存在','url' => null];
         }
-        if($password != $data['password']){
+        if(md5($password) != $data['password']){
             return ['code' => 0, 'errorname' => 'password', 'msg' => '密码错误','url' => null];
         }
         unset($data['password']);
@@ -30,11 +30,16 @@ class User extends Model
 
     public function register($data)
     {
-        $res = User::insertGetId($data);
-        Db::table('userinfo') -> insert(['uid' => $res]);
-        if($res > 0){
-            return ['code' => 1,'msg' => '注册成功','url' => '/user/login'];
+        $olduser = User::where('cardid',$data['cardid'])->find();
+        if(empty($olduser)){
+            $data['password'] = md5($data['password']);
+            $res = User::insertGetId($data);
+            Db::table('userinfo') -> insert(['uid' => $res]);
+            if($res > 0){
+                return ['code' => 1,'msg' => '注册成功','url' => '/user/login'];
+            }
+            return ['code' => 0,'msg' => '注册失败','url' => null];
         }
-        return ['code' => 0,'msg' => '注册失败','url' => null];
+        return ['code'=>0,'msg'=>'注册失败,已存在的账号','url'=>null];
     }
 }

@@ -39,25 +39,6 @@ class Login extends Controller
         }
     }
 
-    public function unitIndex()
-    {
-        return $this -> fetch("login/unit_login");
-    }
-
-    public function unitLoignVerifty()
-    {
-        $unitcode = input('unitcode');
-        $password = input('password');
-        $data = Db::name('unit') -> where('unitcode',$unitcode) -> find();
-        if( empty($data) ){
-            return json(['code'=>0,'msg'=>'登录失败,账号不存在','errorname'=>'unitcode','url'=>null]);
-        }
-        if( $data['password'] !== $password ){
-            return json(['code'=>0,'msg'=>'登录失败,密码错误','errorname'=>'password','url'=>null]);
-        }
-        return json(['code'=>1,'msg'=>'登录成功','errorname'=>null,'url'=>'/']);
-    }
-
     public function changePwd()
     {
         return $this -> fetch("login/changepwd");
@@ -69,7 +50,7 @@ class Login extends Controller
         $cardid = input('cardid');
         $problem = input('pwdproblem');
         $answer = input('pwdanswer');
-        $password = input('password');
+        $password = md5(input('password'));
         $data = Db::name('user')->join('userinfo t2','user.id=t2.uid')->where('cardid',$cardid)->find();
         if($problem == $data['pwdproblem']){
             if($answer == $data['pwdanswer']){

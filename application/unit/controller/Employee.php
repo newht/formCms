@@ -31,6 +31,10 @@ class Employee extends Controller
         $pwdanswer = input('pwdanswer');
         Db::startTrans();
         try{
+            $is_null = Db::name('user')->where('cardid',$cardid)->find();
+            if(!empty($is_null)){
+                throw new Exception("该用户已存在");
+            }
             $data = ['cardid'=>$cardid,'name'=>$name,'phone'=>$phone,'unit_id'=>$unit['id'],'password'=>$password];
             $id = Db::name('user')->insertGetId($data);
             Db::name('userinfo')->insert(['uid'=>$id,'pwdproblem'=>$pwdproblem,'pwdanswer'=>$pwdanswer]);
