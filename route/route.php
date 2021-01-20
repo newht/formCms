@@ -52,6 +52,9 @@ Route::group('unit',function (){
     Route::rule("setwordinfo",'unit/Employee/setWordInfo','post')->middleware('unitLoginCheck');
     Route::rule("gosetinvoiceinfo/:id",'unit/Employee/goSetInvoiceInfo','get')->middleware('unitLoginCheck');
     Route::rule("setinvoiceinfo",'unit/Employee/setInvoiceInfo','post')->middleware('unitLoginCheck');
+    //修改密码
+    Route::rule('updatepwd','unit/Index/updatePwd','get');
+    Route::rule('setupdatepwd','unit/Index/setUpdatePwd','post');
 
     Route::rule("gorecording",'unit/Recording/goRecording','get')->middleware('unitLoginCheck');
     Route::rule("gocompleted",'unit/Recording/goCompleted','get')->middleware('unitLoginCheck');

@@ -11,6 +11,7 @@ class Login extends Controller
 {
     public function index()
     {
+
         $data = Db::table('announcements') -> where('is_delete', 0) ->select();
         $this -> assign('data',$data);
         return $this -> fetch("login/index");
