@@ -19,13 +19,14 @@
             {foreach $data as $v}
             <li class="lione">
                 <div style="float: right;display: block;width: 20%;text-align: right">
-                    已报人数：{$v.count}
+                    <span>已报人数：{$v.count}</span>
                 </div>
-                <div style="width: 100%;display: block">
+                <div style="display: block;width: 100%">
                     <h3 style="color: #70A989">{$v.fname}</h3>
                     <h4>{$v.subtitle}</h4>
                     <label onclick="Unfold($(this));" style="cursor: pointer;user-select: none;">点击查看报名信息</label>
-                    <div>
+                    <a href="" style="float: right;color: red">前往缴费</a>
+                    <div style="display: inline;">
                         <ul style="display: none" class="formdatas">
                             {foreach $v.formdatas as $m=>$n}
                             <li style="border: 0">
@@ -55,10 +56,10 @@
     function Unfold(obj){
         let text = obj.text();
         if(text === '点击查看报名信息'){
-            obj.next().children('.formdatas').show()
+            obj.next().next().children('.formdatas').show()
             obj.text('点击隐藏报名信息')
         }else if(text === '点击隐藏报名信息'){
-            obj.next().children('.formdatas').hide()
+            obj.next().next().children('.formdatas').hide()
             obj.text('点击查看报名信息')
         }
 

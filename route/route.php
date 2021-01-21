@@ -55,6 +55,10 @@ Route::group('unit',function (){
     //修改密码
     Route::rule('updatepwd','unit/Index/updatePwd','get');
     Route::rule('setupdatepwd','unit/Index/setUpdatePwd','post');
+    //报名课程
+    Route::rule("signup",'unit/Employee/signUp','get') -> middleware('unitLoginCheck');
+    Route::rule("gowrite/:id",'unit/Employee/goWrite','get')->middleware('unitLoginCheck');
+    Route::rule("insert",'unit/Employee/insert','post')->middleware('unitLoginCheck');
 
     Route::rule("gorecording",'unit/Recording/goRecording','get')->middleware('unitLoginCheck');
     Route::rule("gocompleted",'unit/Recording/goCompleted','get')->middleware('unitLoginCheck');

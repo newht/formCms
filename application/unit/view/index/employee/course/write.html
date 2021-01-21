@@ -55,7 +55,7 @@
                     {/if}
                 </div></li>
                 {/foreach}
-                <li><div><input type="button" id="submit" value="确认信息并报名"></div></li>
+                <li><div><input type="button" id="submit" value="保存"></div></li>
             </form>
         </ul>
     </div>
@@ -82,7 +82,7 @@
                 data[i].value = data[i].value.replace(/\s+/g, "");
             }
             $.ajax({
-                url:"/user/insert",
+                url:"/unit/insert",
                 type:"post",
                 dataType:"json",
                 data:data,

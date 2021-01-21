@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>教育报名系统</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/user/css/index.css">
+    <style>
+        .info ul li:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="max">
+    {include file='public/logo'}
+    {include file='public/wlcome'}
+    <div class="info">
+        <div class="infoTitle">课程报名并缴费</div>
+        <ul>
+            {if count($data) > 0}
+            {foreach $data as $v}
+            <a href="/unit/gowrite/{$v.id}">
+                <li class="lione">
+                    <img src="/static/images/user/icon.png" width='60' alt="">
+                    <div>
+                        <h3>{$v.fname}</h3>
+                        <h4>{$v.subtitle}</h4>
+                    </div>
+                </li>
+            </a>
+            {/foreach}
+            {else /}
+            <li class="lione" style="font-size: 12px;color:#8F8F8F">
+                暂无可报名课程
+            </li>
+            {/if}
+        </ul>
+    </div>
+</div>
+{include file='public/webbottom'}
+</body>
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+<script>
+    $(function () {
+        $('.info ul li').css({'display':'flex','align-items': 'center'});
+        $('.info ul li').hover(function () {
+            $(this).children('div').children('h3').css({'color':'#6AA684'});
+        },function () {
+            $(this).children('div').children('h3').css({'color':'black'});
+        })
+        $(".lione:last").css('border-bottom','0');
+    })
+</script>
+</html>
