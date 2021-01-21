@@ -1,6 +1,6 @@
 <?php
 namespace app\unit\controller;
-use app\admin\controller\Table;
+
 use think\Controller;
 use think\Db;
 
@@ -14,14 +14,27 @@ class Index extends Controller
     public function drop()
     {
         session('unit',null);
-        $login = new Login();
-        return $login -> index();
+        return redirect('/');
     }
 
-    public function null()
+    public function updatePwd()
     {
-        return $this -> fetch('index/null');
+        return $this -> fetch('index/updatepwd');
     }
 
-
+    public function setUpdatePwd()
+    {
+        $password = md5(input('oldpassword'));
+        $newpassword = md5(input('newpassword'));
+        $user = session('unit');
+        $data = Db::name('unit')->where('id',$user['id'])->find();
+        if($data['password'] == $password){
+            $res = Db::name('unit')->where('id',$user['id'])->update(['password'=>$newpassword]);
+            if($res == 1){
+                return json(['code'=>200,'error'=>null]);
+            }
+            return json(['code'=>201,'error'=>'数据错误，请联系站长']);
+        }
+        return json(['code'=>201,'error'=>'旧密码错误']);
+    }
 }

@@ -18,7 +18,7 @@ class Login extends Controller
     public function unitLoignVerifty()
     {
         $unitcode = input('unitcode');
-        $password = input('password');
+        $password = md5(input('password'));
         $data = Db::name('unit') -> where('unitcode',$unitcode) -> find();
         if( empty($data) ){
             return json(['code'=>0,'msg'=>'登录失败,账号不存在','errorname'=>'unitcode','url'=>null]);

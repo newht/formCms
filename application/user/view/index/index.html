@@ -8,11 +8,8 @@
 </head>
 <body>
     <div class="max">
-        <div class="logo"></div>
-        <div class="wlcome">
-            <span class="wlcomeleft"><i class="layui-icon">&#xe66f; </i>欢迎您：{$Think.session.user.name}</span>
-            <span class="wlcomeright"><a href="/user/drop"><i class="layui-icon" >&#xe682; </i>退出</a></span>
-        </div>
+        {include file='public/logo'}
+        {include file='public/wlcome'}
         <div class="info">
             <div class="infoTitle">基本信息</div>
             <ul>
@@ -23,7 +20,7 @@
                 <li>性别：<?php echo substr(session('user')['cardid'],-2,1)%2 === 1 ? '男' : '女' ?></li>
             </ul>
             <div class="infobottom">
-                <a href="">修改密码</a>
+                <a href="/user/updatepwd">修改密码</a>
             </div>
         </div>
         <div class="infoOther">
@@ -34,13 +31,7 @@
             请准确填写完善以上信息后报名
         </div>
     </div>
-    <div class="webbottom">
-        <ul>
-            <li><div><a href="/user/index"><i class="layui-icon-user layui-icon" style="font-size: 30px"></i></a></div>个人信息</li>
-            <li><div><a href="/user/signup"><i class="layui-icon-edit layui-icon" style="font-size: 30px"></i></a></div>课程报名</li>
-            <li><div><a href="/user/gorecording"><i class="layui-icon-log layui-icon" style="font-size: 30px"></i></a></div>报名记录</li>
-        </ul>
-    </div>
+    {include file='public/webbottom'}
 </body>
 <script src="/static/jquery.min.js"></script>
 <script src="/static/layui/layui.js"></script>

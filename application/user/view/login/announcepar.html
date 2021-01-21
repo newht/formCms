@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>首页</title>
+</head>
+<style>
+.sa{
+
+    width: 1200px;
+}
+.sa1{
+
+    width: 800px;
+    margin: auto;
+    border: 1px solid black;
+}
+pre{
+    white-space:pre-wrap; /* css3.0 */ 
+    white-space:-moz-pre-wrap; /* Firefox */ 
+    white-space:-pre-wrap; /* Opera 4-6 */ 
+    white-space:-o-pre-wrap; /* Opera 7 */ 
+    word-wrap:break-word; /* Internet Explorer 5.5+ */ 
+}
+
+</style>
+<body>
+    <div class="sa" style="word-break:break-all;">
+        <div class="sa1" style="word-break:break-all;">
+            <h1>{$data.title}</h1>
+            <pre  style="word-break:break-all;">{$data.contents}</pre>
+        </div>
+    </div>
+</body>
+</html>

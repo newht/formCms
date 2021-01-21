@@ -11,7 +11,17 @@ class Login extends Controller
 {
     public function index()
     {
+
+        $data = Db::table('announcements') -> where('is_delete', 0) ->select();
+        $this -> assign('data',$data);
         return $this -> fetch("login/index");
+    }
+
+    public function announcepar($id){
+        $data = Db::table('announcements') -> where('id',$id) ->find();
+        $this -> assign('data',$data);
+        return $this->fetch("login/announcepar");
+
     }
 
     public function login()
@@ -30,22 +40,30 @@ class Login extends Controller
         }
     }
 
-    public function unitIndex()
+    public function changePwd()
     {
-        return $this -> fetch("login/unit_login");
+        return $this -> fetch("login/changepwd");
     }
 
-    public function unitLoignVerifty()
+    public function setPassword()
     {
-        $unitcode = input('unitcode');
-        $password = input('password');
-        $data = Db::name('unit') -> where('unitcode',$unitcode) -> find();
-        if( empty($data) ){
-            return json(['code'=>0,'msg'=>'登录失败,账号不存在','errorname'=>'unitcode','url'=>null]);
+
+        $cardid = input('cardid');
+        $problem = input('pwdproblem');
+        $answer = input('pwdanswer');
+        $password = md5(input('password'));
+        $data = Db::name('user')->join('userinfo t2','user.id=t2.uid')->where('cardid',$cardid)->find();
+        if($problem == $data['pwdproblem']){
+            if($answer == $data['pwdanswer']){
+                $res = Db::name('user')->where('cardid',$cardid)->update(['password'=>$password]);
+                if($res==1){
+                    return json(['code'=>200,'error'=>null]);
+                }else{
+                    return json(['code'=>201,'error'=>'数据错误，请联系站长']);
+                }
+            }
+            return json(['code'=>201,'error'=>'密码找回答案错误']);
         }
-        if( $data['password'] !== $password ){
-            return json(['code'=>0,'msg'=>'登录失败,密码错误','errorname'=>'password','url'=>null]);
-        }
-        return json(['code'=>1,'msg'=>'登录成功','errorname'=>null,'url'=>'/']);
+        return json(['code'=>201,'error'=>'密码找回问题错误']);
     }
 }

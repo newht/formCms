@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>教育报名系统</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/user/css/index.css">
+    <style>
+        li label{width: 72px;display: inline-block}
+        input{border:0;width: 70%}
+        input::placeholder{color: red}
+    </style>
+</head>
+<body>
+<div class="max">
+    {include file='public/logo'}
+    {include file='public/wlcome'}
+    <div class="info">
+        <div class="infoTitle">修改密码</div>
+        <form id="form01">
+            <ul>
+                <li>
+                    <label for="oldpassword">原密码：</label>
+                    <input type="password" name="oldpassword" id="oldpassword">
+                </li>
+                <li>
+                    <label for="newpassword">新密码：</label>
+                    <input type="password" name="newpassword" id="newpassword">
+                </li>
+                <li>
+                    <label for="newpassword2">确认密码：</label>
+                    <input type="password" name="newpassword2" id="newpassword2" >
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div class="buttoms" style="width: 100%">
+        <div class="submit" >
+            修改密码
+        </div>
+    </div>
+</div>
+{include file='public/webbottom'}
+</body>
+<script src="/static/jquery.min.js"></script>
+<script src="/static/layui/layui.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.submit').click(function () {
+            let formdata = $('#form01').serializeArray();
+            if(!($("[name=newpassword]").val() === $("[name=newpassword2]").val())){
+                $('[name=newpassword2]').prop('placeholder','密码不相同');
+                $('[name=newpassword2]').val('');
+                return false;
+            }
+            $.ajax({
+                url:"/unit/setupdatepwd",
+                type:"post",
+                dataType:"json",
+                data:formdata,
+                success:function(res){
+                    console.log(res)
+                    if(res.code === 201){
+                        alert(res.error);
+                    }else if(res.code === 200){
+                        alert('修改成功');
+                    }
+                }
+            })
+        });
+    })
+</script>
+</html>

@@ -21,16 +21,18 @@
         input[type=button]:hover{
             border: 1px solid blue;
         }
+
+        .infoTitle{font-size: 20px}
     </style>
 </head>
 <body>
 <div class="max">
     {include file='public/logo'}
     {include file='public/wlcome'}
+    <div class="infoTitle">
+        <a href="/unit/gouserinfo/{$id}">《 员工信息设置</a>
+    </div>
     <div class="info">
-        <div class="infoTitle">
-            个人信息设置
-        </div>
         <ul>
             <li><div><label for="email">电子邮件</label><input type="text" id="email" name="email"  value="{$data.email|default=''}"></div></li>
             <li><div><label for="location">所在地区</label><input type="text" id="location" name="location"  value="{$data.location|default=''}"></div></li>
@@ -63,9 +65,6 @@
 </div>
 {include file='public/webbottom'}
 </body>
-<!--<div style="width: 100%;padding: 20px;box-sizing:border-box;text-align: center">-->
-    <!--<img style="max-width: 900px" width="100%" src="" >-->
-<!--</div>-->
 <script type="text/javascript" src="/static/jquery.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
@@ -108,8 +107,9 @@
             let name = $(this).prop('name');
             let formdata = {};
             formdata[name] = data;
+            formdata['id'] = "{$id}";
             $.ajax({
-                url:"/user/setuserinfo",
+                url:"/unit/setuserinfo",
                 type:"post",
                 dataType:"json",
                 data:formdata,
@@ -123,8 +123,9 @@
             let obj = $(this);
             let formid = obj.parent().prop('id');
             let formdata = new FormData(document.getElementById(formid));
+            formdata.append('id',"{$id}");
             $.ajax({
-                url:"/user/setuserinfo",
+                url:"/unit/setuserinfo",
                 type:"post",
                 dataType:"json",
                 contentType:false,
@@ -141,7 +142,6 @@
                 }
             })
         })
-
     })
 </script>
 </html>

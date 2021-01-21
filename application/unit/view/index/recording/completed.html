@@ -5,6 +5,7 @@
     <title>教育报名系统</title>
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <link rel="stylesheet" href="/static/user/css/index.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_2311555_zva3xoymw78.css">
     <style>
         .info ul li:hover{
             cursor: pointer;
@@ -16,29 +17,19 @@
     {include file='public/logo'}
     {include file='public/wlcome'}
     <div class="info">
-        <div class="infoTitle">课程报名并缴费</div>
+        <div class="infoTitle">
+            未缴费列表
+        </div>
         <ul>
-            {if count($data) > 0}
-            {foreach $data as $v}
-            <a href="/user/gowrite/{$v.id}">
-                <li class="lione">
-                    <img src="/static/images/user/icon.png" width='60' alt="">
-                    <div>
-                        <h3>{$v.fname}</h3>
-                        <h4>{$v.subtitle}</h4>
-                    </div>
-                </li>
-            </a>
-            {/foreach}
-            {else /}
-            <li class="lione" style="font-size: 12px;color:#8F8F8F">
-                暂无可报名课程
+            <li class="lione">
+                <div>
+                    <h3><span>待缴费</span><span></span><span><h4>></h4></span></h3>
+                </div>
             </li>
-            {/if}
         </ul>
     </div>
 </div>
-{include file='public/webbottom'}
+{include file="public/webbottom"}
 </body>
 <script type="text/javascript" src="/static/jquery.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>

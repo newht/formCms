@@ -14,11 +14,8 @@
 </head>
 <body>
 <div class="max">
-    <div class="logo"></div>
-    <div class="wlcome">
-        <span class="wlcomeleft"><i class="layui-icon">&#xe66f; </i>欢迎您：胡涛</span>
-        <span class="wlcomeright"><a href="/user/drop"><i class="layui-icon" >&#xe682; </i>退出</a></span>
-    </div>
+    {include file='public/logo'}
+    {include file='public/wlcome'}
     <div class="info">
         <div class="infoTitle">
             员工列表
@@ -29,7 +26,7 @@
         <ul>
             {if count($data) > 0}
             {foreach $data as $v}
-            <a href="/user/gowrite/{$v.id}">
+            <a href="/unit/gouserinfo/{$v.id}">
                 <li class="lione">
                     <div>
                         <h3><span>{$v.name}</span><span>{$v.phone}</span><span><h4>查看 ></h4></span></h3>

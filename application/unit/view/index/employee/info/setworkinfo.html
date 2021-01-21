@@ -5,15 +5,18 @@
     <title>教育报名系统</title>
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <link rel="stylesheet" href="/static/user/css/indexTable.css">
+    <style>
+        .infoTitle{font-size: 20px}
+    </style>
 </head>
 <body>
 <div class="max">
     {include file='public/logo'}
     {include file='public/wlcome'}
+    <div class="infoTitle">
+        <a href="/unit/gouserinfo/{$id}">< 员工信息设置</a>
+    </div>
     <div class="info">
-        <div class="infoTitle">
-            工作单位信息设置
-        </div>
         <ul>
             <li><div><label for="name">工作单位名称</label><input type="text" id="name" name="name" value="{$data.name}"></div></li>
             <li><div><label for="department">所在部门</label><input type="text" id="department" name="department" value="{$data.department}"></div></li>
@@ -38,10 +41,11 @@
             let text = $(this).val();
             let formdata = {};
             formdata[name] = text;
+            formdata['uid'] = "{$id}";
             if(text){
                 console.log(text)
                 $.ajax({
-                    url:"/user/setemployerinfo",
+                    url:"/unit/setwordinfo",
                     type:"post",
                     dataType:"json",
                     data:formdata,

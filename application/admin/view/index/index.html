@@ -28,7 +28,7 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-    <div class="layui-logo ">houtaiguanli</div>
+        <div class="layui-logo ">houtaiguanli</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-right ">
             <li class="layui-nav-item">
@@ -60,6 +60,13 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="layui-icon layui-icon-set">&nbsp;设置</i></a>
                     <dl class="layui-nav-child">
+                        <dd >
+                            <a href="javascript:;">公告设置<span class="layui-nav-more"></span></a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="/admin/announce" target="iframe1">公告列表</a></dd>
+                                <dd><a href="/admin/announce_del" target="iframe1">已删公告</a></dd>
+                            </dl>
+                        </dd>
                         <dd >
                             <a href="javascript:;">表单设置<span class="layui-nav-more"></span></a>
                             <dl class="layui-nav-child">

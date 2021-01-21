@@ -34,11 +34,17 @@ class Info extends Controller
     {
         $uid = session('user')['id'];
         $data = input();
-        $num = Db::name("employerinfo") -> where('uid',$uid) -> update($data);
+        $data['uid'] = $uid;
+        $user = Db::name("employerinfo")->where('uid',$uid)->find();
+        if(empty($user)){
+            $num = Db::name("employerinfo") -> insert($data);
+        }else{
+            $num = Db::name("employerinfo") -> update($data);
+        }
         if($num){
             return ['code' => 1,'error' => null];
         }else{
-            return ['code' => 1,'error' => '数据错误'];
+            return ['code' => 0,'error' => '数据错误'];
         }
     }
 }

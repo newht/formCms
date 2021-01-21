@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>忘记密码</title>
+    <link rel="stylesheet" href="/user/css/form.css">
+    <style>
+        input::placeholder{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="max">
+    {include file='public/logo'}
+    <div class="title"><h3>密码修改</h3></div>
+    <div class="form">
+        <form >
+            <div><span>身份证号码</span><input name="cardid" type="text"></div>
+            <div><span>密码找回问题</span><input name="pwdproblem" type="text"></div>
+            <div><span>密码找回答案</span><input name="pwdanswer" type="text"></div>
+            <div><span>重设密码</span><input name="password" type="text"></div>
+            <div><span>确认密码</span><input name="password2" type="text"></div>
+        </form>
+        <div style="padding: 20px 0">
+            <div class="submit">
+                修改密码
+            </div>
+            <br>
+            <a href="/user/login"><div class="submit">
+                返回登录界面
+            </div></a>
+        </div>
+
+    </div>
+</div>
+</body>
+<script src="/static/jquery.min.js"></script>
+<script>
+
+    $(function () {
+        $("input").prop('autocomplete','off');
+        $("input").focus(function () {
+            $(this).prop('placeholder','')
+        });
+
+        $(".submit:first").click(function () {
+            let formdata = $("form").serializeArray();
+            let reg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+            if(!reg.test($('[name=cardid]').val())){
+                $('[name=cardid]').prop('placeholder','身份证号码格式不正确');
+                $('[name=cardid]').val('');
+                return false;
+            }
+            if(!($("[name=password]").val() === $("[name=password2]").val())){
+                $('[name=password2]').prop('placeholder','密码不相同');
+                $('[name=password2]').val('');
+                return false;
+            }
+            $.ajax({
+                url:"/user/setpassword",
+                type:"post",
+                dataType:"json",
+                data:formdata,
+                success:function(res){
+                    console.log(res)
+                    if(res.code === 200){
+                        alert('修改成功，点击确认返回登录界面');
+                        location.href = '/user/login'
+                    }
+                    if(res.code === 201){
+                        alert(res.error);
+                    }
+                }
+            })
+        })
+    })
+</script>
+</html>

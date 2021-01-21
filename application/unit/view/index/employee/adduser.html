@@ -37,31 +37,41 @@
 <script>
     layui.use('layer',function () {
         let layer = layui.layer;
-    })
+    });
     $(function () {
+
         $('.info ul li:last').css('border',0);
         $("input").prop('autocomplete','off');
 
         $("#submit").click(function () {
             let obj = $(this);
             let data = $("form").serializeArray();
-            for(let i=0 ; i<data.length ; i++ ){
-                if(i > 1 && data[i].name === data[i-1].name ){
-                    data[i].value += "," + data[i-1].value;
-                }
-                data[i].value = data[i].value.replace(/\s+/g, "");
+            let reg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+            if(!reg.test($('[name=cardid]').val())){
+                $('[name=cardid]').prop('placeholder','身份证号码格式不正确');
+                $('[name=cardid]').val('');
+                return false;
+            }
+            if(!(/^1[3456789]\d{9}$/.test($("[name=phone]").val()))){
+                $('[name=phone]').prop('placeholder','手机号码有误，请重填');
+                $('[name=phone]').val('');
+                return false;
             }
             $.ajax({
-                url:"/user/insert",
+                url:"/unit/adduser",
                 type:"post",
                 dataType:"json",
                 data:data,
                 success:function(e){
+                    console.log(e)
                     let msg;
                     if(e.code === 1){
                         msg = '保存成功,点击确认返回上一级';
                     }else if(e.code === 0){
-                        msg = e.error;
+                        msg = '保存失败';
+                        if(e.error === '该用户已存在'){
+                            msg+=','+e.error;
+                        }
                     }
                     layer.open({'title':'提示信息',btn:['确认'],content:msg});
                 }
