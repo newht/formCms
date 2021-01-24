@@ -16,9 +16,9 @@
         .bottom{text-align: center;font-size: 13px;padding: 30px;}
         #affirm{white-space: pre-wrap;font-size: 13px;min-height: calc(50vh);color: #3e3e3e}
         a{text-decoration:none;}
-        li{margin:10px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size: 13px}
+        li{margin:10px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size: 13px;color:#666666;}
         ul{padding:0 5px;border: 1px solid #4596E8;}
-        .annon_text{padding: 5px 0}
+        .annon_text{padding: 5px 0;}
         .annon_text span:first-child{background: #4596E8;margin: 5% 0;color:white;width: 65px;text-align: left;padding: 5px 7px;}
         .annon_text span:last-child{float: right}
         .annon_text a{color:#4596E8}
@@ -27,7 +27,18 @@
             body {max-width: 1024px;}
             .max{width: 100%;height: calc(81vh);padding: 5px 10px;box-sizing: border-box;min-width: 320px}
         }
+        @font-face {
+            font-family: 'iconfont';  /* project id 2311555 */
+            src: url('//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.eot');
+            src: url('//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.woff2') format('woff2'),
+            url('//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.woff') format('woff'),
+            url('//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.svg#iconfont') format('svg');
+        }
+        .xiahuaxian:hover{color: #7a7e83}
     </style>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.css">
 </head>
 <body>
 <div class="max">
@@ -43,7 +54,7 @@
     <div class="annon">
         <div class="annon_text">
             <span class="annon_left_text" id="annon_text">
-                公告信息
+                <i class="iconfont icon-liebiao"> 公告信息</i>
             </span>
             <span>
                 <a href="#">更多 >></a>
@@ -51,7 +62,11 @@
         </div>
         <ul>
             {foreach $data as $v}
-            <li><a href="user/announcepar/{$v.id}">{$v.title}</a></li>
+            <li>
+                <i class="iconfont icon-yuandianxiao" style="vertical-align: middle"></i>
+                <span style="float: right;margin: 0 5px 0 15%">2019-12-12</span>
+                <a class="xiahuaxian" href="user/announcepar/{$v.id}">{$v.title}</a>
+            </li>
             {/foreach}
         </ul>
     </div>

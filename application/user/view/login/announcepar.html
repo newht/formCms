@@ -3,33 +3,37 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>首页</title>
+    <style>
+        body {background: url("/static/images/bg.png")no-repeat top center/100% ;}
+        .max{width: 70%;height: calc(81vh);padding: 5px 10px;}
+        *{margin: 0 auto;font-family: '微软雅黑';}
+        .logo{height: 100px;margin: 30px 0;text-align: center}
+        .content{padding: 20px;background: white}
+        .title{text-align: center;border-bottom: 1px solid red;position: relative;}
+        .title div{vertical-align: bottom;position: absolute;bottom: 3px;}
+        .title span{font-size: 13px;}
+        .content p{white-space: pre-wrap;font-size: 15px;padding: 10px}
+        /*pre{width: 600px}*/
+        @media screen and (max-width: 1024px) {
+            body {max-width: 1024px;}
+            .max{width: 100%;height: calc(81vh);padding: 5px 10px;box-sizing: border-box;min-width: 320px}
+        }
+    </style>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.css">
 </head>
-<style>
-.sa{
-
-    width: 1200px;
-}
-.sa1{
-
-    width: 800px;
-    margin: auto;
-    border: 1px solid black;
-}
-pre{
-    white-space:pre-wrap; /* css3.0 */ 
-    white-space:-moz-pre-wrap; /* Firefox */ 
-    white-space:-pre-wrap; /* Opera 4-6 */ 
-    white-space:-o-pre-wrap; /* Opera 7 */ 
-    word-wrap:break-word; /* Internet Explorer 5.5+ */ 
-}
-
-</style>
 <body>
-    <div class="sa" style="word-break:break-all;">
-        <div class="sa1" style="word-break:break-all;">
-            <h1>{$data.title}</h1>
-            <pre  style="word-break:break-all;">{$data.contents}</pre>
+    <div class="max">
+        {include file='public/logo'}
+        <div class="content">
+            <div class="title">
+                <h3 style="margin-bottom: 50px">{$data.title}</h3>
+                <div>
+                    <span>发布时间：{$data.create_time}</span>
+                </div>
+            </div>
+            <p>{$data.contents}</p>
         </div>
     </div>
 </body>
+<script src="/static/jquery.min.js"></script>
 </html>
