@@ -18,7 +18,7 @@ class User extends Model
     {
         $data = User::where('cardid','eq',$cardid) -> find();
         if(empty($data)){
-            return ['code' => 0, 'errorname' => 'cardid', 'msg' => '用户不存在','url' => null];
+            return ['code' => 0, 'errorname' => 'cardid', 'msg' => '用户不存在,请输入正确的身份证号码','url' => null];
         }
         if(md5($password) != $data['password']){
             return ['code' => 0, 'errorname' => 'password', 'msg' => '密码错误','url' => null];
