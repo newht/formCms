@@ -1,11 +1,3 @@
-<!--
- * @Author: your name
- * @Date: 2021-01-05 13:56:45
- * @LastEditTime: 2021-01-06 14:49:28
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \project.com\application\admin\view\announce\announce_edit.html
--->
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,13 +46,11 @@
       <button type="reset" class="layui-btn layui-btn-primary">重置</button>
     </div>
   </div>
-  <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
 </form>
 <script src='/static/layui/layui.js'></script>
 <script>
 layui.use('form', function(){
   var form = layui.form;
-  //各种基于事件的操作，下面会有进一步介绍
   form.on('switch(checkbox)', function(data){
     console.log(data.elem.checked); //开关是否开启，true或者false
     console.log(data.value); //开关value值，也可以通过data.elem.value得到

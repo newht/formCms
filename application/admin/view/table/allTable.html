@@ -5,64 +5,36 @@
     <title>所有表单</title>
     <link rel="stylesheet" href="/static/bootstrap-4.5.0/css/bootstrap.css">
     <style>
-        * {
-            margin: 0 auto;
-        }
-
-        .div01 {
-            float: left;
-            width: 90%;
-            margin: 20px 50px;
-            border-radius: 10px;
-            border: 1px solid rgba(180, 180, 180, 0.16);
-            padding: 5px;
-            background: rgba(180, 180, 180, 0.16);
-            /*text-align: center;*/
-        }
-
-        /*阴影*/
-        .div01:hover {
-            -webkit-box-shadow: rgba(180, 180, 180, 0.71) 0px 0px 10px;
-            -moz-box-shadow: rgba(180, 180, 180, 0.71) 0px 0px 10px;
-            box-shadow: rgba(180, 180, 180, 0.71) 0px 0px 10px;
-            cursor: pointer;
-        }
-
-        .div01_in {
-            background: white;
-            border: 1px solid rgba(180, 180, 180, 0.16);
-            border-radius: 5px;
-            padding: 8px;
-            /*height: 50px;*/
-        }
-
-        .div_top {
-            /*background: #ECF1F6;*/
-            font-size: 13px;
-            line-height: 30px;
-            /*padding-left: 2%;*/
-        }
-
-        .div_title {
-            line-height: 20px;
-            font-size: 18px;
-        }
+        * {margin: 0 auto;}
+        body{min-width: 960px}
+        .div_top {font-size: 13px;line-height: 30px;margin-bottom: 20px;font-family: 微软雅黑;color: #a0a0a0}
+        .div01{float: left;width: 30%;border-radius: 8px;border: 5px solid #dbdbdb;padding: 10px;background: white;position:relative;height: calc(19vh);margin-right: 2.5%;margin-bottom: 20px}
+        .div_title {line-height: 20px;font-size: 18px;}
+        .content{font-size:13px;position:absolute;bottom:10px;}
+        .content:last-child{right: 5px;bottom: 5px;width: 50px;line-height: 26px;background: #cccccc;color: black;text-align: center;border-radius: 2px;cursor: pointer}
+        .content:last-child:hover{border: 1px solid #A0A0A0}
     </style>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2311555_1w8gejba23l.css">
 </head>
 <body style="padding: 10px">
 <div class="div_top">
-    <span>所有表格(点击修改表单):</span>
+   所有表格（点击修改表单）:
 </div>
-<div style="">
+<div >
     {foreach $data as $k => $v}
-    <div class="div01" tableid="{$v.id}" title="双击进入填写">
-        <div class="div01_in">
-            <div class="div_title"><span><b>&nbsp;&nbsp;&#8226;&nbsp;&nbsp;{$v.fname}</b></span><span style="float: right;font-size: 13px">已报名人数：{$v.count}人</span></div>
+    <div class="div01" tableid="{$v.id}" title="单机击进入修改">
+        <div class="div_title">
+            <i class="iconfont icon-yuandianxiao"></i>{$v.fname}
+        </div>
+        <div class="content">
+            已报名人数：{$v.count}人
+        </div>
+        <div class="content set-btn">
+            设置
         </div>
     </div>
     {/foreach}
 </div>
-
 </body>
 <script src="/static/jquery.min.js"></script>
 <script src="/static/bootstrap-4.5.0/js/bootstrap.js"></script>
@@ -78,7 +50,15 @@
             //location.href='/table/'+$(this).attr('tableid');
         })
 
+        $(".div01").each(function () {
+            if($(this).index()%3 === 0){
+                $(this).css('margin-left','2.5%')
+            }
+        })
 
+        $('.set-btn').click(function () {
+            alert(1)
+        })
     })
 </script>
 </html>
