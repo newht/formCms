@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 16665
- * Date: 2020/11/23
- * Time: 11:24
- */
 
 namespace app\admin\controller;
-
 
 use app\admin\model\Admin;
 use think\Controller;
@@ -16,11 +9,17 @@ use think\facade\Config;
 
 class User extends Controller
 {
-    public function webUser()
+    public function webUser($fie = '', $condition = '')
     {
-        $data = Db::table("user")->select();
-        $this -> assign('data',$data);
-        return $this -> fetch("user/webuser");
+        $data = Db::table("user")->field('user.id,cardid,user.name,user.phone,unit.name as unit_name,user.createtime');
+        if (!empty($fie)) {
+            echo($fie);
+            $data = $data->where($fie, 'like', '%' . $condition . '%');
+        }
+//        $data = $data -> where('unit.name','like','%%');
+        $data = $data->leftJoin('unit', 'user.unit_id = unit.id')->select();
+        $this->assign('data', $data);
+        return $this->fetch("user/webuser");
     }
 
     public function show()

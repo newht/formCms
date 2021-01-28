@@ -95,6 +95,12 @@ Route::group("admin",function (){
     Route::rule("anon_del","admin/Announce/anon_del","post");
     Route::rule("anon_addAnon","admin/Announce/anon_add","post");
 });
+
+Route::group('pay',function (){
+    Route::rule('/',function (){
+        echo md5('1qaz2wsx');
+    });
+});
 Route::post('in','admin/Login/in');
 
 
