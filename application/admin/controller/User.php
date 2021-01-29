@@ -9,16 +9,20 @@ use think\facade\Config;
 
 class User extends Controller
 {
-    public function webUser($fie = '', $condition = '')
+    public function webUser()
     {
+        $fie = '';
+        $condition = '';
         $data = Db::table("user")->field('user.id,cardid,user.name,user.phone,unit.name as unit_name,user.createtime');
-        if (!empty($fie)) {
-            echo($fie);
+        if (!empty(input('fie')) && input('fie') != 'undefined') {
+            $fie = input('fie');
+            $condition = input('condition');
             $data = $data->where($fie, 'like', '%' . $condition . '%');
         }
-//        $data = $data -> where('unit.name','like','%%');
         $data = $data->leftJoin('unit', 'user.unit_id = unit.id')->select();
         $this->assign('data', $data);
+        $this -> assign('fie',$fie);
+        $this -> assign('condition',$condition);
         return $this->fetch("user/webuser");
     }
 

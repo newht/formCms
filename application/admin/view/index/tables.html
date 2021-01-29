@@ -24,7 +24,7 @@
 <body>
 <div class="top" style="text-align: right">
     <input type="button" value="修改审核状态"  class="layui-btn layui-btn-normal">
-    <!--<input type="radio">未审核-->
+    <input type="button" value="导出Excel" class="layui-btn layui-btn-normal">
 </div>
 <table style="width: 100%;" cellspacing="1" cellpadding="0">
     <tr style="background: #d0d0d0;font-size: 14px">
@@ -77,7 +77,7 @@
             }
         });
 
-        $('.layui-btn-normal').click(function () {
+        $('.layui-btn-normal:eq(0)').click(function () {
             let formdata = [];
             $("[name=checkbox]:checked").each(function () {
                 let temp = {};

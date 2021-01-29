@@ -35,10 +35,11 @@
         <div style="display: inline-block">
             <label class="layui-form-label">条件：</label>
             <div class="layui-inline">
-                <input type="text" id="condition" name="condition" class="layui-input">
+                <input type="text" id="condition" name="condition" class="layui-input" value="{$condition|default=''}">
             </div>
         </div>
         <input type="button" value="查询" id="submit" class="layui-btn layui-btn-normal">
+        <input type="button" value="导出Excel" style="float: right" class="layui-btn layui-btn-normal">
     </form>
 </div>
 <table style="width: 100%;" cellspacing="1" cellpadding="0">
@@ -84,18 +85,19 @@
 
         $('table tr:eq(0) td').each(function () {
             let str = $(this).text();
-            if( str !== '序号' && str !== '密码' && str !== '注册时间' && str !== '操作'){
-                let optionStr = '<option value="' + $(this).attr("fie") + '">' + str + '</option>'
+            if( str !== '序号' && str !== '密码' && str !== '注册时间' && str !== '操作' ){
+                let fie = $(this).attr("fie");
+                let selected = fie === '{$fie}' ? 'selected' : '';
+                let optionStr = '<option value="' + fie + '" '+ selected +' >' + str + '</option>'
                 $('#fie').append(optionStr)
             }
             form.render('select');
         });
 
-        $('.layui-btn-normal').click(function () {
-            let formdata = $('form').serializeArray();
+        $('.layui-btn-normal:eq(0)').click(function () {
             let fie = $('#fie').val();
             let condition = $('#condition').val();
-            location.href='/admin/webuser/'+fie+'/'+condition
+            location.href='/admin/webuser/?fie='+fie+'&condition='+condition
         })
     });
 
