@@ -28,6 +28,7 @@ class Index extends Controller
         $data = Db::table($tb_name) -> select();
         $this->assign('th', $th);
         $this->assign('data', $data);
+        $this->assign('jsonData', json_encode($data));
         return $this -> fetch("index/tables");
     }
 

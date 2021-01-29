@@ -21,7 +21,7 @@ class Admin extends Model
     public function login($name,$password)
     {
         $password = md5($password);
-        $data = Admin::field('name,nick_name,password') -> where('name','eq',$name) -> find();
+        $data = Admin::field('id,name,nick_name,password') -> where('name','eq',$name) -> find();
         if(empty($data)){
             return ['code' => 0, 'msg' => '账号不存在'];
         }

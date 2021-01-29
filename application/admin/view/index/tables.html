@@ -24,7 +24,8 @@
 <body>
 <div class="top" style="text-align: right">
     <input type="button" value="修改审核状态"  class="layui-btn layui-btn-normal">
-    <input type="button" value="导出Excel" class="layui-btn layui-btn-normal">
+    <!--<input type="button" value="导出Excel" class="layui-btn layui-btn-normal">-->
+    <input type="button" value="导出Excel" onclick="let header = [];$('table tr:eq(0) td:gt(0):not(:last)').each(function() { header.push($(this).text())});location.href='/excel/export?data={$jsonData}&header='+header;" style="float: right" class="layui-btn layui-btn-normal">
 </div>
 <table style="width: 100%;" cellspacing="1" cellpadding="0">
     <tr style="background: #d0d0d0;font-size: 14px">

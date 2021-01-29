@@ -94,12 +94,21 @@ Route::group("admin",function (){
     Route::rule("announceedits","admin/Announce/announce_edit","get");
     Route::rule("anon_del","admin/Announce/anon_del","post");
     Route::rule("anon_addAnon","admin/Announce/anon_add","post");
+    //个人基本信息设置
+    Route::rule("baseinfo","admin/setting.BaseInfo/index","get");
+    Route::rule("updatebaseinfo","admin/setting.BaseInfo/updateBaseInfo","post");
+    Route::rule("password","admin/setting.BaseInfo/password","get");
+    Route::rule("updatepassword","admin/setting.BaseInfo/updatePassword","post");
 });
 
 Route::group('pay',function (){
     Route::rule('/',function (){
         echo md5('1qaz2wsx');
     });
+});
+
+Route::group('excel',function(){
+   Route::rule('export','admin/excel.Export/index','get|post');
 });
 Route::post('in','admin/Login/in');
 

@@ -21,10 +21,13 @@ class User extends Controller
         }
         $data = $data->leftJoin('unit', 'user.unit_id = unit.id')->select();
         $this->assign('data', $data);
+
+        $this -> assign('jsonData',json_encode($data));
         $this -> assign('fie',$fie);
         $this -> assign('condition',$condition);
         return $this->fetch("user/webuser");
     }
+
 
     public function show()
     {

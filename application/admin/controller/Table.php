@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 16665
- * Date: 2020/11/24
- * Time: 14:46
- */
 
 namespace app\admin\controller;
-
 
 use think\Controller;
 use think\Db;

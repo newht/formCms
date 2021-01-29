@@ -39,7 +39,7 @@
             </div>
         </div>
         <input type="button" value="查询" id="submit" class="layui-btn layui-btn-normal">
-        <input type="button" value="导出Excel" style="float: right" class="layui-btn layui-btn-normal">
+        <input type="button" value="导出Excel" onclick="let header = [];$('table tr:eq(0) td:gt(0):not(:last)').each(function() { header.push($(this).text())});location.href='/excel/export?data={$jsonData}&header='+header;" style="float: right" class="layui-btn layui-btn-normal">
     </form>
 </div>
 <table style="width: 100%;" cellspacing="1" cellpadding="0">
