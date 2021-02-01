@@ -84,7 +84,17 @@ class Table extends Controller
         $sql.="auditstates varchar(20) comment '审核状态' default '未审核')";
 //        $sql = substr($sql, 0, -1) . ")";
         return Db::execute($sql);
+    }
 
+    public function saveTable($id)
+    {
+        $data = Db::table('form_info')
+            ->where('id', 'eq', $id)
+            ->find();
+        $data['content'] = json_decode($data['content'], true);
+        dump($data['content']);
+        $this->assign('data', $data);
+        return $this->fetch('table/savetable');
     }
 
 }

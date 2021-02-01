@@ -7,7 +7,8 @@
 </head>
 <body>
 <h2>公告内容</h2>
-<form class="layui-form" id="form01" enctype="multipart/form-data" method="post"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+<form class="layui-form" id="form01" enctype="multipart/form-data" method="post">
+    <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
     <input type="hidden" name="id" placeholder="请输入" autocomplete="off" class="layui-input"
            value="{$data.id|default=''}">
     <div class="layui-form-item">
@@ -38,14 +39,19 @@
 
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">公告内容</label>
-        <div class="layui-input-block" id="contents" name="contents">
-            <!--<textarea name="contents" id="contents" placeholder="请输入内容" rows="15"-->
-                      <!--class="layui-textarea">{$data.contents|default=''}</textarea>-->
+        <div class="layui-input-block">
+            <div id="contents" name="contents"></div>
+            <div style="display: none" id="hiddenedit">
+                {notempty name='data'}
+                {$data.contents|raw|default=''}
+                {/notempty}
+            </div>
         </div>
+
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <input  type="button" class="layui-btn" id="submit" value="立即提交">
+            <input type="button" class="layui-btn" id="submit" value="立即提交">
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -60,15 +66,13 @@
     editor.config.uploadFileName = 'file_edit';
     editor.config.uploadImgHooks = {
         // 图片上传并返回了结果，想要自己把图片插入到编辑器中
-        customInsert: function(insertImgFn, result) {
+        customInsert: function (insertImgFn, result) {
             // insertImgFn 可把图片插入到编辑器，传入图片 src ，执行函数即可
             insertImgFn(result.data['url'])
         }
     }
     editor.create();
-    let sss = "{$data.contents}"
-    console.log(sss)
-    editor.txt.html(sss)
+    editor.txt.html($("#hiddenedit").html());
 
     layui.use(['form'], function () {
         var form = layui.form;
@@ -82,19 +86,15 @@
         $('#submit').click(function () {
             let text = editor.txt.html();
             let formdata = $('#form01').serializeArray();
-            formdata.push({"name":"contents","value":text});
+            formdata.push({"name": "contents", "value": text});
             console.log(formdata);
             $.ajax({
-                url:"/admin/anon_addanon",
-                type:"post",
-                data:formdata,
-                dataType:"json",
-                success:function(res){
+                url: "/admin/anon_addanon",
+                type: "post",
+                data: formdata,
+                dataType: "json",
+                success: function (res) {
                     console.log(res)
-                },error:function (xhr,status,error) {
-                    console.log(xhr)
-                    console.log(status)
-                    console.log(error)
                 }
             });
         });

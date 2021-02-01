@@ -79,6 +79,9 @@ Route::group("admin",function (){
     Route::rule('gocreate','admin/Table/goCreate','get');
     Route::rule('addtable','admin/Table/insertTable','post');
     Route::rule('auditstates','admin/Index/auditStates','post');
+    //修改表单
+    Route::get('savetable/:id','admin/Table/saveTable');
+
     Route::rule('gorbac','admin/Rbac/goRbac','get');
     Route::rule("setrbac","admin/Rbac/setRbac",'post');
     Route::rule('goadmin','admin/Rbac/goAdmin','get');
@@ -100,6 +103,7 @@ Route::group("admin",function (){
     Route::rule("updatebaseinfo","admin/setting.BaseInfo/updateBaseInfo","post");
     Route::rule("password","admin/setting.BaseInfo/password","get");
     Route::rule("updatepassword","admin/setting.BaseInfo/updatePassword","post");
+
 });
 
 Route::group('pay',function (){

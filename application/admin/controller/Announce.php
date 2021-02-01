@@ -16,13 +16,10 @@ use think\facade\View;
 class Announce extends Controller{
 
     public function announce_edit($id = ""){
-        // return $id;
         if($id){
-            $data = Db::table('announcements')->where('id',$id)->find(); 
-            // echo "<pre>";var_dump($data);die;
+            $data = Db::table('announcements')->where('id',$id)->find();
             $data['contents'] = ($data['contents']);
             $this->assign("data", $data);
-            dump($data);
         }
             return $this->fetch("announce/announce_edit");
 
@@ -49,7 +46,7 @@ class Announce extends Controller{
         $data = [
             'title' => input('title'),
             'subtitle' => input('subtitle'),
-            'contents' => (input('contents')),
+            'contents' => input('contents'),
             'is_static' => empty(input('static')) ? 0 : 1,
         ];
         if(empty(input('id'))){
