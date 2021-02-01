@@ -19,12 +19,27 @@ class Table extends Controller
     public function getTables()
     {
         $data = Db::table("form_info")
-            ->field("id,fname,tb_name,subtitle")
+            ->field("id,fname,tb_name,subtitle,status,expiration")
             ->select();
         foreach ($data as $k => $v) {
             $data[$k]['count'] = Db::table($v['tb_name'])->count();
         }
         return $data;
+    }
+
+    public function setTableStatus()
+    {
+        $data = [
+            'status' => empty(input('status')) ? 0 : 1,
+            'expiration' => input('expiration')
+        ];
+        $res = Db::name('form_info')->where('id',input('id'))->update($data);
+        if($res > 0){
+            $return = json(['code' => 200,'msg'=> '保存成功']);
+        }else{
+            $return = json(['code' => 201,'msg'=> '没有做出修改']);
+        }
+        return $return;
     }
 
     public function goCreate()

@@ -20,6 +20,7 @@ class Login extends Controller
     public function announcepar($id){
         $data = Db::table('announcements') -> where('id',$id) ->find();
         $data['create_time'] = date('Y-m-d',$data['create_time']);
+        $data['contents'] = ($data['contents']);
         $this -> assign('data',$data);
         return $this->fetch("login/announcepar");
 

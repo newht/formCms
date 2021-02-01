@@ -14,7 +14,7 @@
         .title span{font-size: 13px;}
         .fanhui{text-align: center;position: relative;}
         .bottom{text-align: center;font-size: 13px;padding: 30px;}
-        .content p{white-space: pre-wrap;font-size: 15px;padding: 10px}
+        .contentp{white-space: pre-line;font-size: 15px;padding: 10px}
         /*pre{width: 600px}*/
         @media screen and (max-width: 1024px) {
             body {max-width: 1024px;}
@@ -33,14 +33,21 @@
                     <span>发布时间：{$data.create_time}</span>
                 </div>
             </div>
-            <p>{$data.contents}</p>
+            <div class="contentp" id="asd" style="">{$data.contents|raw}</div>
 <link rel="stylesheet" href="https://www.bootcss.com/p/buttons/css/buttons.css">
 <div class="fanhui"><a class="button button-uppercase button-primary" href="javascript:window.history.back(-1);">返回上页</a></div>
         </div>
     <div class="bottom">
         Copyright © 2007-2021 Tontru edu. All Rights Reserved. 蜀ICP备12002633号-5
     </div>
-    </div>
+    </div>
 </body>
 <script src="/static/jquery.min.js"></script>
+<script>
+    $(function () {
+        // let ss = "{$data.contents}";
+        // console.log(ss)
+        // $("#asd").html(ss)
+    })
+</script>
 </html>

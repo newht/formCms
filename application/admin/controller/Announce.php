@@ -16,19 +16,18 @@ use think\facade\View;
 class Announce extends Controller{
 
     public function announce_edit($id = ""){
-
         // return $id;
         if($id){
-
             $data = Db::table('announcements')->where('id',$id)->find(); 
             // echo "<pre>";var_dump($data);die;
+            $data['contents'] = ($data['contents']);
             $this->assign("data", $data);
-
+            dump($data);
         }
             return $this->fetch("announce/announce_edit");
-        
-        
+
     }
+
     public function announce(){
         $data = Db::table('announcements')->where('is_delete',0)->select();
         $this->assign("data", $data);
@@ -46,26 +45,21 @@ class Announce extends Controller{
     }
 
     public function anon_add(){
-
-        // var_dump($_POST['static']);
-        if(empty($_POST['static'])){
-            $is_static = 0;
-        }else{
-            $is_static = 1;    
-        }
-        $id = $_POST['id'];
-        $title = $_POST['title'];
-        $subtitle = $_POST['subtitle'];
-        $contents = $_POST['contents'];
-        if(empty($_POST['id'])){
-            $data = ['title' => $title, 'subtitle' =>  $subtitle,'is_static'=> $is_static,'contents'=>$contents,'create_time'=> time()];
+        $id = input('id');
+        $data = [
+            'title' => input('title'),
+            'subtitle' => input('subtitle'),
+            'contents' => (input('contents')),
+            'is_static' => empty(input('static')) ? 0 : 1,
+        ];
+        if(empty(input('id'))){
+            $data['create_time'] = time();
             Db::name('announcements')->data($data)->insert();
-            return $this->announce();
+            return (['code' => 200,'msg' => '添加成功']);
         }
-        $data = ['title' => $title, 'subtitle' =>  $subtitle,'is_static'=> $is_static,'contents'=>$contents,'update_time'=> time()];
+        $data['update_time'] = time();
         Db::name('announcements')->where('id', $id)->update($data);
-        return $this->announce();
- 
+        return ['code' => 200,'msg' => '修改成功'];
     }
 
     public function announce_del(){

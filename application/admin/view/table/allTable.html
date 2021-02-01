@@ -3,62 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <title>所有表单</title>
-    <link rel="stylesheet" href="/static/bootstrap-4.5.0/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
     <style>
         * {margin: 0 auto;}
         body{min-width: 960px}
         .div_top {font-size: 13px;line-height: 30px;margin-bottom: 20px;font-family: 微软雅黑;color: #a0a0a0}
-        .div01{float: left;width: 30%;border-radius: 8px;border: 5px solid #dbdbdb;padding: 10px;background: white;position:relative;height: calc(19vh);margin-right: 2.5%;margin-bottom: 20px}
+        .div01{float: left;width: 25%;border-radius: 8px;border: 5px solid #dbdbdb;padding: 10px;background: white;position:relative;height: calc(15vh);margin-right: 3%;margin-bottom: 20px}
         .div_title {line-height: 20px;font-size: 18px;}
-        .content{font-size:13px;position:absolute;bottom:10px;}
-        .content:last-child{right: 5px;bottom: 5px;width: 50px;line-height: 26px;background: #cccccc;color: black;text-align: center;border-radius: 2px;cursor: pointer}
-        .content:last-child:hover{border: 1px solid #A0A0A0}
+        .content1{font-size:13px;position:absolute;bottom:10px;}
+        .content1:last-child{right: 5px;bottom: 5px;width: 50px;line-height: 26px;background: #cccccc;color: black;text-align: center;border-radius: 2px;cursor: pointer}
+        .content1:last-child:hover{border: 1px solid #A0A0A0}
     </style>
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2311555_1w8gejba23l.css">
 </head>
 <body style="padding: 10px">
-<div class="div_top">
-   所有表格（点击修改表单）:
-</div>
-<div >
-    {foreach $data as $k => $v}
-    <div class="div01" tableid="{$v.id}" title="单机击进入修改">
-        <div class="div_title">
-            <i class="iconfont icon-yuandianxiao"></i>{$v.fname}
-        </div>
-        <div class="content">
-            已报名人数：{$v.count}人
-        </div>
-        <div class="content set-btn">
-            设置
-        </div>
+    <div class="div_top">
+        所有表格（点击修改表单）:
     </div>
-    {/foreach}
-</div>
+    <div >
+        {foreach $data as $k => $v}
+        <div class="div01" tableid="{$v.id}" title="单机击进入修改">
+            <div class="div_title">
+                <i class="iconfont icon-yuandianxiao"></i>{$v.fname}
+            </div>
+            <div class="content1">
+                已报名人数：{$v.count}人
+            </div>
+            <div class="content1 set-btn" status="{$v.status}" expiration="{$v.expiration}">
+                设置
+            </div>
+        </div>
+        {/foreach}
+    </div>
+    <div id="modal" style="display: none;padding: 20px">
+        <form class="layui-form">
+            <input type="hidden" name="id">
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否启用</label>
+                <div class="layui-inline">
+                    <input type="checkbox" name="status" lay-skin="switch" lay-text="启用|关闭" value="1" >
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">过期时间</label>
+                <div class="layui-inline">
+                    <input type="text" class="layui-input" name="expiration" id="expiration" placeholder=" 年 - 月 - 日  时:分:秒 ">
+                </div>
+            </div>
+        </form>
+    </div>
 </body>
 <script src="/static/jquery.min.js"></script>
-<script src="/static/bootstrap-4.5.0/js/bootstrap.js"></script>
+<script src="/static/layui/layui.js"></script>
 <script>
-    $(function () {
-        $(".div01").dblclick(function () {
-            // let con = confirm('请问你想修改表单还是查看申请数据');
-            // if (con) {
-            //     location.href = '/'
-            // } else {
-                location.href = '/table/' + $(this).attr('tableid');
-            // }
-            //location.href='/table/'+$(this).attr('tableid');
+    layui.use(['layer','form','laydate'],function () {
+        let layer = layui.layer;
+        let form = layui.form;
+        let laydate = layui.laydate;
+        laydate.render({
+            elem: '#expiration', //指定元素
+            type:'datetime'
+        });
+
+        $('.set-btn').click(function (event) {
+            let status = $(this).attr('status');
+            $("[name=status]").prop('checked',status === '1');
+            let expiration = $(this).attr('expiration');
+            $("[name=expiration]").val(expiration);
+            $("form:eq(0) [name=id]").val($(this).parent().attr('tableid'));
+            form.render();
+
+            layer.open({
+                title:'设置',
+                content:$('#modal'),
+                type:1,
+                offset:'100px',
+                shadeClose:true,
+                shade:0.5,
+                btn:['保存','取消'],
+                yes:function (index, layero) {
+                    let formdata = $('#modal form').serializeArray();
+                    $.ajax({
+                        url:'/admin/settablestatus',
+                        type:"post",
+                        dataType:'json',
+                        data:formdata,
+                        success:function(res){
+                            layer.msg(res.msg);
+                        }
+                    });
+                    // return false;
+                }
+            });
+            event.stopPropagation(); // 阻止事件冒泡
         })
+
+    });
+    $(function () {
+        $(".div01").click(function () {
+            location.href = '/table/' + $(this).attr('tableid');
+        });
 
         $(".div01").each(function () {
             if($(this).index()%3 === 0){
-                $(this).css('margin-left','2.5%')
+                $(this).css('margin-left','3.5%')
             }
-        })
-
-        $('.set-btn').click(function () {
-            alert(1)
-        })
+        });
     })
 </script>
 </html>

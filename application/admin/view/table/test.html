@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有表单</title>
+    <link rel="stylesheet" href="/static/bootstrap-4.5.0/css/bootstrap.css">
+    <style>
+        * {margin: 0 auto;}
+        body{min-width: 960px}
+        .div_top {font-size: 13px;line-height: 30px;margin-bottom: 20px;font-family: 微软雅黑;color: #a0a0a0}
+        .div01{float: left;width: 30%;border-radius: 8px;border: 5px solid #dbdbdb;padding: 10px;background: white;position:relative;height: calc(19vh);margin-right: 2.5%;margin-bottom: 20px}
+        .div_title {line-height: 20px;font-size: 18px;}
+        .content{font-size:13px;position:absolute;bottom:10px;}
+        .content:last-child{right: 5px;bottom: 5px;width: 50px;line-height: 26px;background: #cccccc;color: black;text-align: center;border-radius: 2px;cursor: pointer}
+        .content:last-child:hover{border: 1px solid #A0A0A0}
+    </style>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2311555_1w8gejba23l.css">
+</head>
+<body style="padding: 10px">
+<div class="div_top">
+    所有表格（点击修改表单）:
+</div>
+<div >
+    {foreach $data as $k => $v}
+    <div class="div01" tableid="{$v.id}" title="单机击进入修改">
+        <div class="div_title">
+            <i class="iconfont icon-yuandianxiao"></i>{$v.fname}
+        </div>
+        <div class="content">
+            已报名人数：{$v.count}人
+        </div>
+        <div class="content set-btn">
+            设置
+        </div>
+    </div>
+    {/foreach}
+</div>
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">模态框头部</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                模态框内容..
+            </div>
+
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+<script src="/static/jquery.min.js"></script>
+<script src="/static/bootstrap-4.5.0/js/bootstrap.js"></script>
+<script>
+    $(function () {
+        $(".div01").click(function () {
+            location.href = '/table/' + $(this).attr('tableid');
+        })
+
+        $(".div01").each(function () {
+            if($(this).index()%3 === 0){
+                $(this).css('margin-left','2.5%')
+            }
+        })
+
+        $('.set-btn').click(function (event) {
+            $("#myModal").modal('show');
+            event.stopPropagation(); // 阻止事件冒泡
+        })
+    })
+</script>
+</html>

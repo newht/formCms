@@ -75,6 +75,7 @@ Route::group("admin",function (){
     Route::rule("admin",'admin/User/show','get');
     Route::rule("drop",'admin/User/drop','get');
     Route::rule("alltable",'admin/Table/allTable','get');
+    Route::rule('settablestatus','admin/Table/setTableStatus','post');
     Route::rule('gocreate','admin/Table/goCreate','get');
     Route::rule('addtable','admin/Table/insertTable','post');
     Route::rule('auditstates','admin/Index/auditStates','post');
@@ -93,7 +94,7 @@ Route::group("admin",function (){
     Route::rule("announceedit/:id","admin/Announce/announce_edit","get");
     Route::rule("announceedits","admin/Announce/announce_edit","get");
     Route::rule("anon_del","admin/Announce/anon_del","post");
-    Route::rule("anon_addAnon","admin/Announce/anon_add","post");
+    Route::rule("anon_addanon","admin/Announce/anon_add","post");
     //个人基本信息设置
     Route::rule("baseinfo","admin/setting.BaseInfo/index","get");
     Route::rule("updatebaseinfo","admin/setting.BaseInfo/updateBaseInfo","post");
@@ -109,6 +110,10 @@ Route::group('pay',function (){
 
 Route::group('excel',function(){
    Route::rule('export','admin/excel.Export/index','get|post');
+});
+
+Route::group('layuiedit',function(){
+    Route::rule('uploadimg','admin/Layuiedit/uploadImg','post|get');
 });
 Route::post('in','admin/Login/in');
 
