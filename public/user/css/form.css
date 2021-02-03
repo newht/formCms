@@ -7,7 +7,7 @@
 .form form div span{display: inline-block;width: 13%}
 .form form div input{width: 85.5%;outline:none;border:0;border-bottom: 1px solid #ccc;padding: 3px;}
 .forget{text-align: right;font-size: 12px;padding: 5px 20px 35px 0}
-.submit{background: #66A381;text-align: center;padding: 13px 0;font-size: 17px;color: white;}
+.submit{background: #1b9af7;text-align: center;padding: 13px 0;font-size: 17px;color: white;}
 .submit:hover{cursor: pointer;}
 .registered{background: white;text-align: center;padding: 13px 0;font-size: 16px;color: #5d5d5d;margin: 15px 0;border: 1px solid #5d5d5d}
 a{text-decoration: none;}

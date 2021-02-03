@@ -49,12 +49,12 @@
                 alert('请确认已读诚信承诺书后点击注册！')
             }else{
                 let formdata = $("form").serializeArray();
-                let reg = /^[^_IOZSVa-z\W]{2}\d{6}[^_IOZSVa-z\W]{10}$/g;
-                if(!reg.test($('[name=unitcode]').val())){
-                    $('[name=unitcode]').prop('placeholder','企业税号格式不正确');
-                    $('[name=unitcode]').val('');
-                    return false;
-                }
+                // let reg = /^[^_IOZSVa-z\W]{2}\d{6}[^_IOZSVa-z\W]{10}$/g;
+                // if(!reg.test($('[name=unitcode]').val())){
+                //     $('[name=unitcode]').prop('placeholder','企业税号格式不正确');
+                //     $('[name=unitcode]').val('');
+                //     return false;
+                // }
                 if(!(/^1[3456789]\d{9}$/.test($("[name=phone]").val()))){
                     $('[name=phone]').prop('placeholder','手机号码有误，请重填');
                     $('[name=phone]').val('');
@@ -66,14 +66,14 @@
                     return false;
                 }
                 $.ajax({
-                    url:"/user/unitreg",
+                    url:"/unit/unitreg",
                     type:"post",
                     dataType:"json",
                     data:formdata,
                     success:function(res){
                         console.log(res);
                         if(res.code === 0){
-
+                            alert(res.msg);
                         }
                         if(res.code === 1){
                             alert('注册成功，点击确认返回登录界面');

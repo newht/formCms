@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>四川建设培训网</title>
+    <style>
+        body {background: url("/static/images/bg.png")no-repeat top center/100% ;}
+        .max{width: 70%;height: calc(81vh);padding: 5px 10px;}
+        *{margin: 0 auto;font-family: '微软雅黑';}
+        .logo{clear: both;box-sizing: border-box;right: 0;top: 0;display: block;margin-top: 0px;margin-right: 0px;text-align: center;}
+        .content{padding: 20px;background: white}
+        .title{margin-bottom: 10px;color: #0d8ddb}
+        .fanhui{text-align: center;position: relative;}
+        .bottom{text-align: center;font-size: 13px;padding: 30px;}
+        .contentp{white-space: pre-line;font-size: 15px;padding: 10px}
+        .contentlist{margin-bottom: 10px}
+
+        .listleft{width: 25%;display: inline-block;vertical-align: top;margin: 15px}
+        .listlefttitle{text-align: center;padding: 10px;background: #0d8ddb;color: white}
+        .listleft ul{list-style: none;padding: 0}
+        .listleft li{text-align: center;padding: 10px;background: #f9f9f9}
+        .listleft li i{float: right;color: #505457}
+        .lihover{background: #f1f1f1 !important;}
+        .listright{width: 65%;display: inline-block;border: 1px solid #bebebe;vertical-align: top;margin: 15px}
+        .listright li{margin:10px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size: 16px;color:#666666;}
+        .listright li a{color: #666666;text-decoration: none}
+        .listright ul{padding:0 5px;}
+        /*pre{width: 600px}*/
+        @media screen and (max-width: 1024px) {
+            body {max-width: 1024px;}
+            .max{width: 100%;height: calc(81vh);padding: 5px 10px;box-sizing: border-box;min-width: 320px}
+            .listleft{width: 100%;display: inline-block;border: 1px solid red;vertical-align: top}
+            .listright{width: 100%;display: inline-block;border: 1px solid #bebebe;vertical-align: top}
+            .listleft,.listright{margin: 0}
+            .listleft{display:none;}
+            .listright li{font-size: 13px}
+        }
+    </style>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2311555_80dmawzltts.css">
+    <link rel="stylesheet" href="https://www.bootcss.com/p/buttons/css/buttons.css">
+</head>
+<body>
+    <div class="max">
+        {include file='public/logo'}
+        <div class="content">
+            <div class="title">
+                <h3 >当前位置：首页 > 公告信息</h3>
+            </div>
+            <div class="contentlist">
+                <div class="listleft">
+                    <div class="listlefttitle">
+                        <h3>公告信息</h3>
+                    </div>
+                    <ul>
+                        <li class="lihover">新闻 <i class="icon-xiaosanjiao iconfont" ></i></li>
+                        <li>公告 <i class="icon-xiaosanjiao iconfont" ></i></li>
+                    </ul>
+                </div>
+                <div class="listright">
+                    <ul>
+                        {foreach $data as $v}
+                        <li>
+                            <i class="iconfont icon-yuandianxiao" style="vertical-align: middle"></i>
+                            <span style="float: right;margin: 0 5px 0 15%">2019-12-12</span>
+                            <a class="xiahuaxian" href="/announcepar/announcepar/{$v.id}">{$v.title}</a>
+                        </li>
+                        {/foreach}
+                    </ul>
+                </div>
+            </div>
+            <div class="fanhui"><a class="button button-uppercase button-primary" href="javascript:window.history.back(-1);">返回上页</a></div>
+        </div>
+    <div class="bottom">
+        Copyright © 2007-2021 Tontru edu. All Rights Reserved. 蜀ICP备12002633号-5
+    </div>
+    </div>
+</body>
+<script src="/static/jquery.min.js"></script>
+<script>
+    $(function () {
+        $('.listleft li').hover(function () {
+            $(this).addClass('lihover')
+            $(this).siblings().removeClass('lihover')
+        },function () {
+            $('.listleft li').removeClass('lihover');
+            $('.listleft li:eq(0)').addClass('lihover');
+        })
+    })
+</script>
+</html>

@@ -16,10 +16,13 @@ class Register extends Controller
     public function unitReg()
     {
         $data = input();
-        $res = Db::name('unit') ->strict(false) -> insert($data);
-        if($res > 0){
-            return json(['code' => 1, 'msg' => '注册成功', 'url' => '/unit/login']);
+        $seldata = Db::name('unit')->where('unitcode',$data['unitcode']) -> find();
+        if(empty($seldata)){
+            $res = Db::name('unit') ->strict(false) -> insert($data);
+            if($res > 0){
+                return json(['code' => 1, 'msg' => '注册成功', 'url' => '/unit/login']);
+            }
         }
-        return json(['code' => 0, 'msg' => '注册失败', 'url' => null]);
+        return json(['code' => 0, 'msg' => '注册失败,已存在的企业', 'url' => null]);
     }
 }

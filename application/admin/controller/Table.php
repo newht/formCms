@@ -65,7 +65,7 @@ class Table extends Controller
             $content = json_encode($content, JSON_UNESCAPED_UNICODE);
             $result = Db::table('form_info')->insert(['fname' => $fname, 'subtitle' => $subtitle, 'content' => $content, 'tb_name' => $tb_name,]);
             if ($result === 0) {
-                throw new Exception('数据添加失');
+                throw new Exception('数据添加失败');
             }
             Db::commit();
         } catch (Exception $e) {
@@ -89,12 +89,31 @@ class Table extends Controller
     public function saveTable($id)
     {
         $data = Db::table('form_info')
-            ->where('id', 'eq', $id)
-            ->find();
+            -> where('id', 'eq', $id)
+            -> find();
         $data['content'] = json_decode($data['content'], true);
-        dump($data['content']);
         $this->assign('data', $data);
         return $this->fetch('table/savetable');
     }
 
+    public function updateTable()
+    {
+        $data = input();
+        $data['content'] = json_encode($data['content'],JSON_UNESCAPED_UNICODE);
+        Db::startTrans();
+        try{
+            $res = Db::name('form_info') -> update($data);
+            if($res<1){
+                throw new Exception('没有更新数据');
+            }
+            $tb_name = Db::name('form_info') -> where('id',$data['id']) ->value('tb_name');
+            Db::query('DROP TABLE '.$tb_name);
+            $this -> createTable($tb_name,input('content'));
+            Db::commit();
+        }catch (Exception $e){
+            Db::rollback();
+            return ['code'=> 201,'error' => $e -> getMessage()];
+        }
+        return ['code'=>200,'msg'=>'更新完成'];
+    }
 }

@@ -87,20 +87,19 @@
             let text = editor.txt.html();
             let formdata = $('#form01').serializeArray();
             formdata.push({"name": "contents", "value": text});
-            console.log(formdata);
             $.ajax({
                 url: "/admin/anon_addanon",
                 type: "post",
                 data: formdata,
                 dataType: "json",
                 success: function (res) {
-                    console.log(res)
+                    if(res.code === 200){
+                        layer.msg(res.msg)
+                    }
                 }
             });
         });
     })
-
-
 </script>
 </body>
 </html>

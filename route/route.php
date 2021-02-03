@@ -20,21 +20,23 @@ Route::group('user',function (){
     Route::rule("gowrite/:id",'user/Forms/goWrite','get')->middleware('loginCheck');
     Route::rule("insert",'user/Forms/insert','post')->middleware('loginCheck');
     Route::rule("gorecording",'user/Recording/goRecording','get')->middleware('loginCheck');
-    //新加的公告
-    Route::rule('announce','user/Login/announce','get');
-    Route::rule('announcepar/:id','user/Login/announcepar','get');
-    Route::rule('null','user/Index/null','get');
+
     //忘记密码
     Route::rule("changepwd",'user/Login/changePwd','get');
     Route::rule("setpassword",'user/Login/setPassword','post');
     //修改密码
     Route::rule('updatepwd','user/Index/updatePwd','get');
     Route::rule('setupdatepwd','user/Index/setUpdatePwd','post');
+
+});
+Route::group('announcepar',function (){
+    Route::rule('announcepar/:id','user/Announcepar/announcepar','get');
+    Route::rule('list','user/Announcepar/dataList','get');
 });
 
 Route::group('unit',function (){
     Route::rule("register",'unit/Register/register','get');
-    Route::rule("unitregister",'unit/Register/unitRegister','get');
+    Route::rule("unitreg",'unit/Register/unitReg','post');
     Route::rule("login",'unit/Login/login','get');
     Route::rule("unitloignverifty",'unit/Login/unitLoignVerifty','post');
     Route::rule("index",'unit/Index/index','get') -> middleware('unitLoginCheck');
@@ -80,7 +82,8 @@ Route::group("admin",function (){
     Route::rule('addtable','admin/Table/insertTable','post');
     Route::rule('auditstates','admin/Index/auditStates','post');
     //修改表单
-    Route::get('savetable/:id','admin/Table/saveTable');
+    Route::rule('savetable/:id','admin/Table/saveTable','get');
+    Route::rule('updatetable','admin/Table/updateTable','post');
 
     Route::rule('gorbac','admin/Rbac/goRbac','get');
     Route::rule("setrbac","admin/Rbac/setRbac",'post');

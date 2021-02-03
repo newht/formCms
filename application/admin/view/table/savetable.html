@@ -9,7 +9,7 @@
     <link href="/my-control/css/fileinput.min.css" rel="stylesheet">
     <link href="/my-control/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://www.jq22.com/jquery/font-awesome.4.6.0.css">
-
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
     <link href="/my-control/form_builder/animate.min.css" rel="stylesheet">
     <link href="/my-control/form_builder/summernote.css" rel="stylesheet">
 
@@ -43,12 +43,12 @@
                                     <div class="ibox-content">
                                         <div class="row form-body form-horizontal m-t">
                                             <div class="col-md-12 droppable sortable ui-droppable ui-sortable">
-
+                                                <input type="hidden" id="formid" value="{$data.id}">
                                                 <!--标题-->
                                                 <div class="form-group draggable ui-draggable dropped">
                                                     <label class="col-sm-2 control-label">标题：</label>
                                                     <div class="col-sm-7">
-                                                        <input type="text" class="form-control" placeholder="请输入标题后保存">
+                                                        <input type="text" class="form-control" value="{$data.fname}" placeholder="请输入标题后保存">
                                                     </div>
                                                 </div>
 
@@ -56,7 +56,7 @@
                                                 <div class="form-group draggable ui-draggable dropped">
                                                     <label class="col-sm-2 control-label">副标题：</label>
                                                     <div class="col-sm-7">
-                                                        <input type="text" class="form-control" placeholder="请输入副标题后保存">
+                                                        <input type="text" class="form-control" value="subtitle" placeholder="请输入副标题后保存">
                                                     </div>
                                                 </div>
 
@@ -77,6 +77,33 @@
                                                                     <a class="edit-link" name="radio" title="设置"><i class="fa fa-cog fa-fw"></i></a><a class="remove-link"><i class="fa fa-trash-o"></i></a>
                                                                 </p>
                                                             </div>
+                                                        {/case}
+                                                        {case select}
+                                                            <div class="form-group draggable ui-draggable dropped">
+                                                                <label class="col-sm-2 control-label">{$v.comment}：</label>
+                                                                <div class="col-sm-7">
+                                                                    <select class="form-control">
+                                                                        {foreach $v.option as $m => $n}
+                                                                        <option value="{$n}">{$n}</option>
+                                                                        {/foreach}
+                                                                    </select>
+                                                                </div>
+                                                                <p class="tools col-sm-3"><a class="edit-link" name="select" title="设置"><i class="fa fa-cog fa-fw"></i></a><a class="remove-link"><i class="fa fa-trash-o"></i></a><label class="labcheck"><input type="checkbox"> 必填</label></p>
+                                                            </div>
+                                                        {/case}
+                                                        {case checkbox}
+                                                            <div class="form-group draggable ui-draggable dropped">
+                                                                <label class="col-sm-2 control-label">{$v.comment}：</label>
+                                                                <div class="col-sm-7">
+                                                                    {foreach $v.label as $m => $n}
+                                                                    <label class="radio-inline" style="padding-left:0px;"><input type="checkbox" name="默认1">{$n.label_chid_text}</label>
+                                                                    {/foreach}
+                                                                </div>
+                                                                <p class="tools col-sm-3"><a class="edit-link" name="checkbox" title="设置"><i class="fa fa-cog fa-fw"></i></a><a class="remove-link"><i class="fa fa-trash-o"></i></a></p>
+                                                            </div>
+                                                        {/case}
+                                                        {case textarea}
+                                                            <div class="form-group draggable ui-draggable dropped"><label class="col-sm-2 control-label">{$v.comment}：</label><div class="col-sm-7"><textarea class="form-control" placeholder="请输入文本"></textarea></div><p class="tools col-sm-3"><a class="edit-link" name="textarea" title="设置"><i class="fa fa-cog fa-fw"></i></a><a class="remove-link"><i class="fa fa-trash-o"></i></a><label class="labcheck"><input type="checkbox"> 必填</label></p></div>
                                                         {/case}
                                                     {/switch}
                                                 {/foreach}
@@ -158,6 +185,7 @@
 </div>
 </body>
 <script src="/static/jquery.min.js"></script>
+<script src="/static/layui/layui.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/my-control/javascript/fileinput.min.js"></script>
 <script src="/my-control/javascript/bootstrap-datetimepicker.min.js"></script>
@@ -168,14 +196,11 @@
 <script src="https://cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script src="/my-control/form_builder/beautifyhtml.js"></script>
 <script src="/my-control/javascript/index.js"></script>
-
 <script type="text/javascript">
+    layui.use('layer',function () {
+        let layer = layui.layer;
+    });
     $(function () {
-
-        var data= '<?php echo urlencode(json_encode($data))?>';
-
-        var list = eval(decodeURIComponent(data));
-        console.log(list);
 
         function inputType(obj) {
             let type = '';
@@ -190,63 +215,77 @@
         }
 
         $('#sub').click(function () {
-            let data = [];
-            let fname = '';
-            let subtitle = '';
-            $('.ibox-content').children('.form-body').children('.droppable').children('.draggable').each(function () {
-                let objData = {};
-                let label = $(this).children('label');
-                let labelText = label.text().replace('：', '');
-                if (labelText === '标题') {
-                    fname = label.next().children(':first').val();
-                    return true;
-                } else if(labelText === '副标题'){
-                    subtitle = label.next().children(':first').val();
-                    return true;
-                } else {
-                    objData['comment'] = labelText;
-                }
-                let labelNext = label.next();
-                let type = '';
-                let labelArray = [];
-                let optionArray = [];
-                labelNext.children().each(function () {
-                    type = $(this).prop('tagName').toLocaleLowerCase();
-                    if (type === 'label') {
-                        let temp = {};
-                        temp['label_chid_type'] = $(this).children(":first").prop('tagName').toLocaleLowerCase();
-                        if (temp['label_chid_type'] === 'input') {
-                            temp['label_chid_type'] = inputType($(this).children(":first"));
-                            type = temp['label_chid_type'];
+            layer.open({
+                title:'提示消息',
+                content:'请注意，修改后表单内数据会消失!',
+                icon:0,
+                btn:['确定','取消'],
+                yes:function (index , layou) {
+                    let data = [];
+                    let fname = '';
+                    let subtitle = '';
+                    $('.ibox-content').children('.form-body').children('.droppable').children('.draggable').each(function () {
+                        let objData = {};
+                        let label = $(this).children('label');
+                        let labelText = label.text().replace('：', '');
+                        if (labelText === '标题') {
+                            fname = label.next().children(':first').val();
+                            return true;
+                        } else if(labelText === '副标题'){
+                            subtitle = label.next().children(':first').val();
+                            return true;
+                        } else {
+                            objData['comment'] = labelText;
                         }
-                        temp['label_chid_text'] = $(this).text();
-                        labelArray.push(temp);
-                        objData['label'] = labelArray;
-                    } else if (type === 'input') {
-                        type = inputType($(this));
-                    } else if (type === 'select') {
-                        $(this).children('option').each(function () {
-                            optionArray.push($(this).text());
+                        let labelNext = label.next();
+                        let type = '';
+                        let labelArray = [];
+                        let optionArray = [];
+                        labelNext.children().each(function () {
+                            type = $(this).prop('tagName').toLocaleLowerCase();
+                            if (type === 'label') {
+                                let temp = {};
+                                temp['label_chid_type'] = $(this).children(":first").prop('tagName').toLocaleLowerCase();
+                                if (temp['label_chid_type'] === 'input') {
+                                    temp['label_chid_type'] = inputType($(this).children(":first"));
+                                    type = temp['label_chid_type'];
+                                }
+                                temp['label_chid_text'] = $(this).text();
+                                labelArray.push(temp);
+                                objData['label'] = labelArray;
+                            } else if (type === 'input') {
+                                type = inputType($(this));
+                            } else if (type === 'select') {
+                                $(this).children('option').each(function () {
+                                    optionArray.push($(this).text());
+                                });
+                                objData['option'] = optionArray;
+                            }
                         });
-                        objData['option'] = optionArray;
-                    }
-                });
-                objData['type'] = type;
-                data.push(objData);
-            });
+                        objData['type'] = type;
+                        data.push(objData);
+                    });
 
-            console.log(data);
-            if(fname === ''|| subtitle === ''||fname === null|| subtitle === null){
-                alert('请填写标题和副标题后提交！');
-                return false;
-            }
-            $.ajax({
-                url: "/admin/addtable",
-                type: "post",
-                dataType: "json",
-                data: {fname: fname, subtitle:subtitle, content: data},
-                success: function (e) {
-                    console.log(e)
+                    console.log(data);
+                    if(fname === ''|| subtitle === ''||fname === null|| subtitle === null){
+                        alert('请填写标题和副标题后提交！');
+                        return false;
+                    }
+                    let id = $("#formid").val();
+                    $.ajax({
+                        url: "/admin/updatetable",
+                        type: "post",
+                        dataType: "json",
+                        data: { id:id ,fname:fname , subtitle:subtitle , content:data },
+                        success: function (res) {
+                            if(res.code === 200){
+                                layer.msg(res.msg)
+                            }else{
+                                layer.msg('请联系管理员修改')
+                            }
+                            layer.close(index);
+                        }
+                    })
                 }
             })
         });

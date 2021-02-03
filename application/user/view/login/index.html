@@ -11,7 +11,7 @@
         .logo{clear: both;box-sizing: border-box;right: 0;top: 0;display: block;margin-top: 0px;margin-right: 0px;text-align: center;}
         .title{text-align: center;margin-bottom: 50px;}
         .login{margin: 20px 0;text-align: center;}
-        .login span{background: #66A381;margin: 5px 0;display: inline-block;width: 100%;font-size: 18px;padding: 10px 0;}
+        .login span{background: #1B9AF7;margin: 5px 0;display: inline-block;width: 100%;font-size: 18px;padding: 10px 0;}
         .login a{color: white}
         .affirm{border: 1px solid #4596E8;padding: 5px;}
         .bottom{text-align: center;font-size: 13px;padding: 30px;}
@@ -58,7 +58,7 @@
                 <i class="iconfont icon-liebiao">通知公告</i>
             </span>
             <span>
-                <a href="#">更多 >></a>
+                <a href="/announcepar/list">更多 >></a>
             </span>
         </div>
         <ul>
@@ -66,7 +66,7 @@
             <li>
                 <i class="iconfont icon-yuandianxiao" style="vertical-align: middle"></i>
                 <span style="float: right;margin: 0 5px 0 15%">2019-12-12</span>
-                <a class="xiahuaxian" href="/user/announcepar/{$v.id}">{$v.title}</a>
+                <a class="xiahuaxian" href="/announcepar/announcepar/{$v.id}">{$v.title}</a>
             </li>
             {/foreach}
         </ul>
