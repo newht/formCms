@@ -109,11 +109,6 @@ Route::group("admin",function (){
 
 });
 
-Route::group('pay',function (){
-    Route::rule('/',function (){
-        echo md5('1qaz2wsx');
-    });
-});
 
 Route::group('excel',function(){
    Route::rule('export','admin/excel.Export/index','get|post');
@@ -122,6 +117,18 @@ Route::group('excel',function(){
 Route::group('layuiedit',function(){
     Route::rule('uploadimg','admin/Layuiedit/uploadImg','post|get');
 });
+
+Route::group('pay',function (){
+    Route::rule('/',function (){
+        echo md5('1qaz2wsx');
+    });
+});
+Route::get('qrcodecreate','pay/Qrcodecreate/index');
+Route::get('createqrcode','pay/Pay/create');
+Route::get('wechatpay','pay/Pay/index');
+Route::get('paytest','pay/Pay/pay');
+Route::get('wechatnotify','pay/Pay/huidiao');
+
 Route::post('in','admin/Login/in');
 
 

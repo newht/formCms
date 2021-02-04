@@ -20,8 +20,8 @@
         "topthink/framework": "5.1.*",
         "topthink/think-captcha": "2.0.*",
         "phpoffice/phpspreadsheet": "^1.16",
-        "naixiaoxin/think-wechat": "^1.6"
-
+        "endroid/qrcode": "^3.9",
+        "overtrue/wechat": "~4.0"
     },
     "autoload": {
         "psr-4": {

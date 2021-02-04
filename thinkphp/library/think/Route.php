@@ -13,9 +13,11 @@ namespace think;
 
 use think\exception\RouteNotFoundException;
 use think\route\AliasRule;
+use think\route\Dispatch;
 use think\route\dispatch\Url as UrlDispatch;
 use think\route\Domain;
 use think\route\Resource;
+use think\route\Rule;
 use think\route\RuleGroup;
 use think\route\RuleItem;
 
@@ -26,7 +28,7 @@ class Route
      * @var array
      */
     protected $rest = [
-        'view'  => ['get', '', 'view'],
+        'index'  => ['get', '', 'index'],
         'create' => ['get', '/create', 'create'],
         'edit'   => ['get', '/<id>/edit', 'edit'],
         'read'   => ['get', '/<id>', 'read'],

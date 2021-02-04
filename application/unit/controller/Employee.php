@@ -27,7 +27,7 @@ class Employee extends Controller
         $cardid = input('cardid');
         $name = input('name');
         $phone = input('phone');
-        $password = substr($cardid,-6);
+        $password = md5(substr($cardid,-6));
         $pwdproblem = input('pwdproblem');
         $pwdanswer = input('pwdanswer');
         Db::startTrans();
