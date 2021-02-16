@@ -47,37 +47,69 @@ class Pay extends Controller
         return $this -> fetch('pay/pay');
     }
 
-//    protected $_config;
-//
-//    public  function __construct(){
-//        $this -> _config = [
-//            // 必要配置
-//            'app_id'             => 'wx73229bb5e20d94ea',
-//            'mch_id'             => '1605709892',
-//            'key'                => '1c63129ae9db9c60c3e8aa94d3e00495',   // API 密钥
-//            // 如需使用敏感接口（如退款、发送红包等）需要配置 API 证书路径(登录商户平台下载 API 证书)
-//            'cert_path'          => 'D:\wwwroot\bm.cdpx.org\public\static\cert\apiclient_cert.pem', // XXX: 绝对路径！！！！
-//            'key_path'           => 'D:\wwwroot\bm.cdpx.org\public\static\cert\apiclient_key.pem',      // XXX: 绝对路径！！！！
-//            'notify_url'         => 'http://bm.cdpx.org/wechatnotify',     // 你也可以在下单时单独设置来想覆盖它
-//        ];
-//    }
-
     public function pay()
     {
+
+
         $config = [
             // 必要配置
             'app_id'             => 'wx73229bb5e20d94ea',
             'mch_id'             => '1605709892',
             'key'                => '1c63129ae9db9c60c3e8aa94d3e00495',   // API 密钥
             // 如需使用敏感接口（如退款、发送红包等）需要配置 API 证书路径(登录商户平台下载 API 证书)
-            'cert_path'          => 'D:\wwwroot\bm.cdpx.org\public\static\cert\apiclient_cert.pem', // XXX: 绝对路径！！！！
-            'key_path'           => 'D:\wwwroot\bm.cdpx.org\public\static\cert\apiclient_key.pem',      // XXX: 绝对路径！！！！
+            'cert_path'          => 'E:\phpstudy_pro\WWW\think\public\static\cert\certapiclient_cert.pem',
+            'key_path'           => 'E:\phpstudy_pro\WWW\think\public\static\cert\apiclient_key.pem',
+//            'cert_path'          => 'D:\wwwroot\bm.cdpx.org\public\static\cert\apiclient_cert.pem', // XXX: 绝对路径！！！！
+//            'key_path'           => 'D:\wwwroot\bm.cdpx.org\public\static\cert\apiclient_key.pem',      // XXX: 绝对路径！！！！
             'notify_url'         => 'http://bm.cdpx.org/wechatnotify',     // 你也可以在下单时单独设置来想覆盖它
         ];
-        $app = Factory::payment($config);
 
-        $content = $app->scheme(000001);
-        $this -> create($content);
+        $config = [
+            'token'          => 'test',
+            'appid'          => 'wx73229bb5e20d94ea',
+            'appsecret'      => '1be88e8da232475cc27373db051925e5',
+            'encodingaeskey' => 'BJIUzE0gqlWy0GxfPp4J1oPTBmOrNDIGPNav1YFH5Z5',
+            // 配置商户支付参数（可选，在使用支付功能时需要）
+            'mch_id'         => "1605709892",
+            'mch_key'        => '1c63129ae9db9c60c3e8aa94d3e00495',
+            // 配置商户支付双向证书目录（可选，在使用退款|打款|红包时需要）
+            'ssl_key'        => 'E:\phpstudy_pro\WWW\think\public\static\cert\certapiclient_cert.pem',
+            'ssl_cer'        => 'E:\phpstudy_pro\WWW\think\public\static\cert\apiclient_key.pem',
+            // 缓存目录配置（可选，需拥有读写权限）
+//            'cache_path'     => '',
+        ];
+//        $app = Factory::payment($config);
+
+        // 创建接口实例
+        $wechat = new \WeChat\Pay($config);
+
+        // 组装参数，可以参考官方商户文档
+        $options = [
+            'body'             => '测试商品',
+            'out_trade_no'     => time(),
+            'total_fee'        => '1',
+            'openid'           => 'o38gpszoJoC9oJYz3UHHf6bEp0Lo',
+            'trade_type'       => 'JSAPI',
+            'notify_url'       => 'http://bm.cdpx.org/pay',
+            'spbill_create_ip' => '127.0.0.1',
+        ];
+
+        try {
+
+            // 生成预支付码
+            $result = $wechat->createOrder($options);
+
+            // 创建JSAPI参数签名
+            $options = $wechat->createParamsForJsApi($result['prepay_id']);
+
+            // @todo 把 $options 传到前端用js发起支付就可以了
+
+        } catch (Exception $e) {
+
+            // 出错啦，处理下吧
+            echo $e->getMessage() . PHP_EOL;
+
+        }
 
     }
 
@@ -111,4 +143,40 @@ class Pay extends Controller
 
         $response->send();
     }
+
+    public static function wxPay(){
+        $wxConfig = [
+            // 必要配置
+            'app_id'             => '',
+            'mch_id'             => '',
+            'key'                => '',   // API 密钥
+        ];
+        return Factory::payment($wxConfig);
+    }
+
+    public function usewxpay(){
+        try{
+
+            $out_trade_no = date('YmdHis');//订单号(14+14)
+            $total_fee    = $_POST['price']*100;//商品价格
+//            $total_fee    = 0.1*100;//商品价格
+            $app = self::wxPay();
+            $result = $app->order->unify([
+                'body' => $_POST['qstitle'],
+                'out_trade_no' => $out_trade_no,
+                'total_fee' => $total_fee,
+                'notify_url' => 'https://pay.weixin.qq.com/wxpay/pay.action', // 支付结果通知网址，如果不设置则会使用配置里的默认地址
+                'trade_type' => 'JSAPI', // 请对应换成你的支付方式对应的值类型
+                'openid' => $_POST['openid'],
+            ]);
+            $data = $app->jssdk->sdkConfig($result['prepay_id']);
+            return json_encode($data,true);
+        }catch (\Exception $e){
+            var_dump($e->getMessage());die;
+//            return ['code' => 0, 'msg' => '下订单失败'];
+        }
+    }
+
+
+
 }
