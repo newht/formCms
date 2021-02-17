@@ -93,7 +93,7 @@ class Pay extends Controller
             $message['product_id'] = 000001;
 
             $result = $app->order->unify([
-                'trade_type' => 'NATIVE',0
+                'trade_type' => 'NATIVE',
                 'product_id' => $message['product_id'], // $message['product_id'] 则为生成二维码时的产品 ID
                 // ...
             ]);
