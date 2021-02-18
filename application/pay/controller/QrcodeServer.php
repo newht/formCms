@@ -10,7 +10,7 @@ class QrcodeServer
 {
     protected $_qr;
     protected $_encoding        = 'UTF-8';              // 编码类型
-    protected $_size            = 300;                  // 二维码大小
+    protected $_size            = 200;                  // 二维码大小
     protected $_logo            = false;                // 是否需要带logo的二维码
     protected $_logo_url        = '';                   // logo图片路径
     protected $_logo_size       = 80;                   // logo大小

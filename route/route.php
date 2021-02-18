@@ -119,16 +119,11 @@ Route::group('layuiedit',function(){
 });
 
 Route::group('pay',function (){
-    Route::rule('/',function (){
-        echo 1;
-    });
+    Route::rule('/','pay/Pay/pay','get|post');
+    Route::rule('notify','pay/Pay/notify','get|post');
 });
 Route::get('qrcodecreate','pay/Qrcodecreate/index');
 Route::get('createqrcode','pay/Pay/create');
-Route::get('wechatpay','pay/Pay/index');
-Route::get('paytest','pay/Pay/pay');
-Route::get('wechatnotify','pay/Pay/huidiao');
-Route::post('usewxpay','pay/Pay/usewxpay');
 
 Route::post('in','admin/Login/in');
 

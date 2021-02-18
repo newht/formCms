@@ -25,7 +25,7 @@
                     <h3 style="color: #70A989">{$v.fname}</h3>
                     <h4>{$v.subtitle}</h4>
                     <label onclick="Unfold($(this));" style="cursor: pointer;user-select: none;">点击隐藏报名信息</label>
-                    <a href="" style="float: right;color: red">前往缴费</a>
+                    <span style="float: right;color: red;" onclick="pay()">前往缴费</span>
                     <div style="display: inline;">
                         <ul class="formdatas">
                             {foreach $v.formdatas as $m=>$n}
@@ -64,6 +64,29 @@
         }
 
 
+    }
+
+    layui.use('layer',function () {
+        let layer = layui.layer;
+
+    })
+    function pay(){
+        $.ajax({
+            url:'/pay',
+            type:'post',
+            dataType:'json',
+            data:{body:'我想试试 - 支付',total_fee:'1'},
+            success:function (res) {
+                console.log(res)
+                layer.open({
+                    type:1,
+                    title:'手机微信扫描二维码',
+                    content:13,
+                    offset:'auto',
+                    area:['220px','300px']
+                })
+            }
+        })
     }
 
     $(function () {
