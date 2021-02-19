@@ -14,7 +14,7 @@ class Pay extends Controller
         // 自定义二维码配置
         $config = [
             'title'         => true,
-            'title_content' => '请用微信扫码',
+//            'title_content' => '请用微信扫码',
         ];
         $qr_code = new QrcodeServer($config);
         $qr_img = $qr_code -> createServer($qr_url);
@@ -62,24 +62,17 @@ class Pay extends Controller
             'total_fee' => $mssage['total_fee'],
             'trade_type' => 'NATIVE'
         ]);
-        if($result['return_code']=='SUCCESS'){
-            if($result['result_code']=='SUCCESS'){
-                $this -> create($result['code_url']);
-                exit;
-            }
-            if($result['result_code']=='FAIL'){
-                echo $result['err_code_des'];
-                exit;
-            }
-        }
-        dump($result);
-        exit;
-
+        return $result;
     }
 
     public function notify()
     {
-
+        $config = $this -> setConfig();
+        $app = Factory::payment($config);
+        $response = $app->handlePaidNotify(function ($message, $fail) {
+            // 你的逻辑
+            return true;
+        });
+        $response->send();
     }
-
 }

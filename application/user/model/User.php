@@ -30,8 +30,8 @@ class User extends Model
 
     public function register($data)
     {
-        $olduser = User::where('cardid',$data['cardid'])->find();
-        if(empty($olduser)){
+//        $olduser = User::where('cardid',$data['cardid'])->find();
+//        if(empty($olduser)){
             $oldphone = User::where('phone',$data['phone'])->find();
             if(empty($oldphone)){
                 $data['password'] = md5(substr($data['phone'],-4));
@@ -43,7 +43,7 @@ class User extends Model
                 return ['code' => 0,'msg' => '注册失败','url' => null];
             }
             return ['code'=>0,'msg'=>'注册失败,该电话号码已注册','url'=>null];
-        }
-        return ['code'=>0,'msg'=>'注册失败,已存在的账号','url'=>null];
+//        }
+//        return ['code'=>0,'msg'=>'注册失败,已存在的账号','url'=>null];
     }
 }

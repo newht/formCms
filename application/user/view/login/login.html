@@ -5,6 +5,11 @@
     <title>登录</title>
     <link rel="stylesheet" href="/user/css/form.css">
 </head>
+<style>
+    @media screen and (max-width: 1024px) {
+        .form form div:first-child span{width: 35%}
+    }
+</style>
 <body>
 <div class="max">
     {include file='public/logo'}
@@ -12,7 +17,7 @@
     <div class="form">
         <form>
             <div>
-                <span>账号（注册时的电话号码）</span><input type="text" name="cardid" id="cardid" placeholder="请输入账号" autocomplete="off">
+                <span>账号(注册电话)</span><input type="text" name="cardid" id="cardid" placeholder="请输入账号" autocomplete="off">
             </div>
             <div>
                 <span>密码</span><input type="password" name="password" id="password" placeholder="请输入密码" autocomplete="off">
