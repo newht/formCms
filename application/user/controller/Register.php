@@ -18,7 +18,6 @@ class Register extends Controller
     {
         $user = new User();
         $data = input();
-        unset($data['password2']);
         $res = $user -> register($data);
         return $res;
     }

@@ -21,8 +21,7 @@
         "topthink/think-captcha": "2.0.*",
         "phpoffice/phpspreadsheet": "^1.16",
         "endroid/qrcode": "^3.9",
-        "overtrue/wechat": "~4.0",
-        "zoujingli/wechat-developer": "dev-master"
+        "overtrue/wechat": "~4.0"
     },
     "autoload": {
         "psr-4": {

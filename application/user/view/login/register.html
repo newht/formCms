@@ -17,10 +17,10 @@
     <div class="form">
         <form >
             <div><span>身份证号码</span><input name="cardid" type="text"></div>
-            <div><span>真实姓名</span><input name="name" type="text"></div>
+            <div><span>用戶名</span><input name="name" type="text"></div>
             <div><span>联系电话</span><input name="phone" type="text"></div>
-            <div><span>登录密码</span><input name="password" type="text"></div>
-            <div><span>确认密码</span><input name="password2" type="text"></div>
+            <!--<div><span>登录密码</span><input name="password" type="text"></div>-->
+            <!--<div><span>确认密码</span><input name="password2" type="text"></div>-->
             <!--<div><span>验证码</span><input type="text" style="width: 20%"><img width="100"  src="{:captcha_src()}" alt="captcha" /></div>-->
         </form>
         <div class="chengnuo">
@@ -60,11 +60,6 @@
                     $('[name=phone]').val('');
                     return false;
                 }
-                if(!($("[name=password]").val() === $("[name=password2]").val())){
-                    $('[name=password2]').prop('placeholder','密码不相同');
-                    $('[name=password2]').val('');
-                    return false;
-                }
                 $.ajax({
                     url:"/user/registerVerification",
                     type:"post",
@@ -76,7 +71,7 @@
                             alert(res.msg);
                         }
                         if(res.code === 1){
-                            alert('注册成功，点击确认返回登录界面');
+                            alert('注册成功，密码为手机号后四位，点击确认返回登录界面');
                             location.href = res.url
                         }
                     }
