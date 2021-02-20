@@ -29,7 +29,7 @@
                     <h3 style="color: #70A989">{$v.fname}</h3>
                     <h4>{$v.subtitle}</h4>
                     <label onclick="Unfold($(this));" style="cursor: pointer;user-select: none;">点击查看报名信息</label>
-                    <span class="paybtn" onclick="pay($(this))">前往缴费</span>
+                    <span class="paybtn" orderid="{$v.formdatas['订单id']|default=''}" onclick="pay($(this))">前往缴费</span>
                     <div style="display: inline;">
                         <ul class="formdatas" style="display: none">
                             {foreach $v.formdatas as $m=>$n}
@@ -56,8 +56,8 @@
 </body>
 <div style="display: none;text-align: center" id="layeropen" >
     <div style="height: 64px;background: #F2F2F2;text-align: left;font-size: 13px;padding: 0 10px;">
-        <br/>订单编号：<span><?php echo date('YmdHis').'18654789'; ?></span>
-        <br/>应付金额：￥ <span>0.01</span>
+        <br/>订单编号：<span></span>
+        <br/>应付金额：￥ <span></span>
     </div>
     <img src="" alt="" width="200" height="200" >
     <div>
@@ -85,16 +85,24 @@
 
     function pay(obj){
         console.log()
-        $.post('/pay',{body:obj.prev().prev().prev().text(),total_fee:1},function (res) {
-            console.log(res)
-            $('#layeropen img:eq(0)').prop('src','/createqrcode?qr_url='+res.code_url);
-            layer.open({
-                title:'收银台',
-                type:1,
-                area:['400px','400px'],
-                content:$('#layeropen')
-            });
+        let orderid = '';
+        $.post('/pay/getorder',{id:obj.attr('orderid')},function (e) {
+            // console.log(e);
+            // return false;
+            $('#layeropen div:first span:first').text(e.order.order_id);
+            $('#layeropen div:first span:last').text(e.order.money);
+            $.post('/pay',{body:e.order.fname,out_trade_no:e.order.order_id,total_fee:e.order.money*100},function (res) {
+                console.log(res)
+                $('#layeropen img:eq(0)').prop('src','/createqrcode?qr_url='+res.code_url);
+                layer.open({
+                    title:'收银台',
+                    type:1,
+                    area:['400px','400px'],
+                    content:$('#layeropen')
+                });
+            })
         })
+
     }
 
     function notify()

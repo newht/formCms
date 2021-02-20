@@ -31,7 +31,7 @@ class Table extends Controller
     {
         $data = [
             'status' => empty(input('status')) ? 0 : 1,
-            'expiration' => input('expiration')
+            'expiration' => empty(input('expiration')) ? null : input('expiration')
         ];
         $res = Db::name('form_info')->where('id',input('id'))->update($data);
         if($res > 0){
@@ -68,11 +68,11 @@ class Table extends Controller
                 throw new Exception('数据添加失败');
             }
             Db::commit();
+            return ['code'=>1,'error'=>null,'tb_name'=>$tb_name];
         } catch (Exception $e) {
             Db::rollback();
-            $result = $e->getMessage();
+            return ['code'=>0,'error'=>$e->getMessage()];
         }
-        return $result;
     }
 
     public function createTable($tabel_name, $content)
@@ -82,6 +82,7 @@ class Table extends Controller
             $sql .= "fie_" . $k . " text comment '" . $v['comment'] . "' ,";
         }
         $sql.="auditstates varchar(20) comment '审核状态' default '未审核')";
+        $sql.="orderid int comment '订单id')";
 //        $sql = substr($sql, 0, -1) . ")";
         return Db::execute($sql);
     }
@@ -115,5 +116,22 @@ class Table extends Controller
             return ['code'=> 201,'error' => $e -> getMessage()];
         }
         return ['code'=>200,'msg'=>'更新完成'];
+    }
+
+    //删除表单
+    public function del()
+    {
+        Db::startTrans();
+        try{
+            $tb_name = Db::name('form_info') -> where('id',input('id')) -> value('tb_name');
+            $sql = "drop table ".$tb_name;
+            Db::execute($sql);
+            Db::name('form_info') -> delete(input('id'));
+            Db::commit();
+            return ['code' => 1,'error'=> null];
+        }catch (Exception $e){
+            Db::rollback();
+            return ['code'=>0,'error'=>$e->getMessage()];
+        }
     }
 }

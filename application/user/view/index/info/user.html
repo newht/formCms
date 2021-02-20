@@ -79,14 +79,15 @@
         let title = document.getElementById(obj).parentElement.previousElementSibling.textContent;
         var index = layer.open({
             type: 1 //Page层类型
-            // ,area:
+            ,area: '200px'
+            ,offset: '100px'
             ,title: title
             ,shade: 0.6 //遮罩透明度
             ,maxmin: true //允许全屏最小化
             ,shadeClose: true //点击遮罩关闭层
             ,anim: Math.ceil(Math.random()*10) //0-6的动画形式，-1不开启
             , btn:[]
-            ,content:'',
+            ,content:"<img src='"+src+"' width='200'/>"
         });
     }
 

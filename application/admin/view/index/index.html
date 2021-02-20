@@ -49,11 +49,11 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                <li class="layui-nav-item">
+                <li class="layui-nav-item" id="date">
                     <a class="" href="javascript:;"><i class="layui-icon layui-icon-list">&nbsp;数据</i></a>
                     <dl class="layui-nav-child">
                         {foreach $data as $v}
-                        <dd><a href="/admin/getdata/{$v.tb_name}" target="iframe1">{$v.fname}</a></dd>
+                        <dd><a href="/admin/getdata/{$v.tb_name}" target="iframe1" title="{$v.fname}">{$v.fname}</a></dd>
                         {/foreach}
                     </dl>
                 </li>

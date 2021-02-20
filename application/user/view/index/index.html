@@ -16,8 +16,8 @@
                 <li>姓名：{$Think.session.user.name}</li>
                 <li>证件号：{$Think.session.user.cardid} </li>
                 <li>联系电话：{$Think.session.user.phone}</li>
-                <li>出生日期：<?php echo substr(session('user')['cardid'],6,4).'-'.substr(session('user')['cardid'],10,2).'-'.substr(session('user')['cardid'],12,2) ?></li>
-                <li>性别：<?php echo substr(session('user')['cardid'],-2,1)%2 === 1 ? '男' : '女' ?></li>
+                <li>出生日期：<?php  if(!empty(session('user')['cardid'])){echo substr(session('user')['cardid'],6,4).'-'.substr(session('user')['cardid'],10,2).'-'.substr(session('user')['cardid'],12,2);} ?></li>
+                <li>性别：<?php  if(!empty(session('user')['cardid'])){echo substr(session('user')['cardid'],-2,1)%2 === 1 ? '男' : '女';} ?></li>
             </ul>
             <div class="infobottom">
                 <a href="/user/updatepwd">修改密码</a>

@@ -217,6 +217,13 @@
                 data: {fname: fname, subtitle:subtitle, content: data},
                 success: function (e) {
                     console.log(e)
+                    if(e.code === 1){
+                        alert('添加成功');
+                        let _body = window.parent;
+                        $(_body.document.getElementById('date').lastElementChild).append('<dd><a href="/admin/getdata/'+e.tb_name+'" target="iframe1" >'+fname+'</a></dd>');
+                    }else{
+                        alert(e.error)
+                    }
                 }
             })
         });

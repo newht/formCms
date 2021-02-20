@@ -4,6 +4,7 @@ namespace app\user\controller;
 
 use think\Controller;
 use think\Db;
+use think\Exception;
 
 class Forms extends Controller
 {
@@ -22,10 +23,26 @@ class Forms extends Controller
         $data = input();
         unset($data['tb_name']);
         $data['id'] = session('user')['id'];
-        if(empty(Db::table($table) -> where('id',$data['id']) -> find())){
+        Db::startTrans();
+        try{
+            $bool = Db::table($table) -> where('id',$data['id']) -> find();
+            if(!empty($bool)){
+                throw new Exception('已报名该课程，前往查看报名记录');
+            }
+            //报名课程
             $num = Db::name($table) -> insert($data);
-            return ['code' => 1,'error' => null];
+            //生成订单
+            $form_info = Db::name('form_info') -> where('tb_name',$table) -> find();
+            $orderid = date('YmdHis').'878794';
+            $order = Db::name('orderinfo') -> insert(['order_id'=>$orderid,'form_id'=>$form_info['id'],'status'=>0]);
+            if($order != 1 ){
+                throw new Exception('添加订单失败');
+            }
+            Db::commit();
+            return ['code' => 1,'error' => null,'orderid'=>$orderid,'money'=>$form_info['money']*100,'body'=>$form_info['fname']];
+        }catch (Exception $e){
+            Db::rollback();
+            return ['code' => 0,'error' => $e -> getMessage()];
         }
-        return ['code' => 0,'error' => '已报名该课程'];
     }
 }

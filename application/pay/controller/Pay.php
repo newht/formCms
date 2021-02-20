@@ -3,6 +3,7 @@ namespace app\pay\controller;
 
 use EasyWeChat\Factory;
 use think\Controller;
+use think\Db;
 
 class Pay extends Controller
 {
@@ -54,15 +55,27 @@ class Pay extends Controller
     public function pay()
     {
         $mssage = input();
+        //微信下订单
         $config = $this -> setConfig();
         $app = Factory::payment($config);
         $result = $app->order->unify([
             'body' => $mssage['body'],
-            'out_trade_no' => date('Ymdhis'),
+            'out_trade_no' => $mssage['out_trade_no'],
             'total_fee' => $mssage['total_fee'],
             'trade_type' => 'NATIVE'
         ]);
         return $result;
+    }
+
+    public function getOrder()
+    {
+        $order = Db::name('orderinfo')
+            -> alias('t1')
+            -> field('t1.id,t1.status,t1.order_id,t1.create_time,t2.fname,t2.money')
+            -> join('form_info t2','t1.form_id = t2.id ')
+            -> where('t1.id',input('id'))
+            -> find();
+        return ['code'=>0,'order'=>$order];
     }
 
     public function notify()

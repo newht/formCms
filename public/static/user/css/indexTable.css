@@ -10,7 +10,7 @@
 /*input:hover{cursor:default}*/
 .info{margin-bottom: 20px;border: 1px solid #cccccc;}
 .infoTitle{font-size: 26px;padding: 5px 15px;border-bottom: 1px solid #e8e8e8;}
-.info ul li{padding: 15px 15px;border-bottom: 1px solid #e8e8e8;font-size: 12px;}
+.info ul li{padding: 15px 15px;border-bottom: 1px solid #e8e8e8;font-size: 13px;}
 .info ul li div{width: 80%;display: inline}
 .info ul li div label{color: #8f8f8f}
 .info ul li div input[type=text]{border: 0;margin-top: 3px;width: 100%;}

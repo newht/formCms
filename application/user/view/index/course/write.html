@@ -64,8 +64,8 @@
 </body>
 <div style="display: none;text-align: center" id="layeropen" >
     <div style="height: 64px;background: #F2F2F2;text-align: left;font-size: 13px;padding: 0 10px;">
-        <br/>订单编号：<span><?php echo date('YmdHis').'18654789'; ?></span>
-        <br/>应付金额：<span>￥ 0.01</span>
+        <br/>订单编号：<span></span>
+        <br/>应付金额：￥ <span></span>
     </div>
     <img src="" alt="" width="200" height="200" >
     <div>
@@ -97,9 +97,11 @@
                 dataType:"json",
                 data:data,
                 success:function(e){
-                    let msg;
+                    console.log(e)
                     if(e.code === 1){
-                        $.post('/pay',{body:$('.infoTitle').text(),total_fee:1},function (res) {
+                        $("#layeropen div:eq(0) span:first").text(e.orderid);
+                        $("#layeropen div:eq(0) span:last").text(e.money/100);
+                        $.post('/pay',{body:e.body,total_fee:e.money},function (res) {
                             console.log(res)
                             $('#layeropen img:eq(0)').prop('src','/createqrcode?qr_url='+res.code_url);
                             layer.open({
@@ -110,9 +112,18 @@
                             });
                         })
                     }else if(e.code === 0){
-                        layer.open({'title':'提示信息',btn:['确认'],content:e.error + '，前往查看报名记录',end:function(){location.href = '/user/gorecording';}});
+                        layer.open({
+                            type:0,
+                            title: '提示信息',
+                            btn: ['确认'],
+                            content: e.error,
+                            end: function () {
+                                if(e.error === '已报名该课程，前往查看报名记录') {
+                                    location.href = '/user/gorecording';
+                                }
+                            }
+                        });
                     }
-
                 }
             })
         })

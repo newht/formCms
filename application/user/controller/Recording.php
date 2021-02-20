@@ -34,7 +34,6 @@ class Recording extends Controller
             }
         }
         $this->assign('data', $data);
-//        dump($data);
         return $this->fetch('index/recording/index');
     }
 }

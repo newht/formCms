@@ -8,23 +8,26 @@
         * {margin: 0 auto;}
         body{min-width: 960px}
         .div_top {font-size: 13px;line-height: 30px;margin-bottom: 20px;font-family: 微软雅黑;color: #a0a0a0}
-        .div01{float: left;width: 25%;border-radius: 8px;border: 5px solid #dbdbdb;padding: 10px;background: white;position:relative;height: calc(15vh);margin-right: 3%;margin-bottom: 20px}
+        .div01{float: left;width: 19.6%;margin-bottom: 20px;margin-right:2.4%;border-radius: 8px;border: 5px solid #dbdbdb;padding: 10px;background: white;position:relative;height: calc(15vh);}
         .div_title {line-height: 20px;font-size: 18px;}
         .content1{font-size:13px;position:absolute;bottom:10px;}
         .content1:last-child{right: 5px;bottom: 5px;width: 50px;line-height: 26px;background: #cccccc;color: black;text-align: center;border-radius: 2px;cursor: pointer}
         .content1:last-child:hover{border: 1px solid #A0A0A0}
+        .icon-guanbi:hover{cursor: pointer;border: 1px solid #c5c5c5;background: #c5c5c5;color: white}
     </style>
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_2311555_1w8gejba23l.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2311555_jtf2c8qjr3.css">
 </head>
 <body style="padding: 10px">
     <div class="div_top">
         所有表格（点击修改表单）:
     </div>
-    <div >
+    <div>
         {foreach $data as $k => $v}
         <div class="div01" tableid="{$v.id}" title="单机击进入修改">
             <div class="div_title">
-                <i class="iconfont icon-yuandianxiao"></i>{$v.fname}
+                <i class="iconfont icon-yuandianxiao" style="float: left"></i>
+                <span style="width: 85%;display: inline-block">{$v.fname}</span>
+                <span style="float: right" onclick="event.stopPropagation();"><i class="iconfont icon-guanbi" title="删除"></i></span>
             </div>
             <div class="content1">
                 已报名人数：{$v.count}人
@@ -95,7 +98,11 @@
                         dataType:'json',
                         data:formdata,
                         success:function(res){
-                            layer.msg(res.msg);
+                            console.log(res)
+                            layer.msg(res.msg,{end:function () {
+                                    layer.close(index)
+                                }});
+
                         }
                     });
                     // return false;
@@ -111,10 +118,37 @@
         });
 
         $(".div01").each(function () {
-            if($(this).index()%3 === 0){
-                $(this).css('margin-left','3.5%')
+            if($(this).index()%4 === 0){
+                $(this).css('margin-left','2.4%')
+            }else{
+                $(this).css('margin-left',0)
             }
         });
+
+        $('.icon-guanbi').click(function () {
+            let obj = $(this);
+            layer.open({
+                title:'删除提示',
+                content:'您确定要删除该表单吗？',
+                icon:0,
+                btn:['确定','取消'],
+                yes:function (index , res) {
+                    $.post('/admin/delete',{id:obj.parent().parent().parent().attr('tableid')},function (e) {
+                        console.log(e)
+                        layer.close(index)
+                        obj.parent().parent().parent().remove();
+                        $(".div01").each(function () {
+                            if($(this).index()%4 === 0){
+                                $(this).css('margin-left','2.4%')
+                            }else{
+                                $(this).css('margin-left',0)
+                            }
+                        });
+                    })
+                }
+            })
+        })
+
     })
 </script>
 </html>

@@ -20,6 +20,7 @@
         <ul>
             {if count($data) > 0}
             {foreach $data as $v}
+            {if $v.status == 1}
             <a href="/user/gowrite/{$v.id}">
                 <li class="lione">
                     <img src="/static/images/user/icon.png" width='60' alt="">
@@ -29,6 +30,7 @@
                     </div>
                 </li>
             </a>
+            {/if}
             {/foreach}
             {else /}
             <li class="lione" style="font-size: 12px;color:#8F8F8F">

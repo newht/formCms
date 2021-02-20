@@ -84,6 +84,8 @@ Route::group("admin",function (){
     //修改表单
     Route::rule('savetable/:id','admin/Table/saveTable','get');
     Route::rule('updatetable','admin/Table/updateTable','post');
+    //删除
+    Route::rule('delete','admin/Table/del','post');
 
     Route::rule('gorbac','admin/Rbac/goRbac','get');
     Route::rule("setrbac","admin/Rbac/setRbac",'post');
@@ -121,6 +123,7 @@ Route::group('layuiedit',function(){
 Route::group('pay',function (){
     Route::rule('/','pay/Pay/pay','get|post');
     Route::rule('notify','pay/Pay/notify','get|post');
+    Route::rule('getorder','pay/Pay/getOrder','post');
 });
 Route::get('qrcodecreate','pay/Qrcodecreate/index');
 Route::get('createqrcode','pay/Pay/create');
