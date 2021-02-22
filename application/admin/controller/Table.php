@@ -19,7 +19,7 @@ class Table extends Controller
     public function getTables()
     {
         $data = Db::table("form_info")
-            ->field("id,fname,tb_name,subtitle,status,expiration")
+            ->field("id,fname,tb_name,subtitle,status,expiration,money")
             ->select();
         foreach ($data as $k => $v) {
             $data[$k]['count'] = Db::table($v['tb_name'])->count();
@@ -31,7 +31,8 @@ class Table extends Controller
     {
         $data = [
             'status' => empty(input('status')) ? 0 : 1,
-            'expiration' => empty(input('expiration')) ? null : input('expiration')
+            'expiration' => empty(input('expiration')) ? null : input('expiration'),
+            'money' => empty(input('money')) ? null : input('money')
         ];
         $res = Db::name('form_info')->where('id',input('id'))->update($data);
         if($res > 0){
@@ -81,7 +82,7 @@ class Table extends Controller
         foreach ($content as $k => $v) {
             $sql .= "fie_" . $k . " text comment '" . $v['comment'] . "' ,";
         }
-        $sql.="auditstates varchar(20) comment '审核状态' default '未审核')";
+        $sql.="auditstates varchar(20) comment '审核状态' default '未审核',";
         $sql.="orderid int comment '订单id')";
 //        $sql = substr($sql, 0, -1) . ")";
         return Db::execute($sql);

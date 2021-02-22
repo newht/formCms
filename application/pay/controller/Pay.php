@@ -67,6 +67,14 @@ class Pay extends Controller
         return $result;
     }
 
+    public function jsApipay()
+    {
+        $config = $this -> setConfig();
+        $payment = Factory::payment($config);
+        $jssdk = $payment->jssdk;
+        $json = $jssdk->bridgeConfig($prepayId);
+    }
+
     public function getOrder()
     {
         $order = Db::name('orderinfo')

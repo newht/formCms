@@ -21,15 +21,20 @@
             {if count($data) > 0}
             {foreach $data as $v}
             {if $v.status == 1}
+            <?php if(strtotime($v['expiration']) > time() || empty($v['expiration']) ){ ?>
             <a href="/user/gowrite/{$v.id}">
-                <li class="lione">
+                <li class="lione" >
                     <img src="/static/images/user/icon.png" width='60' alt="">
-                    <div>
-                        <h3>{$v.fname}</h3>
+                    <div >
+                        <h3>{$v.fname}(正在报名<?php if(!empty($v['expiration'])){ echo ','.date('Y年m月d日 H时i分s秒',strtotime($v['expiration'])).'截止';} ?>)</h3>
                         <h4>{$v.subtitle}</h4>
                     </div>
+                    <!--<div style="border: 1px solid red;">-->
+                        <!--截至时间：<span>2021年2月22日 14:00:00</span>-->
+                    <!--</div>-->
                 </li>
             </a>
+            <?php } ?>
             {/if}
             {/foreach}
             {else /}

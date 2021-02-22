@@ -108,11 +108,12 @@
                                                         src="/my-control/image/add_form_img02.png"></label>
                                             </div>
                                             <div id="datetime" class="form-group draggable ui-draggable btntext">
-                                                <label class="col-sm-12"><i class="fa fa-arrows"></i> 时间 <img
-                                                        src="/my-control/image/add_form_img06.png"></label>
+                                                <label class="col-sm-12"><i class="fa fa-arrows"></i> 时间 <img src="/my-control/image/add_form_img06.png"></label>
                                             </div>
                                             <!--<div id="file" class="form-group draggable ui-draggable btntext">-->
-                                            <!--<label class="col-sm-12"><i class="fa fa-arrows"></i> 上传 <img src="/my-control/image/add_form_img07.png"></label>-->
+                                                <!--<label class="col-sm-12">-->
+                                                    <!--<i class="fa fa-arrows"></i> 上传 <img src="/my-control/image/add_form_img07.png">-->
+                                                <!--</label>-->
                                             <!--</div>-->
                                             <!--<div id="picker" class="form-group draggable ui-draggable btntext">
                                                 <label class="col-sm-12"><i class="fa fa-arrows"></i> 省市区 <img src="image/add_form_img08.png"></label>
@@ -220,7 +221,8 @@
                     if(e.code === 1){
                         alert('添加成功');
                         let _body = window.parent;
-                        $(_body.document.getElementById('date').lastElementChild).append('<dd><a href="/admin/getdata/'+e.tb_name+'" target="iframe1" >'+fname+'</a></dd>');
+                        $(_body.document.getElementById('date').lastElementChild).append('<dd ><a href="/admin/getdata/'+e.tb_name+'" target="iframe1" >'+fname+'</a></dd>');
+                        $(_body.document.getElementById('iframe1')).prop('src','/admin/alltable');
                     }else{
                         alert(e.error)
                     }
