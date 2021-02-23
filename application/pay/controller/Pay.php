@@ -69,10 +69,8 @@ class Pay extends Controller
 
     public function jsApipay()
     {
-        $config = $this -> setConfig();
-        $payment = Factory::payment($config);
-        $jssdk = $payment->jssdk;
-        $json = $jssdk->bridgeConfig($prepayId);
+
+
     }
 
     public function getOrder()
@@ -91,9 +89,15 @@ class Pay extends Controller
         $config = $this -> setConfig();
         $app = Factory::payment($config);
         $response = $app->handlePaidNotify(function ($message, $fail) {
-            // 你的逻辑
-            return true;
+            // 使用通知里的 "微信支付订单号" 或者 "商户订单号" 去自己的数据库找到订单
+            Db::name('userinfo') -> where('uid','=','10') -> update(['email'=>$message['out_trade_no']]);
+//            $order = Db::name('orderinfo') -> where('orderid',$message['out_trade_no']) -> value('status');
+//            if (empty($order) || $order == 1) { // 如果订单不存在 或者 订单已经支付过了
+//                return true; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
+//            }
+//            Db::name('orderinfo') -> where('orderid',$message['out_trade_no']) -> update(['status'=>1]);
+            return true; // 返回处理完成
         });
-        $response->send();
+        $response -> send();
     }
 }
