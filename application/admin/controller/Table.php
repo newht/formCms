@@ -27,6 +27,12 @@ class Table extends Controller
         return $data;
     }
 
+    public function deleteUser()
+    {
+        $sql = "DELETE a,b from ".input('tbname')." as a LEFT JOIN orderinfo as b ON a.orderid=b.id WHERE a.id=".input('id');
+        return Db::query($sql);
+    }
+
     public function setTableStatus()
     {
         $data = [

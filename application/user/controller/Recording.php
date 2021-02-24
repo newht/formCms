@@ -16,6 +16,7 @@ class Recording extends Controller
         foreach ($data as $a => $v) {
             $temp = Db::table($v['tb_name'])->where('id', session('user')['id'])->find();
             if (!empty($temp)) {
+                $orderstatus = Db::name('orderinfo') -> where('id',$temp['orderid']) -> value('status');
                 $count =  Db::table($v['tb_name']) -> count();
                 $data[$a]['count'] = $count;
                 $sql = "SELECT COLUMN_NAME,column_comment FROM INFORMATION_SCHEMA.Columns WHERE table_name='" . $v['tb_name'] . "' AND table_schema='" . $database . "'";
@@ -27,6 +28,7 @@ class Recording extends Controller
                         }
                     }
                 }
+                $temp2['订单状态'] = empty($orderstatus) ? '待缴费' : '已缴费';
                 $data[$a]['formdatas'] = $temp2;
                 $temp2= [];
             } else {

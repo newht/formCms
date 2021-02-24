@@ -41,7 +41,9 @@
             <td><input type="checkbox" name="checkbox" ></td>
             {foreach $v as $m => $n}
             {if $m == 'auditstates'}
-            <td><input type="button" class="layui-btn {$n === '未审核' ? 'layui-btn-primary' : '' } layui-btn-xs" value="{$n}"></td>
+            <td><input type="button" class="layui-btn {$n === '未审核' ? 'layui-btn-primary' : '' } layui-btn-xs" name="auditstates" value="{$n}"></td>
+            {elseif $m == 'status'/}
+            <td><?php echo empty($n) ? '待缴费' : '已缴费'; ?></td>
             {else /}
             <td>{$n}</td>
             {/if}
@@ -53,7 +55,7 @@
         {/foreach}
     {else /}
     <tr>
-        <td colspan="10" style="text-align: center;font-size: 13px">没有数据</td>
+        <td colspan="<?php echo count($th)+2; ?>" style="text-align: center;font-size: 13px">没有数据</td>
     </tr>
     {/if}
 </table>
@@ -90,12 +92,10 @@
                 }
                 formdata.push(temp);
             });
-
             if(formdata.length === 0){
                 layer.open({title:"提示消息",content:"修改失败，请勾选后重试！",icon:2})
                 return false;
             }
-
             $.ajax({
                 url:"/admin/auditstates",
                 type:"post",
@@ -117,19 +117,69 @@
                 }
             })
         });
+        
+        $("[name=auditstates]").click(function () {
+            let auditstates = $(this).val() === '已审核' ? '未审核' : '已审核';
+            let obj = $(this);
+            let id = obj.parent().parent().children('td:eq(1)').text();
+            layer.open({
+                icon:0,
+                content:"你确定要修改？",
+                btn:['我确定','取消'],
+                yes:function (index , layero) {
+                    $.ajax({
+                        url:"/admin/auditstates",
+                        type:"post",
+                        dataType:"json",
+                        data:{tbname:tbname,data:[{id: id, auditstates: auditstates}]},
+                        success:function(res){
+                            console.log(res);
+                            if(res === 1){
+                                layer.open({
+                                    content:"修改成功",
+                                    icon:1,
+                                    end:function () {
+                                        obj.val(auditstates);
+                                        obj.toggleClass("layui-btn-primary");
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        });
 
         $("#checkbox").click(function () {
             $("[name=checkbox]").prop('checked',$(this).prop('checked'));
         });
         
         $('.layui-btn-danger').click(function () {
+            let obj = $(this);
+            let tbname = "{$th[0]['表名']}";
             layer.open({
                 content:"确定删除吗",
                 title:'删除提示',
                 icon:3,
-                btn:['我确定'],
+                btn:['我确定','取消'],
                 yes:function (index,layero) {
-                    layer.close(index)
+
+                    $.ajax({
+                        url:"/admin/deleteuser",
+                        type:"post",
+                        dataType:"json",
+                        data:{id:obj.parent().parent().parent().children('td:eq(1)').text(),tbname:tbname},
+                        success:function(res){
+                            console.log(res)
+                            layer.open({
+                                title: "删除提示",
+                                content: "删除成功",
+                                end: function () {
+                                    obj.parent().parent().parent().remove();
+                                }
+                            })
+                        }
+                    });
                 }
             })
         })

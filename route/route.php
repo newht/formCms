@@ -74,6 +74,8 @@ Route::group("admin",function (){
     Route::rule("/",'admin/Login/login','get');
     Route::rule("index",'admin/Index/index','get');
     Route::rule("getdata/:tb_name",'admin/Index/getData','get');
+    //删除报名信息
+    Route::rule("deleteuser","admin/Table/deleteUser",'post');
     Route::rule("admin",'admin/User/show','get');
     Route::rule("drop",'admin/User/drop','get');
     Route::rule("alltable",'admin/Table/allTable','get');
@@ -84,7 +86,7 @@ Route::group("admin",function (){
     //修改表单
     Route::rule('savetable/:id','admin/Table/saveTable','get');
     Route::rule('updatetable','admin/Table/updateTable','post');
-    //删除
+    //删除表单
     Route::rule('delete','admin/Table/del','post');
 
     Route::rule('gorbac','admin/Rbac/goRbac','get');

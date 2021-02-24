@@ -29,7 +29,7 @@
                     <h3 style="color: #70A989">{$v.fname}</h3>
                     <h4>{$v.subtitle}</h4>
                     <label onclick="Unfold($(this));" style="cursor: pointer;user-select: none;">点击查看报名信息</label>
-                    <span class="paybtn" orderid="{$v.formdatas['订单id']|default=''}" onclick="pay($(this))">前往缴费</span>
+                    <span class="paybtn" orderid="{$v.formdatas['订单id']|default=''}" onclick="pay($(this))"></span>
                     <div style="display: inline;">
                         <ul class="formdatas" style="display: none">
                             {foreach $v.formdatas as $m=>$n}
@@ -91,18 +91,26 @@
             $('#layeropen div:first span:last').text(e.order.money);
             $.post('/pay',{body:e.order.fname,out_trade_no:e.order.order_id,total_fee:e.order.money*100},function (res) {
                 console.log(res)
-                $('#layeropen img:eq(0)').prop('src','/createqrcode?qr_url='+res.code_url);
-                layer.open({
-                    title:'收银台',
-                    type:1,
-                    area:['400px','400px'],
-                    content:$('#layeropen')
-                });
+                if(res.return_code === "SUCCESS" ){
+                    if(res.result_code == "SUCCESS") {
+                        $('#layeropen img:eq(0)').prop('src', '/createqrcode?qr_url=' + res.code_url);
+                        layer.open({
+                            title: '收银台',
+                            type: 1,
+                            area: ['400px', '400px'],
+                            content: $('#layeropen')
+                        });
+                    }else if(res.result_code == "FAIL"){
+                        layer.open({
+                            title: '提示信息',
+                            type: 0,
+                            content: '已缴费'
+                        });
+                    }
+                }
             })
         })
     }
-
-
 
     function isWeiXin(){
         var ua = window.navigator.userAgent.toLowerCase();
@@ -114,6 +122,15 @@
     }
 
     $(function () {
+        $(".paybtn").each(function () {
+            let text  = $(this).next().children('ul').children('li').last().children('span').text();
+            if(text==='已缴费'){
+                $(this).text(text);
+                $(this).css('color','#87B6A2')
+            }else{
+                $(this).text('前往缴费');
+            }
+        });
 
         $("input").prop('autocomplete','off');
         $('.lione:last').css('border-bottom',0)

@@ -24,8 +24,23 @@ class Index extends Controller
           LEFT JOIN information_schema.columns b ON a.table_name = b.table_name
           WHERE a.table_schema = '" . $database . "'
           and a.table_name = '" . $tb_name . "'
+          or a.table_name = 'orderinfo'
           ORDER BY a.table_name");
-        $data = Db::table($tb_name) -> select();
+        $str = '';
+        foreach ($th as $k => $v){
+            if($v['表名'] == $tb_name &&  $v['字段说明'] != '订单id'){
+                $str .= $tb_name."." . $v['字段名'] . ",";
+            }else if($v['表名'] == 'orderinfo' && $v['字段说明'] == '订单状态'){
+                $str .= "orderinfo." . $v['字段名'] . ",";
+            }else{
+                unset($th[$k]);
+            }
+        }
+        $str = substr($str,0,-1);
+
+        $sql = "select " . $str ." from ".$tb_name." left join orderinfo on " .$tb_name.".orderid = orderinfo.id";
+        $data = Db::query($sql);
+//        $data = Db::table($tb_name) -> select();
         $this->assign('th', $th);
         $this->assign('data', $data);
         $this->assign('jsonData', json_encode($data));

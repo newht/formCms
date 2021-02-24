@@ -27,6 +27,14 @@ class Info extends Controller
                 return ['code' => 0,'error' => $file->getError()];
             }
         }
+
+        if(!empty(input('name'))){
+            session('user')['name'] = input('name');
+            return Db::name("user") -> where('id',$uid) -> update($data);
+        }else if(!empty(input('cardid'))){
+            session('user')['cardid'] = input('cardid');
+            return Db::name("user") -> where('id',$uid) -> update($data);
+        }
         return Db::name("userinfo") -> where('uid',$uid) -> update($data);
     }
 

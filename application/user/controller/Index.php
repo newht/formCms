@@ -13,7 +13,10 @@ class Index extends Controller
 
     public function goInfo()
     {
-        $data = Db::table('userinfo') -> where('uid',session('user')['id']) -> find();
+        $data = Db::table('userinfo')
+            -> join('user','userinfo.uid = user.id')
+            -> where('uid',session('user')['id'])
+            -> find();
 
         $this -> assign('data',$data);
         return $this -> fetch("index/info/user");
