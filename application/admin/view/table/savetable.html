@@ -280,7 +280,10 @@
                         success: function (res) {
                             console.log(res)
                             if(res.code === 200){
-                                layer.msg(res.msg)
+                                layer.msg(res.msg,{time:700,end:function () {
+                                        let _body = window.parent;
+                                        $(_body.document.getElementById('iframe1')).prop('src','/admin/alltable');
+                                    }})
                             }else{
                                 layer.msg('请联系管理员修改')
                             }

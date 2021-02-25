@@ -59,6 +59,12 @@
                     <input type="text" class="layui-input" name="money" >
                 </div>
             </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">首页显示</label>
+                <div class="layui-inline">
+                    <input type="checkbox" name="isshow" lay-skin="switch" lay-text="on|off" value="1" >
+                </div>
+            </div>
         </form>
     </div>
 </body>
@@ -88,7 +94,7 @@
                 title:'设置',
                 content:$('#modal'),
                 type:1,
-                offset:'100px',
+                offset:'30px',
                 shadeClose:true,
                 shade:0.5,
                 btn:['保存','取消'],

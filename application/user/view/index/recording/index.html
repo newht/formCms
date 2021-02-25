@@ -100,6 +100,7 @@
                             area: ['400px', '400px'],
                             content: $('#layeropen')
                         });
+                        setTimeout(layerclose,3000)
                     }else if(res.result_code == "FAIL"){
                         layer.open({
                             title: '提示信息',
@@ -140,5 +141,25 @@
         })
 
     })
+
+    function layerclose(){
+        $.ajax({
+            url:"/pay/getorderstatus",
+            type:"post",
+            dataType:"json",
+            data:{orderid:$('#layeropen div:first span:first').text()},
+            success:function(res){
+                console.log(res);
+                if(res === 1){
+                    layer.close(layer.index);
+                    layer.open({content:'缴费成功',icon:1,yes:function () {
+                            location.href = "/user/gorecording"
+                        }})
+                }else{
+                    setTimeout(layerclose,1500)
+                }
+            }
+        })
+    }
 </script>
 </html>

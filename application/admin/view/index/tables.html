@@ -43,7 +43,7 @@
             {if $m == 'auditstates'}
             <td><input type="button" class="layui-btn {$n === '未审核' ? 'layui-btn-primary' : '' } layui-btn-xs" name="auditstates" value="{$n}"></td>
             {elseif $m == 'status'/}
-            <td><?php echo empty($n) ? '待缴费' : '已缴费'; ?></td>
+            <td><?php echo $n==1 ? '已缴费' : '待缴费'; ?></td>
             {else /}
             <td>{$n}</td>
             {/if}

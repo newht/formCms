@@ -127,6 +127,7 @@ Route::group('pay',function (){
     Route::rule('notify','pay/Pay/notify','get|post');
     Route::rule('getorder','pay/Pay/getOrder','post');
     Route::rule('jsapipay','pay/Pay/jsApipay','get|post');
+    Route::rule('getorderstatus','pay/Pay/getOrderStatus','post');
 });
 Route::get('qrcodecreate','pay/Qrcodecreate/index');
 Route::get('createqrcode','pay/Pay/create');

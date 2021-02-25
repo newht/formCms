@@ -33,7 +33,7 @@ class Forms extends Controller
             //生成订单
             $form_info = Db::name('form_info') -> where('tb_name',$table) -> find();
             $orderid = date('YmdHis').'878794';
-            $order = Db::name('orderinfo') -> insertGetId(['order_id'=>$orderid,'form_id'=>$form_info['id'],'status'=>0]);
+            $order = Db::name('orderinfo') -> insertGetId(['order_id'=>$orderid,'form_id'=>$form_info['id'],'status'=>2]);
             $data['orderid'] = $order;
             //报名课程
             $num = Db::name($table) -> insert($data);

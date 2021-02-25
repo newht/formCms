@@ -5,6 +5,7 @@
     <title>教育报名系统</title>
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <link rel="stylesheet" href="/static/user/css/indexTable.css">
+    <link rel="stylesheet" href="/my-control/css/FMulSelectUI.min.css">
     <style>
 
         .info ul li input[type=button]{padding: 5px 15px}
@@ -22,44 +23,52 @@
             <form>
                 <input type="hidden" name="tb_name" value="{$form.tb_name}">
                 {foreach $form.content as $k => $v}
-                <li><div>
-                    <label for="fie_{$k}">{$v.comment}</label>
-                    {if $v.type == 'text'}
-                    <input type="text" id="fie_{$k}" name="fie_{$k}" value="">
-                    {/if}
-                    {if $v.type == 'select'}
-                    <select name="fie_{$k}" id="fie_{$k}">
-                        {foreach $v.option as $m => $n}
-                        <option value="{$n}">{$n}</option>
-                        {/foreach}
-                    </select>
-                    {/if}
-                    {if $v.type == 'checkbox'}
-                    <div style="margin-top: 3px;display: block">
-                        {foreach $v.label as $m => $n}
-                        <input type="checkbox" name="fie_{$k}" id="checkbox_{$m}" value="{$n.label_chid_text}"><label for="checkbox_{$m}">{$n.label_chid_text}</label>
-                        {/foreach}
+                <li>
+                    <div>
+                        <label for="fie_{$k}">{$v.comment}</label>
+                        {if $v.type == 'text'}
+                        <input type="text" id="fie_{$k}" name="fie_{$k}" value="">
+                        {/if}
+                        {if $v.type == 'select'}
+                        <select name="fie_{$k}" id="fie_{$k}">
+                            {foreach $v.option as $m => $n}
+                            <option value="{$n}">{$n}</option>
+                            {/foreach}
+                        </select>
+                        {/if}
+                        {if $v.type == 'checkbox'}
+                        <div style="margin-top: 3px;display: block">
+                            {foreach $v.label as $m => $n}
+                            <input type="checkbox" name="fie_{$k}" id="checkbox_{$m}" value="{$n.label_chid_text}"><label for="checkbox_{$m}">{$n.label_chid_text}</label>
+                            {/foreach}
+                        </div>
+                        {/if}
+                        {if $v.type == 'radio'}
+                        <div style="margin-top: 3px;display: block">
+                            {foreach $v.label as $m => $n}
+                            <input type="radio" name="fie_{$k}" value="{$n.label_chid_text}" id="radio_{$m}"><label for="radio_{$m}">{$n.label_chid_text}</label>
+                            {/foreach}
+                        </div>
+                        {/if}
+                        {if $v.type == 'textarea'}
+                        <div style="margin-top: 3px;display: block;width: 100%">
+                            <textarea name="fie_{$k}" id="fie_{$k}" rows="3"></textarea>
+                        </div>
+                        {/if}
+                        {if $v.type == ''}
+                        <div>
+                            <div id="mulselectbox1"></div>
+                        </div>
+                        {/if}
                     </div>
-                    {/if}
-                    {if $v.type == 'radio'}
-                    <div style="margin-top: 3px;display: block">
-                        {foreach $v.label as $m => $n}
-                        <input type="radio" name="fie_{$k}" value="{$n.label_chid_text}" id="radio_{$m}"><label for="radio_{$m}">{$n.label_chid_text}</label>
-                        {/foreach}
-                    </div>
-                    {/if}
-                    {if $v.type == 'textarea'}
-                    <div style="margin-top: 3px;display: block;width: 100%">
-                        <textarea name="fie_{$k}" id="fie_{$k}" rows="3"></textarea>
-                    </div>
-                    {/if}
-                </div></li>
+                </li>
                 {/foreach}
                 <li><div><input type="button" id="submit" value="确认信息并报名"></div></li>
             </form>
         </ul>
     </div>
 </div>
+
 {include file='public/webbottom'}
 </body>
 <div style="display: none;text-align: center" id="layeropen" >
@@ -73,14 +82,188 @@
     </div>
 </div>
 <script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/my-control/javascript/FMulSelectUI.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
     layui.use('layer',function () {
         let layer = layui.layer;
-    })
+    });
+
+    let datas = [
+        {
+            name1: "河北省",
+            id: 2,
+            child: [
+                {
+                    name1: "石家庄市",
+                    id: 21,
+                    child: [
+                        {
+                            name1: "长安区",
+                            id: 211
+                        },
+                        {
+                            name1: "裕华区",
+                            id: 212
+                        },
+                        {
+                            name1: "新华区",
+                            id: 213
+                        }
+                    ]
+                },
+                {
+                    name1: "沧州市",
+                    id: 22,
+                    child: [
+                        {
+                            name1: "新华区",
+                            id: 221
+                        },
+                        {
+                            name1: "运河区",
+                            id: 222
+                        }
+                    ]
+                },
+                {
+                    name1: "秦皇岛市",
+                    id: 23,
+                    child: [
+                        {
+                            name1: "山海关区",
+                            id: 231
+                        },
+                        {
+                            name1: "北戴河区",
+                            id: 232
+                        }
+                    ]
+                }
+            ]
+        },{
+            name1: "河北省",
+            id: 2,
+            child: [
+                {
+                    name1: "石家庄市",
+                    id: 21,
+                    child: [
+                        {
+                            name1: "长安区",
+                            id: 211
+                        },
+                        {
+                            name1: "裕华区",
+                            id: 212
+                        },
+                        {
+                            name1: "新华区",
+                            id: 213
+                        }
+                    ]
+                },
+                {
+                    name1: "沧州市",
+                    id: 22,
+                    child: [
+                        {
+                            name1: "新华区",
+                            id: 221
+                        },
+                        {
+                            name1: "运河区",
+                            id: 222
+                        }
+                    ]
+                },
+                {
+                    name1: "秦皇岛市",
+                    id: 23,
+                    child: [
+                        {
+                            name1: "山海关区",
+                            id: 231
+                        },
+                        {
+                            name1: "北戴河区",
+                            id: 232
+                        }
+                    ]
+                }
+            ]
+        },{
+            name1: "河北省",
+            id: 2,
+            child: [
+                {
+                    name1: "石家庄市",
+                    id: 21,
+                    child: [
+                        {
+                            name1: "长安区",
+                            id: 211
+                        },
+                        {
+                            name1: "裕华区",
+                            id: 212
+                        },
+                        {
+                            name1: "新华区",
+                            id: 213
+                        }
+                    ]
+                },
+                {
+                    name1: "沧州市",
+                    id: 22,
+                    child: [
+                        {
+                            name1: "新华区",
+                            id: 221
+                        },
+                        {
+                            name1: "运河区",
+                            id: 222
+                        }
+                    ]
+                },
+                {
+                    name1: "秦皇岛市",
+                    id: 23,
+                    child: [
+                        {
+                            name1: "山海关区",
+                            id: 231
+                        },
+                        {
+                            name1: "北戴河区",
+                            id: 232
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+
+    $('#mulselectbox1').FMulSelect({
+        // width: 500,  // 宽度，默认自动
+        height: 32,  // 高度，默认30px
+        levels: 3,   // 联动级别数量，默认 3级 ,可配置范围 1-n，理论上没有上限
+        data: datas, // 数据源，json格式
+        levelNames: ['省', '市', '区'],//每个级别的名称，如省市区
+        dataKeyNames: {  //配置数据源的key值 默认为 id  name  child
+            "id": "id",
+            "name": "name1",
+            "childs": "child"
+        }
+    });
     $(function () {
         $('.info ul li:last').css('border',0);
         $("input").prop('autocomplete','off');
+        $("li").click(function () {
+            $(this).children('div').children('input:text').focus();
+        });
 
         $("#submit").click(function () {
             let obj = $(this);
@@ -101,15 +284,19 @@
                     if(e.code === 1){
                         $("#layeropen div:eq(0) span:first").text(e.orderid);
                         $("#layeropen div:eq(0) span:last").text(e.money/100);
-                        $.post('/pay',{body:e.body,total_fee:e.money},function (res) {
+                        $.post('/pay',{body:e.body,total_fee:e.money,out_trade_no:e.orderid},function (res) {
                             console.log(res)
                             $('#layeropen img:eq(0)').prop('src','/createqrcode?qr_url='+res.code_url);
                             layer.open({
                                 title:'收银台',
                                 type:1,
                                 area:['400px','400px'],
-                                content:$('#layeropen')
+                                content:$('#layeropen'),
+                                end:function () {
+                                    payindex = 500;
+                                }
                             });
+                            setTimeout(layerclose,3000);
                         })
                     }else if(e.code === 0){
                         layer.open({
@@ -126,9 +313,32 @@
                     }
                 }
             })
-        })
+        });
     })
 
+    let payindex = 0;
 
+    function layerclose(){
+        if(payindex < 240){
+            $.ajax({
+                url:"/pay/getorderstatus",
+                type:"post",
+                dataType:"json",
+                data:{orderid:$('#layeropen div:first span:first').text()},
+                success:function(res){
+                    console.log(res);
+                    if(res === 1){
+                        layer.close(layer.index);
+                        layer.open({content:'缴费成功',icon:1,yes:function () {
+                                location.href = "/user/gorecording"
+                            }})
+                    }else{
+                        payindex += 1;
+                        setTimeout(layerclose,1500)
+                    }
+                }
+            })
+        }
+    }
 </script>
 </html>

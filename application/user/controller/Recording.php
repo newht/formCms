@@ -28,7 +28,7 @@ class Recording extends Controller
                         }
                     }
                 }
-                $temp2['订单状态'] = empty($orderstatus) ? '待缴费' : '已缴费';
+                $temp2['订单状态'] = $orderstatus == 2 ? '待缴费' : '已缴费';
                 $data[$a]['formdatas'] = $temp2;
                 $temp2= [];
             } else {
