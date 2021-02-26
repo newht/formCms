@@ -42,7 +42,7 @@ class Forms extends Controller
                 throw new Exception('添加订单失败'.$order);
             }
             Db::commit();
-            return ['code' => 1,'error' => null,'orderid'=>$orderid,'money'=>$form_info['money']*100,'body'=>$form_info['fname']];
+            return ['code' => 1,'error' => null,'order'=>$order,'orderid'=>$orderid,'money'=>$form_info['money']*100,'body'=>$form_info['fname']];
         }catch (Exception $e){
             Db::rollback();
             return ['code' => 0,'error' => $e -> getMessage()];

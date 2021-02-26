@@ -32,10 +32,26 @@ class Pay extends Controller
         exit;
     }
 
-    //微信支付
+    //微信支付（native）收银台
     public function index()
     {
-        return $this -> fetch('pay/pay');
+        $id = input('id');
+        $data = Db::name('orderinfo')
+            -> alias('t1')
+            -> join('form_info t2','t1.form_id=t2.id')
+            -> where('t1.id',$id)
+            -> find();
+        $pay_info = $this -> pay(['body' => $data["fname"],"out_trade_no" => $data["order_id"],"total_fee" => $data["money"]*100]);
+        if($pay_info['return_code']== "SUCCESS") {
+            if($pay_info['result_code'] == "FAIL"){
+                return $this -> error($pay_info["err_code_des"],"/user/gorecording");
+            }
+            $data["pay_info"] = $pay_info;
+            $this -> assign('data',$data);
+//            dump($data);
+            return $this -> fetch('pay/pay');
+        }
+        return redirect("/user/gorecording");
     }
 
     public function setConfig()
@@ -52,9 +68,11 @@ class Pay extends Controller
         ];
     }
 
-    public function pay()
+    public function pay($mssage = array())
     {
-        $mssage = input();
+        if(empty($mssage)){
+            $mssage = input();
+        }
         //微信下订单
         $config = $this -> setConfig();
         $app = Factory::payment($config);

@@ -71,16 +71,16 @@
 
 {include file='public/webbottom'}
 </body>
-<div style="display: none;text-align: center" id="layeropen" >
-    <div style="height: 64px;background: #F2F2F2;text-align: left;font-size: 13px;padding: 0 10px;">
-        <br/>订单编号：<span></span>
-        <br/>应付金额：￥ <span></span>
-    </div>
-    <img src="" alt="" width="200" height="200" >
-    <div>
-        <img src="/static/images/payexplain.png" width="200" alt="">
-    </div>
-</div>
+<!--<div style="display: none;text-align: center" id="layeropen" >-->
+    <!--<div style="height: 64px;background: #F2F2F2;text-align: left;font-size: 13px;padding: 0 10px;">-->
+        <!--<br/>订单编号：<span></span>-->
+        <!--<br/>应付金额：￥ <span></span>-->
+    <!--</div>-->
+    <!--<img src="" alt="" width="200" height="200" >-->
+    <!--<div>-->
+        <!--<img src="/static/images/payexplain.png" width="200" alt="">-->
+    <!--</div>-->
+<!--</div>-->
 <script type="text/javascript" src="/static/jquery.min.js"></script>
 <script type="text/javascript" src="/my-control/javascript/FMulSelectUI.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
@@ -244,7 +244,7 @@
                 }
             ]
         }
-    ]
+    ];
 
     $('#mulselectbox1').FMulSelect({
         // width: 500,  // 宽度，默认自动
@@ -280,24 +280,8 @@
                 dataType:"json",
                 data:data,
                 success:function(e){
-                    console.log(e)
                     if(e.code === 1){
-                        $("#layeropen div:eq(0) span:first").text(e.orderid);
-                        $("#layeropen div:eq(0) span:last").text(e.money/100);
-                        $.post('/pay',{body:e.body,total_fee:e.money,out_trade_no:e.orderid},function (res) {
-                            console.log(res)
-                            $('#layeropen img:eq(0)').prop('src','/createqrcode?qr_url='+res.code_url);
-                            layer.open({
-                                title:'收银台',
-                                type:1,
-                                area:['400px','400px'],
-                                content:$('#layeropen'),
-                                end:function () {
-                                    payindex = 500;
-                                }
-                            });
-                            setTimeout(layerclose,3000);
-                        })
+                        location.href = "/pay/index?id=" + e.order;
                     }else if(e.code === 0){
                         layer.open({
                             type:0,
@@ -314,31 +298,6 @@
                 }
             })
         });
-    })
-
-    let payindex = 0;
-
-    function layerclose(){
-        if(payindex < 240){
-            $.ajax({
-                url:"/pay/getorderstatus",
-                type:"post",
-                dataType:"json",
-                data:{orderid:$('#layeropen div:first span:first').text()},
-                success:function(res){
-                    console.log(res);
-                    if(res === 1){
-                        layer.close(layer.index);
-                        layer.open({content:'缴费成功',icon:1,yes:function () {
-                                location.href = "/user/gorecording"
-                            }})
-                    }else{
-                        payindex += 1;
-                        setTimeout(layerclose,1500)
-                    }
-                }
-            })
-        }
-    }
+    });
 </script>
 </html>

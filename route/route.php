@@ -123,6 +123,7 @@ Route::group('layuiedit',function(){
 });
 
 Route::group('pay',function (){
+    Route::rule('index','pay/Pay/index','get');
     Route::rule('/','pay/Pay/pay','get|post');
     Route::rule('notify','pay/Pay/notify','get|post');
     Route::rule('getorder','pay/Pay/getOrder','post');
