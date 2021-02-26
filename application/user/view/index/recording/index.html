@@ -22,19 +22,18 @@
             {if count($data) > 0}
             {foreach $data as $v}
             <li class="lione">
-                <div style="float: right;display: block;width: 20%;text-align: right">
+                <div style="float: right;display: block;width: 25%;text-align: right">
                     <span>已报人数：{$v.count+186}</span>
                 </div>
                 <div style="display: block;width: 100%">
-                    <h3 style="color: #70A989">{$v.fname}</h3>
-                    <h4>{$v.subtitle}</h4>
-                    <label onclick="Unfold($(this));" style="cursor: pointer;user-select: none;">点击查看报名信息</label>
-                    <span class="paybtn" orderid="{$v.formdatas['订单id']|default=''}" onclick="pay($(this))"></span>
+                    <h3 style="color: #70A989;margin-bottom: 5px">{$v.fname}</h3>
+                    <h4>{$v.subtitle}<span class="paybtn" orderid="{$v.formdatas['订单id']|default=''}" onclick="pay($(this))"></span></h4>
+                    <!--<label onclick="Unfold($(this));" style="cursor: pointer;user-select: none;">点击查看报名信息</label>-->
                     <div style="display: inline;">
                         <ul class="formdatas" style="display: none">
                             {foreach $v.formdatas as $m=>$n}
                             <li style="border: 0">
-                                <label>{$m}:</label><span disabled style="background: white" type="text" value="">{$n}</span>
+                                <span>{$m}：</span><span disabled style="background: white" type="text" value="">{$n}</span>
                             </li>
                             {/foreach}
                         </ul>
@@ -67,17 +66,6 @@
 <script type="text/javascript" src="/static/jquery.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
-    function Unfold(obj){
-        let text = obj.text();
-        if(text === '点击查看报名信息'){
-            obj.next().next().children('.formdatas').show()
-            obj.text('点击隐藏报名信息')
-        }else if(text === '点击隐藏报名信息'){
-            obj.next().next().children('.formdatas').hide()
-            obj.text('点击查看报名信息')
-        }
-    }
-
     layui.use('layer',function () {
         let layer = layui.layer;
 
@@ -105,6 +93,7 @@
                         layer.open({
                             title: '提示信息',
                             type: 0,
+                            icon: 0,
                             content: '已缴费'
                         });
                     }
@@ -123,8 +112,11 @@
     }
 
     $(function () {
+        $
+
         $(".paybtn").each(function () {
-            let text  = $(this).next().children('ul').children('li').last().children('span').text();
+            let text  = $(this).next().children('ul').children('li').last().children('span').last().text();
+            console.log(text)
             if(text==='已缴费'){
                 $(this).text(text);
                 $(this).css('color','#87B6A2')
@@ -132,6 +124,8 @@
                 $(this).text('前往缴费');
             }
         });
+
+
 
         $("input").prop('autocomplete','off');
         $('.lione:last').css('border-bottom',0)

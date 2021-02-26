@@ -118,6 +118,15 @@
                 data:formdata,
                 success:function(res){
                     console.log(res)
+                    if(res.code === 0){
+                        layer.open({
+                            icon:2,
+                            content:res.error,
+                            end:function () {
+                                location.reload()
+                            }
+                        })
+                    }
                 }
             })
         })

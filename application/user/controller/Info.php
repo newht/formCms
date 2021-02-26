@@ -30,12 +30,20 @@ class Info extends Controller
 
         if(!empty(input('name'))){
             session('user')['name'] = input('name');
-            return Db::name("user") -> where('id',$uid) -> update($data);
+            Db::name("user") -> where('id',$uid) -> update($data);
+            return ['code'=>1,'error' => null];
         }else if(!empty(input('cardid'))){
-            session('user')['cardid'] = input('cardid');
-            return Db::name("user") -> where('id',$uid) -> update($data);
+            $bool = Db::name('user') -> where('cardid',input('cardid')) -> find();
+            if(empty($bool)){
+                session('user')['cardid'] = input('cardid');
+                Db::name("user") -> where('id',$uid) -> update($data);
+                return ['code'=>1,'error' => null];
+            }else{
+                return ['code' => 0,'error' => '已存在的证件号'];
+            }
         }
-        return Db::name("userinfo") -> where('uid',$uid) -> update($data);
+        Db::name("userinfo") -> where('uid',$uid) -> update($data);
+        return ['code'=>1,'error' => null];
     }
 
     public function setEmployerInfo()
