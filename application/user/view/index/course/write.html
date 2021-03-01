@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -27,7 +28,7 @@
                     <div>
                         <label for="fie_{$k}">{$v.comment}</label>
                         {if $v.type == 'text'}
-                        <input type="text" id="fie_{$k}" name="fie_{$k}" value="">
+                        <input type="text" id="fie_{$k}" name="fie_{$k}" value="{$v.comment=='姓名'?$Think.session.user.name:$v.comment=='身份证'?$Think.session.user.cardid:''}">
                         {/if}
                         {if $v.type == 'select'}
                         <select name="fie_{$k}" id="fie_{$k}">

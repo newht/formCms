@@ -1,7 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 16665
- * Date: 2021/2/26
- * Time: 14:29
- */
+
+use think\facade\Route;
+
+Route::group('admin', function(){
+    // 订单列表
+    Route::rule('orderList','admin/Order/order','get');
+    Route::rule('orderDel','admin/Order/del','post');
+
+    Route::rule('/test','admin/Order/test','get');
+});

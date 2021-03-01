@@ -27,7 +27,7 @@
     <!--<input type="button" value="导出Excel" class="layui-btn layui-btn-normal">-->
     <input type="button" value="导出Excel" onclick="let header = [];$('table tr:eq(0) td:gt(0):not(:last)').each(function() { header.push($(this).text())});location.href='/excel/export?data={$jsonData}&header='+header;" style="float: right" class="layui-btn layui-btn-normal">
 </div>
-<table  class="layui-table" >
+<table style="width: 100%;" cellspacing="1" cellpadding="0">
     <tr style="background: #d0d0d0;font-size: 14px">
         <td><input type="checkbox" id="checkbox" ></td>
         {foreach $th as $v}
@@ -63,9 +63,8 @@
 <script type="text/javascript" src="/static/jquery.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
-    layui.use(['layer','table'],function () {
+    layui.use('layer',function () {
         let layer = layui.layer;
-        let table = layui.table;
     });
 
     $(function(){
@@ -164,6 +163,7 @@
                 icon:3,
                 btn:['我确定','取消'],
                 yes:function (index,layero) {
+
                     $.ajax({
                         url:"/admin/deleteuser",
                         type:"post",
@@ -174,7 +174,6 @@
                             layer.open({
                                 title: "删除提示",
                                 content: "删除成功",
-                                icon:1,
                                 end: function () {
                                     obj.parent().parent().parent().remove();
                                 }
