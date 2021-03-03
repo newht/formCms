@@ -62,6 +62,7 @@ class Employee extends Controller
         $table = new Table();
         $data = $table -> getTables();
         $this -> assign('data',$data);
+        $this -> assign('id',input('id'));
         return $this -> fetch('index/employee/course/signup');
     }
 
@@ -69,7 +70,13 @@ class Employee extends Controller
     {
         $form = Db::name('form_info') -> where('id',$id) -> find();
         $form['content'] = json_decode($form['content'], true);
+        $user = Db::name("user")
+            -> alias('t1')
+            -> join('userinfo t2','t1.id=t2.uid')
+            -> where('t1.id',input("uid"))
+            -> find();
         $this -> assign('form',$form);
+        $this -> assign('user',$user);
         return $this -> fetch('index/employee/course/write');
     }
 
@@ -77,14 +84,14 @@ class Employee extends Controller
     {
         $table = input('tb_name');
         $data = input();
-        unset($data['tb_name']);
-        $data['id'] = session('user')['id'];
+
         if(empty(Db::table($table) -> where('id',$data['id']) -> find())){
-            $num = Db::name($table) -> insert($data);
+            $num = Db::name($table) ->strict(false) -> insert($data);
             return ['code' => 1,'error' => null];
         }
         return ['code' => 0,'error' => '已报名'];
     }
+
 
     public function goSetUserInfo($id)
     {

@@ -72,7 +72,7 @@ Route::group('unit',function (){
 
 Route::group("admin",function (){
     Route::rule("/",'admin/Login/login','get');
-    Route::rule("index",'admin/Index/index','get');
+    Route::rule("index",'admin/Index/index','get') -> middleware('adminLoginCheck');
     Route::rule("getdata/:tb_name",'admin/Index/getData','get');
     //删除报名信息
     Route::rule("deleteuser","admin/Table/deleteUser",'post');
@@ -124,6 +124,7 @@ Route::group('layuiedit',function(){
 
 Route::group('pay',function (){
     Route::rule('index','pay/Pay/index','get');
+    Route::rule('success','pay/Pay/notice','get');
     Route::rule('/','pay/Pay/pay','get|post');
     Route::rule('notify','pay/Pay/notify','get|post');
     Route::rule('getorder','pay/Pay/getOrder','post');

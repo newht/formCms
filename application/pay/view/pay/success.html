@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>教育报名系统</title>
+	<link rel="stylesheet" href="/static/user/css/indexTable.css">
+	<style>
+        .info{border: 0}
+        .infoTitle{border-bottom: 1px solid black;margin-bottom: 15px;padding-left: 5px}
+        .notice{padding: 30px 0 50px 0;font-size: 30px;text-align: center}
+        .news{padding: 10px;font-size: 15px;border-top: 1px solid black}
+        .news span{font-size: 18px;}
+        .news div{margin-top: 12px}
+        #origin-img {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+
+        #origin-img .swiper-slide img {
+            width: 100%;
+            vertical-align: middle;
+        }
+
+        .swiper-pagination {
+            top: 1em;
+            bottom: auto;
+            color: #fff;
+        }
+
+        .upload {
+            position: absolute;
+            bottom: 0;
+            line-height: 3em;
+            background: rgba(0, 0, 0, .5);
+            z-index: 888;
+            color: #fff;
+            text-indent: 1em;
+            width: 100%;
+        }
+
+	</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2311555_iaue9rkrlb.css">
+</head>
+<body>
+    <div class="max">
+        {include file='public/logo'}
+        <div class="info">
+            <div class="infoTitle">
+                支付结果
+            </div>
+            <div class="notice" id="layeropen" >
+                <i class="iconfont icon-zhifuchenggong" style="color: #00FF00;font-size: 100px;vertical-align: middle"></i>
+                <div>
+                    订单支付已完成，我们将在2个工作日内与您取得联系！
+                </div>
+                <!--<div style="font-size: 14px">-->
+                    <!---->
+                <!--</div>-->
+            </div>
+            <div class="news">
+                <span><i class="iconfont icon-tishi_"></i> 温馨提示：</span>
+                <div>
+                    请长按二维码识别图片关注我们的微信公众号，可以与我们联系。
+                </div>
+                <div style="text-align: center" >
+                    <img style="vertical-align: middle" src="/static/images/gongzhognhao.jpg" width="180"  alt=""/>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file='public/webbottom'}
+    <!-- Swiper -->
+    <div class="swiper-container" id="origin-img">
+        <div class="swiper-wrapper"></div>
+        <div class="swiper-pagination"></div>
+        <div class="upload"></div>
+    </div>
+</body>
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.min.js"></script>
+<script>
+    imgsdata = ["/static/images/gongzhognhao.jpg" /*tpa=*/ ,
+            // "/static/images/schoolpermit.jpg" /*tpa=1112*/ ,
+        ];
+
+    var swiper = new Swiper('.swiper-container', {
+        zoom: true,
+        width: window.innerWidth,
+        virtual: true,
+        spaceBetween: 20,
+        pagination: {
+            el: '.swiper-pagination',
+            type: 'fraction',
+        },
+        on: {
+            click: function () {
+                $('#origin-img').fadeOut('fast');
+                this.virtual.slides.length = 0;
+                this.virtual.cache = [];
+                swiperStatus = false;
+            },
+        },
+
+    });
+
+    $('img').click(function () {
+        clickIndex = $(this).index();
+        imgs = imgsdata;
+        for (i = 0; i < imgs.length; i++) {
+            swiper.virtual.appendSlide('<div class="swiper-zoom-container"><img src="' + imgs[i] + '" /></div>');
+        }
+        swiper.slideTo(clickIndex);
+        $('#origin-img').fadeIn('fast');
+        swiperStatus = true;
+    });
+
+    //切换图状态禁止页面缩放
+    // document.addEventListener('touchstart', function (event) {
+    //     if (event.touches.length > 1 && swiperStatus) {
+    //         event.preventDefault();
+    //     }
+    // });
+    // var lastTouchEnd = 0;
+    // document.addEventListener('touchend', function (event) {
+    //     var now = (new Date()).getTime();
+    //     if (now - lastTouchEnd <= 300) {
+    //         event.preventDefault();
+    //     }
+    //     lastTouchEnd = now;
+    // }, false);
+    //
+    // document.addEventListener('touchmove', function (e) {
+    //     if (swiperStatus) {
+    //         e.preventDefault();
+    //     }
+    // })
+</script>
+</html>

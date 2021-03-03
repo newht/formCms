@@ -19,7 +19,7 @@ class User extends Controller
             $condition = input('condition');
             $data = $data->where($fie, 'like', '%' . $condition . '%');
         }
-        $data = $data->leftJoin('unit', 'user.unit_id = unit.id')->select();
+        $data = $data->leftJoin('unit', 'user.unit_id = unit.id') ->order('user.id','desc') ->select();
         $this->assign('data', $data);
 
         $this -> assign('jsonData',json_encode($data));

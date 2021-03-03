@@ -15,6 +15,19 @@ class Index extends Controller
         return $this->fetch('index/index');
     }
 
+    public function info()
+    {
+        $userNum = Db::name('user')->count('id');
+        $announceNum = Db::name('announcements')->count('id');
+        $orderNum = Db::name('orderinfo')->count('id');
+        $tables = $this->getTables();
+        $this->assign('userNum', $userNum);
+        $this->assign('announceNum', $announceNum);
+        $this->assign('orderNum', $orderNum);
+        $this->assign('tables', $tables);
+        return $this->fetch('index/info');
+    }
+
     //查询表中的所有数据
     public function getData($tb_name)
     {
@@ -24,8 +37,7 @@ class Index extends Controller
           LEFT JOIN information_schema.columns b ON a.table_name = b.table_name
           WHERE a.table_schema = '" . $database . "'
           and a.table_name = '" . $tb_name . "'
-          or a.table_name = 'orderinfo'
-          ORDER BY a.table_name");
+          or a.table_name = 'orderinfo'");
         $str = '';
         foreach ($th as $k => $v){
             if($v['表名'] == $tb_name &&  $v['字段说明'] != '订单id'){
@@ -37,9 +49,19 @@ class Index extends Controller
             }
         }
         $str = substr($str,0,-1);
+        if (!empty(input('get.flag'))) {
+            // 只获取未审核数据列表
+            echo 1;
+            $sql = "select " . $str ." from ".$tb_name." left join orderinfo on " .$tb_name.".orderid = orderinfo.id".
+                " where ".$tb_name.".auditstates = '未审核'";
 
-        $sql = "select " . $str ." from ".$tb_name." left join orderinfo on " .$tb_name.".orderid = orderinfo.id";
+        }
+        else {
+            $sql = "select " . $str ." from ".$tb_name." left join orderinfo on " .$tb_name.".orderid = orderinfo.id";
+        }
         $data = Db::query($sql);
+        dump($data);die();
+//        dump($data);exit;
 //        $data = Db::table($tb_name) -> select();
         $this->assign('th', $th);
         $this->assign('data', $data);
@@ -55,6 +77,25 @@ class Index extends Controller
             Db::table($tbname) -> where("id",$v['id']) -> update(['auditstates' => $v['auditstates']]);
         }
         return 1;
+    }
+
+    /**
+     * 获取form表单信息
+     * @return array|\PDOStatement|string|\think\Collection|\think\model\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    private function getTables()
+    {
+        $data = Db::table("form_info")
+            ->field("id,fname,tb_name,subtitle,status,expiration")
+            ->select();
+        foreach ($data as $k => $v) {
+            $data[$k]['count'] = Db::table($v['tb_name'])->count();
+            $data[$k]['unreviewed_count'] = Db::table($v['tb_name'])->where('auditstates','=','未审核')->count();
+        }
+        return $data;
     }
 
 }

@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="/static/user/css/index.css">
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_2311555_zva3xoymw78.css">
     <style>
-        .info ul li:hover{
-            cursor: pointer;
-        }
+        /*.info ul li:hover{*/
+            /*cursor: pointer;*/
+        /*}*/
     </style>
 </head>
 <body>
@@ -18,14 +18,23 @@
     {include file='public/wlcome'}
     <div class="info">
         <div class="infoTitle">
-            未缴费列表
+            缴费记录列表
         </div>
         <ul>
+            {foreach $tables as $k => $v}
             <li class="lione">
                 <div>
-                    <h3><span>待缴费</span><span></span><span><h4>></h4></span></h3>
+                    {$k+1}.{$v.fname} <span style="float: right;color: red">统一缴费</span>
+                    <div style="">
+                        {foreach $v.user as $m}
+                        <div style="padding: 10px 10px;width: auto">
+                            <span>{$m.name}</span><span style="float: right;color: red;">{$m.order_status}</span>
+                        </div>
+                        {/foreach}
+                    </div>
                 </div>
             </li>
+            {/foreach}
         </ul>
     </div>
 </div>
@@ -40,7 +49,7 @@
             $(this).children('div').children('h3').css({'color':'#6AA684'});
         },function () {
             $(this).children('div').children('h3').css({'color':'black'});
-        })
+        });
         $(".lione:last").css('border-bottom','0');
     })
 </script>

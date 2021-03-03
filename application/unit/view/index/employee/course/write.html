@@ -22,38 +22,46 @@
             <form>
                 <input type="hidden" name="tb_name" value="{$form.tb_name}">
                 {foreach $form.content as $k => $v}
-                <li><div>
-                    <label for="fie_{$k}">{$v.comment}</label>
-                    {if $v.type == 'text'}
-                    <input type="text" id="fie_{$k}" name="fie_{$k}" value="">
-                    {/if}
-                    {if $v.type == 'select'}
-                    <select name="fie_{$k}" id="fie_{$k}">
-                        {foreach $v.option as $m => $n}
-                        <option value="{$n}">{$n}</option>
-                        {/foreach}
-                    </select>
-                    {/if}
-                    {if $v.type == 'checkbox'}
-                    <div style="margin-top: 3px;display: block">
-                        {foreach $v.label as $m => $n}
-                        <input type="checkbox" name="fie_{$k}" id="checkbox_{$m}" value="{$n.label_chid_text}"><label for="checkbox_{$m}">{$n.label_chid_text}</label>
-                        {/foreach}
+                <li>
+                    <div>
+                        <label for="fie_{$k}">{$v.comment}</label>
+                        {if $v.type == 'text'}
+                        {switch $v.comment}
+                        {case 姓名}<input type="text" id="fie_{$k}" name="fie_{$k}" value="{$user.name}">{/case}
+                        {case 电话|联系电话|电话号码|手机号码}<input type="text" id="fie_{$k}" name="fie_{$k}" value="{$user.phone}">{/case}
+                        {case 身份证}<input type="text" id="fie_{$k}" name="fie_{$k}" value="{$user.cardid}">{/case}
+                        {case 邮箱|email|Email|电子邮箱}<input type="text" id="fie_{$k}" name="fie_{$k}" value="{$user.email}">{/case}
+                        {default /}<input type="text" id="fie_{$k}" name="fie_{$k}" value="">
+                        {/switch}
+                        {/if}
+                        {if $v.type == 'select'}
+                        <select name="fie_{$k}" id="fie_{$k}">
+                            {foreach $v.option as $m => $n}
+                            <option value="{$n}">{$n}</option>
+                            {/foreach}
+                        </select>
+                        {/if}
+                        {if $v.type == 'checkbox'}
+                        <div style="margin-top: 3px;display: block">
+                            {foreach $v.label as $m => $n}
+                            <input type="checkbox" name="fie_{$k}" id="checkbox_{$m}" value="{$n.label_chid_text}"><label for="checkbox_{$m}">{$n.label_chid_text}</label>
+                            {/foreach}
+                        </div>
+                        {/if}
+                        {if $v.type == 'radio'}
+                        <div style="margin-top: 3px;display: block">
+                            {foreach $v.label as $m => $n}
+                            <input type="radio" name="fie_{$k}" value="{$n.label_chid_text}" id="radio_{$m}"><label for="radio_{$m}">{$n.label_chid_text}</label>
+                            {/foreach}
+                        </div>
+                        {/if}
+                        {if $v.type == 'textarea'}
+                        <div style="margin-top: 3px;display: block;width: 100%">
+                            <textarea name="fie_{$k}" id="fie_{$k}" rows="3"></textarea>
+                        </div>
+                        {/if}
                     </div>
-                    {/if}
-                    {if $v.type == 'radio'}
-                    <div style="margin-top: 3px;display: block">
-                        {foreach $v.label as $m => $n}
-                        <input type="radio" name="fie_{$k}" value="{$n.label_chid_text}" id="radio_{$m}"><label for="radio_{$m}">{$n.label_chid_text}</label>
-                        {/foreach}
-                    </div>
-                    {/if}
-                    {if $v.type == 'textarea'}
-                    <div style="margin-top: 3px;display: block;width: 100%">
-                        <textarea name="fie_{$k}" id="fie_{$k}" rows="3"></textarea>
-                    </div>
-                    {/if}
-                </div></li>
+                </li>
                 {/foreach}
                 <li><div><input type="button" id="submit" value="保存"></div></li>
             </form>
@@ -65,9 +73,6 @@
 <script type="text/javascript" src="/static/jquery.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
-    layui.use('layer',function () {
-        let layer = layui.layer;
-    })
     $(function () {
         $('.info ul li:last').css('border',0);
         $("input").prop('autocomplete','off');
@@ -87,13 +92,7 @@
                 dataType:"json",
                 data:data,
                 success:function(e){
-                    let msg;
-                    if(e.code === 1){
-                        msg = '保存成功,点击确认返回上一级';
-                    }else if(e.code === 0){
-                        msg = e.error;
-                    }
-                    layer.open({'title':'提示信息',btn:['确认'],content:msg});
+                    console.log(e)
                 }
             })
         })

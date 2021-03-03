@@ -13,6 +13,7 @@ class Recording extends Controller
     {
         $database = Config::get('database.database');
         $data = Db::table('form_info')->field('id,fname,subtitle,tb_name')->select();
+
         foreach ($data as $a => $v) {
             $temp = Db::table($v['tb_name'])->where('id', session('user')['id'])->find();
             if (!empty($temp)) {

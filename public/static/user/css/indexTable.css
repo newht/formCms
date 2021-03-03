@@ -4,7 +4,7 @@
 .wlcome i{font-size: 12px}
 .wlcomeright{float: right}
 
-.webbottom{position: fixed;bottom: 0;width: 100%;min-width: 320px;z-index: 3;}
+.webbottom{position: fixed;bottom: 0;width: 100%;min-width: 320px;z-index: 1;}
 .webbottom ul li{float: left;width: 33.33%;padding: 10px 0;text-align: center;background: #e5e5e5}
 
 /*input:hover{cursor:default}*/
@@ -22,7 +22,6 @@ input[type=checkbox],input[type=radio]{vertical-align:middle;}
 @media screen and (max-width: 1024px) {
     body {max-width: 1024px;}
     .max{width: 100%;min-height: calc(81vh);padding: 5px 10px;box-sizing: border-box;min-width: 320px;margin-bottom: 80px}
-
 }
 /* ipad */
 @media screen and (max-width: 768px) {

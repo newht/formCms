@@ -47,8 +47,14 @@ class Pay extends Controller
                 return $this -> error($pay_info["err_code_des"],"/user/gorecording");
             }
             $data["pay_info"] = $pay_info;
+            $udata = Db::name('user')
+                -> alias('t1')
+                -> join($data['tb_name'].' t2','t1.id = t2.id')
+                -> where('t2.orderid',$id)
+                -> find();
             $this -> assign('data',$data);
-//            dump($data);
+            $this -> assign('udata',$udata);
+//            dump($udata);
             return $this -> fetch('pay/pay');
         }
         return redirect("/user/gorecording");
@@ -124,5 +130,10 @@ class Pay extends Controller
             return true; // 返回处理完成
         });
         $response -> send();
+    }
+
+    public function notice()
+    {
+        return $this -> fetch("pay/success");
     }
 }
