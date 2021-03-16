@@ -25,6 +25,7 @@ class User extends Model
         }
         unset($data['password']);
         session('user',$data);
+        session('unit',null);
         return ['code' => 1,'errorname' => null,'msg' => '登录成功','url' => '/user/signup'];
     }
 

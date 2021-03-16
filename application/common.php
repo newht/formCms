@@ -10,3 +10,15 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+
+/**
+ * 验证手机号
+ * @param $phone
+ * @return bool
+ */
+function checkTelephone($phone){
+    if(!preg_match('/^1([0-9]{9})/', $phone)) {
+        return false;
+    }
+    return true;
+}

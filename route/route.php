@@ -97,7 +97,9 @@ Route::group("admin",function (){
     Route::rule("getadmininfo/:id",'admin/Rbac/getAdminInfo','post');
     Route::rule("delete/:type",'admin/Rbac/delete','post');
     Route::rule("insertpost","admin/Rbac/insertPost",'post');
+    //所有注册用户
     Route::rule("webuser","admin/User/webUser","get");
+    Route::rule('deletewebuser',"admin/User/delete");
     //公告
     Route::rule("announce","admin/Announce/announce","get");
     Route::rule("announce_del","admin/Announce/announce_del","get");
@@ -130,10 +132,13 @@ Route::group('pay',function (){
     Route::rule('getorder','pay/Pay/getOrder','post');
     Route::rule('jsapipay','pay/Pay/jsApipay','get|post');
     Route::rule('getorderstatus','pay/Pay/getOrderStatus','post');
+    Route::rule("setopen","pay/Pay/getOpenId","get|post");
+    Route::rule("getwchatorderinfo","pay/Pay/getWechatOrderInfo","get|post");
 });
 Route::get('qrcodecreate','pay/Qrcodecreate/index');
 Route::get('createqrcode','pay/Pay/create');
 
 Route::post('in','admin/Login/in');
+Route::get("moniget","pay/Pay/getOpenId");
 
 

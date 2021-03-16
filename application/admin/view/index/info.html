@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+<head>
+    <meta charset="UTF-8">
+    <title>后台首页</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <script src="/static/layui/layui.js"></script>
+    <script src="/static/jquery.min.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body ">
+                    <blockquote class="layui-elem-quote">欢迎管理员：
+                        <span class="x-red">{$Think.session.user_admin['name']}</span>！当前时间:{:date('Y-m-d H:i:s', time())}
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">数据统计</div>
+                <div class="layui-card-body ">
+                    <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
+                        <li class="layui-col-md2 layui-col-xs6">
+                            <a href="javascript:;" class="x-admin-backlog-body">
+                                <h3>用户数</h3>
+                                <p>
+                                    <cite>{$userNum}</cite></p>
+                            </a>
+                        </li>
+                        <li class="layui-col-md2 layui-col-xs6">
+                            <a href="javascript:;" class="x-admin-backlog-body">
+                                <h3>公告数</h3>
+                                <p>
+                                    <cite>{$announceNum}</cite></p>
+                            </a>
+                        </li>
+                        <li class="layui-col-md2 layui-col-xs6">
+                            <a href="javascript:;" class="x-admin-backlog-body">
+                                <h3>订单数</h3>
+                                <p>
+                                    <cite>{$orderNum}</cite></p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">表单未审核人数统计</div>
+                <div class="layui-card-body ">
+                    <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
+                        {foreach $tables as $key => $val}
+                        <li class="layui-col-md2 layui-col-xs6" style="width: 160px; height: 80px;border-right: 1px solid #eee">
+                            <a href="/admin/getdata/{$val['tb_name']}?flag=1" class="x-admin-backlog-body">
+                                <h3 style="font-size: 16px;">{$val['fname']}</h3>
+                                <p>
+                                    <cite>未审核人数:{$val['unreviewed_count']}</cite>
+                                </p>
+                            </a>
+                        </li>
+                        {/foreach}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">提现未审核人数统计</div>
+                <div class="layui-card-body ">
+                    <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
+                        <li class="layui-col-md2 layui-col-xs6" style="width: 160px; height: 80px;border-right: 1px solid #eee">
+                            <a href="/admin/depositList?audit_status=2" class="x-admin-backlog-body">
+                                <p>
+                                    <cite>未审核人数:{$depositNum}</cite>
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">缓存清理</div>
+                <div class="layui-card-body">
+                    <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
+                        <li class="layui-col-md2 layui-col-xs6"><button type="button" class="layui-btn" id="clearQrcode">推荐二维码清理</button></li>
+                        <li class="layui-col-md2 layui-col-xs6"><button type="button" class="layui-btn" id="clearCache">缓存清理</button></li>
+                        <li class="layui-col-md2 layui-col-xs6"><button type="button" class="layui-btn" id="clearLog">日志清理</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">系统信息</div>
+                <div class="layui-card-body ">
+                    <table class="layui-table">
+                        <tbody>
+                        <tr>
+                            <th>服务器地址</th>
+                            <td>{$_SERVER['REMOTE_ADDR']}</td></tr>
+                        <tr>
+                            <th>运行环境</th>
+                            <td>Apache/2.4.23 (Win32) OpenSSL/1.0.2j mod_fcgid/2.3.9</td></tr>
+                        <tr>
+                            <th>PHP运行方式</th>
+                            <td>cgi-fcgi</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<script>
+    layui.use(['layer'], function(){
+        let layer = layui.layer;
+        $("#clearQrcode").click(function(){
+            $.get('/admin/clearQrcode', {}, function(res){
+                if (res == true) {
+                    layer.msg('清理成功!', {icon: 6, time: 1000});
+                }
+            });
+        })
+
+        // 缓存清理
+        $("#clearCache").click(function(){
+            $.get('/admin/clearCache', {}, function(res){
+                if (res == true) {
+                    layer.msg('清理成功!', {icon: 6, time: 1000});
+                }
+            });
+        });
+
+        // 日志清理
+        $("#clearLog").click(function(){
+            $.get('/admin/clearLog', {}, function(res){
+                if (res == true) {
+                    layer.msg('清理成功!', {icon: 6, time: 1000});
+                }
+            });
+        });
+    });
+
+
+
+</script>
+</body>
+</html>

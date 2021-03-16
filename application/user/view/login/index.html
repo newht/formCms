@@ -65,7 +65,7 @@
             {foreach $data as $v}
             <li>
                 <i class="iconfont icon-yuandianxiao" style="vertical-align: middle"></i>
-                <span style="float: right;margin: 0 5px 0 15%">2019-12-12</span>
+                <span style="float: right;margin: 0 5px 0 15%"><?php echo date('Y-m-d',empty($v['update_time'])?$v['create_time']:$v['update_time']);?></span>
                 <a class="xiahuaxian" href="/announcepar/announcepar/{$v.id}">{$v.title}</a>
             </li>
             {/foreach}

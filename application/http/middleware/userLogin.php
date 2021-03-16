@@ -11,6 +11,7 @@ class userLogin
         if (empty(session('user'))){
             return redirect('/user/login');
         }
+
         return $next($request);
     }
 }

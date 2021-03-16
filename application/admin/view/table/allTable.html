@@ -32,7 +32,7 @@
             <div class="content1">
                 已报名人数：{$v.count}人
             </div>
-            <div class="content1 set-btn" status="{$v.status}" expiration="{$v.expiration}" money="{$v.money}">
+            <div class="content1 set-btn" status="{$v.status}" expiration="{$v.expiration}" money="{$v.money}" sort="{$v.sort}">
                 设置
             </div>
         </div>
@@ -65,6 +65,13 @@
                     <input type="checkbox" name="isshow" lay-skin="switch" lay-text="on|off" value="1" >
                 </div>
             </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-inline">
+                    <input type="number" class="layui-input" name="sort" value="0">
+                    <span style="color: red">排序值越小越靠前,默认为0</span>
+                </div>
+            </div>
         </form>
     </div>
 </body>
@@ -82,12 +89,15 @@
 
         $('.set-btn').click(function (event) {
             let status = $(this).attr('status');
+
             $("[name=status]").prop('checked',status === '1');
             let expiration = $(this).attr('expiration');
             $("[name=expiration]").val(expiration);
             let money = $(this).attr('money');
             $("[name=money]").val(money);
             $("form:eq(0) [name=id]").val($(this).parent().attr('tableid'));
+            let sort = $(this).attr('sort');
+            $("[name=sort]").val(sort);
             form.render();
 
             layer.open({
@@ -106,7 +116,6 @@
                         dataType:'json',
                         data:formdata,
                         success:function(res){
-                            console.log(res)
                             layer.msg(res.msg,{
                                 time:700,
                                 end:function () {

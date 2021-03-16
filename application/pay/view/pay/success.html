@@ -4,6 +4,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>教育报名系统</title>
 	<link rel="stylesheet" href="/static/user/css/indexTable.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
 	<style>
         .info{border: 0}
         .infoTitle{border-bottom: 1px solid black;margin-bottom: 15px;padding-left: 5px}
@@ -74,7 +75,12 @@
             </div>
         </div>
     </div>
-    {include file='public/webbottom'}
+    {notempty name="$Think.session.unit"}
+        {include file='unit_public/webbottom'}
+    {/notempty}
+    {notempty name="$Think.session.user"}
+        {include file='public/webbottom'}
+    {/notempty}
     <!-- Swiper -->
     <div class="swiper-container" id="origin-img">
         <div class="swiper-wrapper"></div>
@@ -83,6 +89,7 @@
     </div>
 </body>
 <script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.min.js"></script>
 <script>
     imgsdata = ["/static/images/gongzhognhao.jpg" /*tpa=*/ ,

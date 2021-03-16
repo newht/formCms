@@ -13,6 +13,7 @@
 // | 中间件配置
 // +----------------------------------------------------------------------
 return [
-    'loginCheck' => app\http\middleware\userLogin::class
+    'loginCheck' => app\http\middleware\userLogin::class,
+    'AdminLoginCheck' => app\http\middleware\AdminLoginCheck::class,
 ];
 

@@ -684,7 +684,7 @@ class Request
                 unset($_GET[$this->config['var_pathinfo']]);
                 unset($this->get[$this->config['var_pathinfo']]);
             } elseif ($this->isCli()) {
-                // CLI模式下 index.php module/controller/action/params/...
+                // CLI模式下 Index.php module/controller/action/params/...
                 $pathinfo = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '';
             } elseif ('cli-server' == PHP_SAPI) {
                 $pathinfo = strpos($this->server('REQUEST_URI'), '?') ? strstr($this->server('REQUEST_URI'), '?', true) : $this->server('REQUEST_URI');
@@ -1800,7 +1800,7 @@ class Request
     public function host($strict = false)
     {
         if (!$this->host) {
-            $this->host = $this->server('HTTP_X_REAL_HOST') ?: $this->server('HTTP_X_FORWARDED_HOST') ?: $this->server('HTTP_HOST');
+            $this->host = $this->server('HTTP_X_REAL_HOST') ?: $this->server('HTTP_HOST');
         }
 
         return true === $strict && strpos($this->host, ':') ? strstr($this->host, ':', true) : $this->host;

@@ -28,7 +28,13 @@
                     <div>
                         <label for="fie_{$k}">{$v.comment}</label>
                         {if $v.type == 'text'}
-                        <input type="text" id="fie_{$k}" name="fie_{$k}" value="{$v.comment=='姓名'?$Think.session.user.name:$v.comment=='身份证'?$Think.session.user.cardid:''}">
+                        {switch $v.comment}
+                        {case 姓名}<input type="text" id="fie_{$k}" name="fie_{$k}" value="{$Think.session.user.name}">{/case}
+                        {case 电话|联系电话|电话号码|手机号码}<input type="text" id="fie_{$k}" name="fie_{$k}" value="{$Think.session.user.phone}">{/case}
+                        {case 身份证}<input type="text" id="fie_{$k}" name="fie_{$k}" value="{$Think.session.user.cardid}">{/case}
+                        {case 邮箱|email|Email|电子邮箱}<input type="text" id="fie_{$k}" name="fie_{$k}" value="{$Think.session.user.email}">{/case}
+                        {default /}<input type="text" id="fie_{$k}" name="fie_{$k}" value="">
+                        {/switch}
                         {/if}
                         {if $v.type == 'select'}
                         <select name="fie_{$k}" id="fie_{$k}">
@@ -259,6 +265,7 @@
             "childs": "child"
         }
     });
+
     $(function () {
         $('.info ul li:last').css('border',0);
         $("input").prop('autocomplete','off');

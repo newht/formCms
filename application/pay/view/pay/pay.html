@@ -59,17 +59,6 @@
                 <div class="payinfo">
                     <div class="paynumber">
                         <span>报名项目：</span><span>{$data.fname}</span>
-                        {empty name='$udata.name'}
-                            {empty name='$udata.cardid'}
-                                {notempty name='$udata.phone'}
-                                <span>-{$udata.phone}</span>
-                                {/notempty}
-                            {else /}
-                            <span>-{$udata.cardid}</span>
-                            {/empty}
-                        {else /}
-                        <span>-{$udata.name}</span>
-                        {/empty}
                     </div>
                     <div class="paynumber">
                         <span>订单编号：</span><span>{$data.order_id}</span>
@@ -79,14 +68,18 @@
                     </div>
                 </div>
                 <div style="text-align: center">
+                    <?php if(isset($data["pay_info"])){ ?>
                     <img src="/createqrcode?qr_url={$data.pay_info.code_url}" alt="" width="200" height="200" >
                     <div>
                         <img src="/static/images/payexplain.png" width="200" alt="">
                     </div>
+                    <?php }else{ ?>
+                    <input type="button" id="jsapipay" class="layui-btn" value="确认缴费">
+                    <?php } ?>
                 </div>
                 <div  style="text-align: center">
                     <div style="position: relative;top: 50px">
-                        点击查看办学许可
+                        点击图片查看办学许可
                     </div>
                     <div>
                         <img id="schoolpermit" src="/static/images/schoolpermit.jpg" width="200" alt="">
@@ -95,7 +88,12 @@
             </div>
         </div>
     </div>
-    {include file='public/webbottom'}
+    {notempty name="$Think.session.unit"}
+        {include file='unit_public/webbottom'}
+    {/notempty}
+    {notempty name="$Think.session.user"}
+        {include file='public/webbottom'}
+    {/notempty}
     <!-- Swiper -->
     <div class="swiper-container" id="origin-img">
         <div class="swiper-wrapper"></div>
@@ -113,6 +111,45 @@
 
     let payindex = 0;
 
+    var isWeixin = function () { //判断是否是微信
+        var ua = navigator.userAgent.toLowerCase();
+        return ua.match(/MicroMessenger/i) == "micromessenger";
+    };
+
+
+    let appid = "wx73229bb5e20d94ea";
+    let code = getUrlParam("code");
+    let redirecturi = window.location.href;
+    if(isWeixin()){
+        if(code == null || code == ''){
+            location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appid+"&redirect_uri="+redirecturi+"&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
+        }else{
+            let setopen = "/pay/setopen?code="+code;
+            $.post(setopen,function (res) {
+                if(res.errcode == 40163){
+                    location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appid+"&redirect_uri="+redirecturi+"&response_type=code&scope=snsapi_base&state=1#wechat_redirect"
+                }
+            })
+        }
+    }
+
+    $("#jsapipay").click(function () {
+        location.href = "/pay/jsapipay/?orderid={$data.id}";
+    });
+
+
+    // 使用
+    function getUrlParam(name){
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        // console.log(reg);
+        var r = decodeURI(window.location.search).substr(1).match(reg);  //匹配目标参数
+        // console.log(window.location.search.substr(1).match(reg));
+        if (r != null) return unescape(r[2]);
+        return null; //返回参数值
+    }
+
+
+
     function layerclose() {
         if (payindex < 240) {
             $.ajax({
@@ -121,7 +158,6 @@
                 dataType: "json",
                 data: {orderid: "{$data.order_id}"},
                 success: function (res) {
-
                     console.log(res);
                     if (res === 1) {
                         location.href = "/pay/success";

@@ -12,6 +12,10 @@ class Login extends Controller
     //公司登录界面
     public function login()
     {
+        if(!empty(session('unit'))){
+            $index = new Index();
+            return $index -> index();
+        }
         return $this -> fetch("login/unit_login");
     }
 
@@ -27,6 +31,7 @@ class Login extends Controller
             return json(['code'=>0,'msg'=>'登录失败,密码错误','errorname'=>'password','url'=>null]);
         }
         session('unit',$data);
+        session('user',null);
         return json(['code'=>1,'msg'=>'登录成功','errorname'=>null,'url'=>'/unit/index']);
     }
 }

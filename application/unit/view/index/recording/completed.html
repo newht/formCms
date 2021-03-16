@@ -10,6 +10,7 @@
         /*.info ul li:hover{*/
             /*cursor: pointer;*/
         /*}*/
+        .paybtn:hover{cursor: pointer}
     </style>
 </head>
 <body>
@@ -24,13 +25,20 @@
             {foreach $tables as $k => $v}
             <li class="lione">
                 <div>
-                    {$k+1}.{$v.fname} <span style="float: right;color: red">统一缴费</span>
+                    {$k+1}.{$v.fname}
                     <div style="">
+                        {if !empty($v.user)}
                         {foreach $v.user as $m}
                         <div style="padding: 10px 10px;width: auto">
-                            <span>{$m.name}</span><span style="float: right;color: red;">{$m.order_status}</span>
+                            <span>{$m.name}</span>
+                            {if $m.order_status=='已缴费'}
+                            <span style="float: right;color: #87B6A2;">{$m.order_status}</span>
+                            {else /}
+                            <span class="paybtn" orderid="{$m.order_id}" style="float: right;color: #87B6A2;">{$m.order_status}</span>
+                            {/if}
                         </div>
                         {/foreach}
+                        {/if}
                     </div>
                 </div>
             </li>
@@ -43,6 +51,10 @@
 <script type="text/javascript" src="/static/jquery.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
+    layui.use('layer',function () {
+        var layer = layui.layer;
+    })
+
     $(function () {
         $('.info ul li').css({'display':'flex','align-items': 'center'});
         $('.info ul li').hover(function () {
@@ -51,6 +63,23 @@
             $(this).children('div').children('h3').css({'color':'black'});
         });
         $(".lione:last").css('border-bottom','0');
+
+        $(".paybtn").click(function (event) {
+            //这里处理，微信浏览器提示信息内容
+            let orderid = '';
+            let obj = $(this);
+            if($(this).text() === "已缴费"){
+                layer.open({
+                    title: '提示信息',
+                    type: 0,
+                    icon: 0,
+                    content: '已缴费'
+                });
+            }else{
+                location.href =  "/pay/index?id=" + obj.attr('orderid');
+            }
+            event.stopPropagation();
+        });
     })
 </script>
 </html>

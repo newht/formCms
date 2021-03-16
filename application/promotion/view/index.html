@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>四川建设培训网</title>
+    <style>
+        /* pc width > 1024px */
+        body {background: url("/static/images/bg.png")no-repeat top center/100% ;}
+        .max{width: 50%;height: calc(81vh);padding: 5px 10px;}
+        *{margin: 0 auto;font-family: '微软雅黑';}
+        .logo{clear: both;box-sizing: border-box;right: 0;top: 0;display: block;margin-top: 0px;margin-right: 0px;text-align: center;}
+        .title{text-align: center;margin-bottom: 50px;}
+        .login{margin: 20px 0;text-align: center;}
+        .login span{background: #1B9AF7;margin: 5px 0;display: inline-block;width: 100%;font-size: 18px;padding: 10px 0;}
+        .login a{color: white}
+        .affirm{border: 1px solid #4596E8;padding: 5px;}
+        .bottom{text-align: center;font-size: 13px;padding: 30px;}
+        #affirm{white-space: pre-wrap;font-size: 13px;min-height: calc(50vh);color: #3e3e3e}
+        a{text-decoration:none;}
+        li{margin:10px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size: 13px;color:#666666;}
+        ul{padding:0 5px;border: 1px solid #4596E8;}
+        .annon_text{padding: 5px 0;}
+        .annon_text span:first-child{background: #4596E8;margin: 5% 0;color:white;width: 65px;text-align: left;padding: 5px 7px;}
+        .annon_text span:last-child{float: right}
+        .annon_text a{color:#4596E8}
+        .annon ul li a{color: #3e3e3e}
+        .form-element {
+            display: flex;
+            flex-direction: row;
+        }
+        @media screen and (max-width: 1024px) {
+            body {max-width: 1024px;}
+            .max{width: 100%;height: calc(81vh);padding: 5px 10px;box-sizing: border-box;min-width: 320px}
+        }
+        @font-face {
+            font-family: 'iconfont';  /* project id 2311555 */
+            src: url('//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.eot');
+            src: url('//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.woff2') format('woff2'),
+            url('//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.woff') format('woff'),
+            url('//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.svg#iconfont') format('svg');
+        }
+        .xiahuaxian:hover{color: #7a7e83}
+    </style>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2311555_m8mu1u3y2vq.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+
+</head>
+<body>
+<div class="max" style="margin: 0 auto;">
+    {include file="public/logo"/}
+    <div class="title">
+        <h2>推广链接</h2>
+    </div>
+    <div class="affirm" style="border: none;">
+        <div id="affirm" style="height: auto">
+            <div class="layui-tab layui-tab-card">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">推广链接</li>
+                    <li>二维码</li>
+                </ul>
+               <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show" style="padding: 0;">
+                        <div class="input-box">
+                            <label for="" style="float: left;">推广文案:</label><textarea name="editor" class="layui-textarea" id="editor" cols="15" rows="10" style="height: 150px;">【推广链接】请复制下方推广链接</textarea>
+                            <button type="button" onclick="copyEditor($(this))" class="layui-btn btn-primary">复制文案</button><span style="margin-left: 8px; color: green; display: none;">复制成功</span>
+                        </div>
+                        <div class="input-box">
+                            <label for="" style="float: left;">推广链接:</label><input type="text" readonly name="promotion_link" id="promotion_link" class="layui-input" value="{$linkPath}">
+                            <button type="button" id="copy" onclick="copyLink($(this))" class="layui-btn btn-primary">复制链接</button><span style="margin-left: 8px; color: green; display: none;">复制成功</span>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item" style="padding: 0;">
+                        <div style="font-size: 16px;text-align: center">请扫描下方推广链接二维码!</div>
+
+                        <!-- 生成推广二维码 -->
+                        <div class="img-box" style="text-align: center;"><?php echo qrcode($userId,$inviteNo) ?></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box" style="display: flex; flex-direction: row;">
+                <a href="/user/index" class="layui-btn btn-primary">返回信息</a>
+                <a href="/promotion/my" class="layui-btn btn-primary">我的推广</a>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        Copyright © 2007-2021 Tontru edu. All Rights Reserved. <a href="https://beian.miit.gov.cn" target="_blank">蜀ICP备12002633号-5</a>
+    </div>
+</div>
+</body>
+<script src="/static/layui/layui.js"></script>
+<script src="/static/jquery.min.js"></script>
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+
+    // 复制链接
+    function copyLink(obj){
+        let input = $(obj).siblings('input');
+        input.select();
+        let res = document.execCommand('copy');
+        if (res) {
+            $(obj).siblings('span').css('display','inline-block');
+        }
+        setTimeout(function(){
+            $(obj).siblings('span').css('display','none');
+        }, 3000);
+    }
+
+    // 复制文本
+    function copyEditor(obj){
+        let textarea = $(obj).siblings('textarea');
+        textarea.select();
+        let res = document.execCommand('copy');
+        if (res) {
+            $(obj).siblings('span').css('display','inline-block');
+        }
+        setTimeout(function(){
+            $(obj).siblings('span').css('display','none');
+        }, 3000);
+    }
+</script>
+</html>

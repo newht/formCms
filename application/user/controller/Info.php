@@ -42,8 +42,14 @@ class Info extends Controller
                 return ['code' => 0,'error' => '已存在的证件号'];
             }
         }
-        Db::name("userinfo") -> where('uid',$uid) -> update($data);
-        return ['code'=>1,'error' => null];
+        $updata = Db::name("userinfo") -> where('uid',$uid) -> update($data);
+        if($updata == 0){
+            $user = Db::name("userinfo") -> where('uid',$uid) -> find();
+            if(empty($user)){
+                Db::name("userinfo") -> insert(['uid'=> $uid]);
+            }
+        }
+        return ['code'=>1,'error' => null,'updata'=>$updata];
     }
 
     public function setEmployerInfo()

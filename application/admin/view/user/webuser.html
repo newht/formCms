@@ -16,8 +16,8 @@
         }
         .top{
             padding: 15px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #F2F2F2;
+            margin-bottom: 0px;
+          //  border-bottom: 1px solid #F2F2F2;
         }
     </style>
 </head>
@@ -42,14 +42,15 @@
         <input type="button" value="导出Excel" onclick="let header = [];$('table tr:eq(0) td:gt(0):not(:last)').each(function() { header.push($(this).text())});location.href='/excel/export?data={$jsonData}&header='+header;" style="float: right" class="layui-btn layui-btn-normal">
     </form>
 </div>
-<table style="width: 100%;" cellspacing="1" cellpadding="0">
-    <tr style="background: #d0d0d0;font-size: 14px">
+<table style="width: 100%;" cellspacing="1" cellpadding="0" class="layui-table">
+    <tr style="background: #f4f4f4;font-size: 14px">
         <td><input type="checkbox" id="checkbox" ></td>
         <td>序号</td>
         <td fie='cardid'>身份证号码</td>
         <td fie='user.name'>姓名</td>
         <td fie="user.phone">联系电话</td>
         <td fie="unit.name">所属公司</td>
+        <td fie="balance">用户余额</td>
         <td fie="caretetime">注册时间</td>
         <td>操作</td>
     </tr>
@@ -65,7 +66,7 @@
             {/if}
             {/foreach}
             <td>
-                <i class="layui-icon"><input type="button" class="layui-btn layui-btn-danger layui-btn-xs" value="&#xe640;删除"></i>
+                <i class="layui-icon"><input type="button" class="layui-btn layui-btn-danger layui-btn-xs" fie_id="{$v.id}" value="&#xe640;删除"></i>
             </td>
         </tr>
         {/foreach}
@@ -102,7 +103,38 @@
     });
 
     $(function () {
-
+        $(".layui-btn-danger").click(function () {
+            layer.open({
+                content:"您确定要删除这个用户吗",icon:0,
+                yes:function (index,layero) {
+                    let obj = $(this);
+                    let userid = obj.attr("fie_id");
+                    let formdata = {userid:userid};
+                    $.ajax({
+                        url:"/admin/deletewebuser",
+                        type:"post",
+                        dataType:"json",
+                        data:formdata,
+                        success:function (res) {
+                            console.log(res)
+                            if(res.code === 200){
+                                layer.open({
+                                    content:res.msg,icon:1,
+                                    end:function(){
+                                        obj.parent().parent().parent().remove();
+                                    }
+                                })
+                            }else if(res.code === 201){
+                                layer.open({
+                                    content:res.error,icon:2
+                                })
+                            }
+                        }
+                    });
+                    // layer.close(index)
+                }
+            });
+        })
     })
 
 </script>

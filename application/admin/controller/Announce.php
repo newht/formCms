@@ -26,8 +26,13 @@ class Announce extends Controller{
     }
 
     public function announce(){
-        $data = Db::table('announcements')->where('is_delete',0)->select();
+        $data = Db::table('announcements')->where('is_delete',0)->paginate(10, false);
+        $paginate['total'] = $data->total();
+        $paginate['list_rows'] = $data->listRows();
+        $paginate['last_page'] = $data->lastPage();
+        $paginate['current_page'] = $data->currentPage();
         $this->assign("data", $data);
+        $this->assign('paginate', $paginate);
         return $this->fetch("announce/announce");
     }
 

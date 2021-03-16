@@ -68,11 +68,15 @@
         </ul>
     </div>
 </div>
+{if $Think.session.un}
 {include file='public/webbottom'}
 </body>
 <script type="text/javascript" src="/static/jquery.min.js"></script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
+    layui.use('layer',function () {
+        var layer = layui.layer;
+    });
     $(function () {
         $('.info ul li:last').css('border',0);
         $("input").prop('autocomplete','off');
@@ -86,13 +90,29 @@
                 }
                 data[i].value = data[i].value.replace(/\s+/g, "");
             }
+            data.push({name:'id',value:"{$user.id}"});
             $.ajax({
                 url:"/unit/insert",
                 type:"post",
                 dataType:"json",
                 data:data,
                 success:function(e){
-                    console.log(e)
+                    console.log(e);
+                    if(e.code === 1){
+                        location.href = "/pay/index?id=" + e.order;
+                    }else if(e.code === 0){
+                        layer.open({
+                            type:0,
+                            title: '提示信息',
+                            btn: ['确认'],
+                            content: e.error,
+                            end: function () {
+                                if(e.error === '已报名该课程，前往查看报名记录') {
+                                    location.href = '/unit/gorecording';
+                                }
+                            }
+                        });
+                    }
                 }
             })
         })

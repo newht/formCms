@@ -17,7 +17,6 @@ $(document).ready(function() {
         }
     });
     setup_draggable();
-
     $("#copy-to-clipboard").on("click", function() {
             var $copy = $(".form-body").clone().appendTo(document.body);
 
@@ -37,7 +36,6 @@ $(document).ready(function() {
 
             return false
         })
-
         //点击添加表单
     $(".btntext,.btntexts").click(function() {
         $(tableList($(this).attr("id"))).appendTo($(".ui-sortable"));
@@ -75,12 +73,10 @@ $(document).ready(function() {
 });
 
 var setup_draggable = function() {
-
     $(".draggable").draggable({
         appendTo: "body",
         helper: "clone"
     });
-
     $(".droppable").droppable({
         accept: ".draggable",
         helper: "clone",

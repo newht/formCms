@@ -2,10 +2,10 @@
 
 /**
  * 用法：
- * class index
+ * class view
  * {
  *     use \traits\controller\Jump;
- *     public function index(){
+ *     public function view(){
  *         $this->error();
  *         $this->redirect();
  *     }

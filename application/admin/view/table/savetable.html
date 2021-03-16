@@ -243,30 +243,36 @@
                         let optionArray = [];
                         labelNext.children().each(function () {
                             type = $(this).prop('tagName').toLocaleLowerCase();
-                            if (type === 'label') {
-                                let temp = {};
-                                temp['label_chid_type'] = $(this).children(":first").prop('tagName').toLocaleLowerCase();
-                                if (temp['label_chid_type'] === 'input') {
-                                    temp['label_chid_type'] = inputType($(this).children(":first"));
-                                    type = temp['label_chid_type'];
-                                }
-                                temp['label_chid_text'] = $(this).text();
-                                labelArray.push(temp);
-                                objData['label'] = labelArray;
-                            } else if (type === 'input') {
-                                type = inputType($(this));
-                            } else if (type === 'select') {
-                                $(this).children('option').each(function () {
-                                    optionArray.push($(this).text());
-                                });
-                                objData['option'] = optionArray;
+                            switch (type) {
+                                case 'label' :
+                                    let temp = {};
+                                    temp['label_chid_type'] = $(this).children(":first").prop('tagName').toLocaleLowerCase();
+                                    if (temp['label_chid_type'] === 'input') {
+                                        temp['label_chid_type'] = inputType($(this).children(":first"));
+                                        type = temp['label_chid_type'];
+                                    }
+                                    temp['label_chid_text'] = $(this).text();
+                                    labelArray.push(temp);
+                                    objData['label'] = labelArray;
+                                    break;
+                                case 'input':
+                                    type = inputType($(this));
+                                    objData['ispossible'] = $(this).parent().next().children('.labcheck').children('input').is(':checked');
+                                    break;
+                                case 'select':
+                                    $(this).children('option').each(function () {
+                                        optionArray.push($(this).text());
+                                    });
+                                    objData['option'] = optionArray;
+                                    objData['ispossible'] = $(this).parent().next().children('.labcheck').children('input').is(':checked');
+                                    break;
+                                default:
+                                    break;
                             }
                         });
                         objData['type'] = type;
                         data.push(objData);
                     });
-
-                    console.log(data);
                     if(fname === ''|| subtitle === ''||fname === null|| subtitle === null){
                         alert('请填写标题和副标题后提交！');
                         return false;
@@ -278,7 +284,7 @@
                         dataType: "json",
                         data: { id:id ,fname:fname , subtitle:subtitle , content:data },
                         success: function (res) {
-                            console.log(res)
+                            console.log(res);return false;
                             if(res.code === 200){
                                 layer.msg(res.msg,{time:700,end:function () {
                                         let _body = window.parent;

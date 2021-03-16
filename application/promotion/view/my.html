@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>教育报名系统</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/user/css/index.css">
+    <style>
+        #info {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        .recommend-list {
+            display: flex;
+            flex-direction: column;
+        }
+        .recommend-list > .recommend-item {
+            height: auto;
+            line-height: 25px;
+            font-size: 14px;
+            border-bottom: 1px solid #e8e8e8;
+            color: #8f8f8f;
+        }
+        #balance {
+            color: red;
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="max">
+    {include file='public/logo'}
+    {include file='public/wlcome'}
+    <div class="info" id="info">
+        <div class="infoTitle" style="border: none;font-size: 14px;">我的推广</div>
+        <div class="infoTitle" style="border: none;font-size: 14px;">我的余额:&nbsp;&nbsp;<span id="balance">{$balanceTotal}</span>
+        <button type="button" class="layui-btn" style="line-height: 30px;height: 30px;font-size: 12px;" onclick="tixian()">提现</button>
+        </div>
+    </div>
+    <div class="recommend-list">
+        {if condition="empty($recommendList) == true"}
+        <div class="recommend-item" style="border-bottom: none;">你还没有推荐记录,快去推荐吧!</div>
+        {else/}
+        {foreach $recommendList as $key => $val}
+        <div class="recommend-item">
+            <div class="recommend-user">推荐人:{$val.recommend_user}</div>
+            <div class="apply-user">报名用户:{$val.apply_user}</div>
+            <div class="apply-lesson">报名课程:{$val.fname}</div>
+            <div class="">报名金额:{$val.fprice}</div>
+            <div class="rebate-price">返利金额:{$val.rebate_price}</div>
+            <div class="order-no">订单号:{$val.order_id}</div>
+            <div class="time">推荐时间:{:date('Y-m-d H:i:s', $val.create_time)}</div>
+        </div>
+        {/foreach}
+        {/if}
+    </div>
+    <div style="text-align: center;height: 60px;line-height: 60px;"><a href="javascript:void(0)" page="{$paginate['current_page']}" id="more" style="color: blue;" onclick="loadMore($(this))">查看更多>></a></div>
+    <div class="infoOther" style="margin-top: 5px;">
+        <a href="/user/index"><span>返回信息</span></a>
+        <a href="/promotion/index?user_id={$Think.session.user.id}"><span>返回链接</span></a>
+    </div>
+</div>
+</body>
+<script src="/static/jquery.min.js"></script>
+<script src="/static/layui/layui.js"></script>
+<script>
+    // 加载更多
+    function loadMore(obj){
+        let current_page = $(obj).attr('page');
+        let user_id = '{$userId}';
+        let current_url = '{$paginate["current_url"]}';  // 当前链接地址
+        let list_rows = '{$paginate["list_rows"]}';  // 一页显示数量
+        let last_page = '{$paginate["last_page"]}';  // 页数总数
+        let page = parseInt(current_page) + parseInt(1);
+        $(obj).attr('page', page);
+        if (page > last_page) {
+            alert('已经加载到最后一页!');
+            return false;
+        }
+       $.post('/promotion/loadMore', {
+           'user_id': user_id,
+           'page': page,
+           'current_url': current_url,
+           'list_rows': list_rows,
+           'last_page': last_page,
+       }, function(res){
+            if (res.code == 1) {
+                let data = res.data;
+                $(data).each(function(index, val){
+                    $(".recommend-list").append("<div class=\"recommend-item\">\n" +
+                        "            <div class=\"recommend-user\">推荐人:"+val.recommend_user+"</div>\n" +
+                        "            <div class=\"apply-user\">报名用户:"+val.apply_user+"</div>\n" +
+                        "            <div class=\"apply-lesson\">报名课程:"+val.fname+"</div>\n" +
+                        "            <div class=\"\">报名金额:"+val.fprice+"</div>\n" +
+                        "            <div class=\"rebate-price\">返利金额:"+val.rebate_price+"</div>\n" +
+                        "            <div class=\"order-no\">订单号:"+val.order_id+"</div>\n" +
+                        "            <div class=\"time\">推荐时间:"+getLocalTime(val.create_time)+"</div>\n" +
+                        "        </div>");
+
+
+                })
+
+            }
+       });
+
+        // 时间戳转换为日期格式
+        function getLocalTime(timestamp) {
+            let date = new Date();
+            Y = date.getFullYear() + '-';
+            M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+            D = date.getDate() + ' ';
+            h = date.getHours() + ':';
+            m = date.getMinutes() + ':';
+            s = date.getSeconds();
+            str = Y + M + D + h + m + s;
+            return str;
+        }
+    }
+</script>
+</html>

@@ -13,7 +13,6 @@ namespace think\route;
 
 use think\Container;
 use think\Loader;
-use think\Request;
 use think\Route;
 use think\route\dispatch\Callback as CallbackDispatch;
 use think\route\dispatch\Controller as ControllerDispatch;
@@ -197,7 +196,7 @@ class Domain extends RuleGroup
      * @access protected
      * @param  Request   $request
      * @param  string    $url URL地址
-     * @param  string    $controller 控制器名 （支持带模块名 index/user ）
+     * @param  string    $controller 控制器名 （支持带模块名 view/user ）
      * @return ControllerDispatch
      */
     protected function bindToController($request, $url, $controller)

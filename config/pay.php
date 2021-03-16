@@ -13,7 +13,7 @@ return [
     //app_secret
     'app_secret'            =>  '1be88e8da232475cc27373db051925e5',
     //证书路径
-    'sslCertPath'           =>  '',
+    'sslCertPath'           =>  'cert/apiclient_cert.pem',
     //证书路径
-    'sslKeyPath'            =>  ''
+    'sslKeyPath'            =>  'cert/apiclient_key.pem'
 ];

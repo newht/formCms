@@ -48,6 +48,8 @@ return [
     'class_suffix'           => false,
     // 控制器类后缀
     'controller_suffix'      => false,
+    // 网页链接
+    'web_url'                => 'http://'.$_SERVER['SERVER_NAME'],
 
     // +----------------------------------------------------------------------
     // | 模块设置
@@ -97,7 +99,7 @@ return [
     // 是否开启路由延迟解析
     'url_lazy_route'         => false,
     // 是否强制使用路由
-    'url_route_must'         => false,
+    'url_route_must'         => true,
     // 合并路由规则
     'route_rule_merge'       => false,
     // 路由是否完全匹配

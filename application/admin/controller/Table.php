@@ -19,7 +19,8 @@ class Table extends Controller
     public function getTables()
     {
         $data = Db::table("form_info")
-            ->field("id,fname,tb_name,subtitle,status,expiration,money")
+            ->field("id,fname,tb_name,sort,subtitle,status,expiration,money")
+            ->order('sort asc')
             ->select();
         foreach ($data as $k => $v) {
             $data[$k]['count'] = Db::table($v['tb_name'])->count();
@@ -38,7 +39,8 @@ class Table extends Controller
         $data = [
             'status' => empty(input('status')) ? 0 : 1,
             'expiration' => empty(input('expiration')) ? null : input('expiration'),
-            'money' => empty(input('money')) ? null : input('money')
+            'money' => empty(input('money')) ? null : input('money'),
+            'sort' => intval(input('post.sort'))
         ];
         $res = Db::name('form_info')->where('id',input('id'))->update($data);
         if($res > 0){

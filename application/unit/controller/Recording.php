@@ -20,16 +20,17 @@ class Recording extends Controller
                 if(!empty($data)){
                     $temp = $n;
                     $temp['order_id'] = $data['orderid'];
-                    $order = Db::name('orderinfo') -> where('order_id',$data['orderid']) -> find();
+                    $order = Db::name('orderinfo') -> where('id',$data['orderid']) -> find();
                     if(empty($order)){
                         $temp['order_status'] = "订单不存在，请联系站长";
                     }else{
-                        $temp['order_status'] = $order['status'] == 2 ? '已缴费' : '前往缴费';
+                        $temp['order_status'] = $order['status'] == 2 ? '前往缴费' : '已缴费';
                     }
                     $tables[$k]['user'][] = $temp;
                 }
             }
         }
+//        dump($tables);
         $this -> assign("tables",$tables);
         return $this->fetch('index/recording/completed');
     }

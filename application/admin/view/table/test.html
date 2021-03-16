@@ -63,18 +63,18 @@
     $(function () {
         $(".div01").click(function () {
             location.href = '/table/' + $(this).attr('tableid');
-        })
+        });
 
         $(".div01").each(function () {
             if($(this).index()%3 === 0){
                 $(this).css('margin-left','2.5%')
             }
-        })
+        });
 
         $('.set-btn').click(function (event) {
             $("#myModal").modal('show');
             event.stopPropagation(); // 阻止事件冒泡
-        })
+        });
     })
 </script>
 </html>

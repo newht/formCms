@@ -4,6 +4,7 @@ namespace app\pay\controller;
 use EasyWeChat\Factory;
 use think\Controller;
 use think\Db;
+use think\Exception;
 
 class Pay extends Controller
 {
@@ -20,44 +21,65 @@ class Pay extends Controller
         $qr_code = new QrcodeServer($config);
         $qr_img = $qr_code -> createServer($qr_url);
         echo $qr_img;
-        // 写入文件
-//        $qr_url = '这是个测试二维码';
-//        $file_name = './static/qrcode';  // 定义保存目录
-//        $config['file_name'] = $file_name;
-//        $config['generate']  = 'writefile';
-//
-//        $qr_code = new QrcodeServer($config);
-//        $rs = $qr_code->createServer($qr_url);
-//        print_r($rs);
         exit;
     }
 
-    //微信支付（native）收银台
-    public function index()
+    public function iswechat()
     {
-        $id = input('id');
+        $user_agent = $_SERVER['HTTP_USER_AGENT'];
+        if (strpos($user_agent, 'MicroMessenger') === false) {
+            // 非微信浏览器禁止浏览
+            return false;
+        } else {
+            // 微信浏览器，允许访问
+            return true;
+        }
+    }
+
+    public function getOrderInfo($id)
+    {
         $data = Db::name('orderinfo')
             -> alias('t1')
+            -> field('t1.id,t1.status,order_id,create_time,fname,subtitle,tb_name,expiration,money')
             -> join('form_info t2','t1.form_id=t2.id')
             -> where('t1.id',$id)
             -> find();
-        $pay_info = $this -> pay(['body' => $data["fname"],"out_trade_no" => $data["order_id"],"total_fee" => $data["money"]*100]);
-        if($pay_info['return_code']== "SUCCESS") {
-            if($pay_info['result_code'] == "FAIL"){
-                return $this -> error($pay_info["err_code_des"],"/user/gorecording");
+        $sql = "SELECT  column_name,column_comment FROM information_schema.columns WHERE table_schema ='".config('database.database')."' AND table_name = '".$data['tb_name']."'";
+        $tb = Db::query($sql);
+        foreach ($tb as $v){
+            if( $v['column_comment'] == '姓名' || $v['column_comment'] == '真实姓名'){
+                $name = Db::name($data['tb_name'])
+                    -> where('orderid',$data['id'])
+                    -> value($v['column_name']);
+                $data['fname'] = $data['fname'].' - '.$name;
             }
-            $data["pay_info"] = $pay_info;
-            $udata = Db::name('user')
-                -> alias('t1')
-                -> join($data['tb_name'].' t2','t1.id = t2.id')
-                -> where('t2.orderid',$id)
-                -> find();
-            $this -> assign('data',$data);
-            $this -> assign('udata',$udata);
-//            dump($udata);
-            return $this -> fetch('pay/pay');
         }
-        return redirect("/user/gorecording");
+        return $data;
+    }
+
+    //微信支付收银台
+    public function index()
+    {
+        //@id orderinfo表中的id
+        $id = input('id');
+        $iswachat = $this -> iswechat();
+        $data = $this -> getOrderInfo($id);
+        if($iswachat){
+
+        }else {
+            $pay_info = $this->pay(['body' => $data["fname"], "out_trade_no" => $data["order_id"], "total_fee" => $data["money"] * 100]);
+            if ($pay_info['return_code'] == "SUCCESS") {
+                if ($pay_info['result_code'] == "FAIL") {
+                    return $this->error($pay_info["err_code_des"], "/user/gorecording");
+                }
+                $data["pay_info"] = $pay_info;
+            } else {
+                return redirect("/user/gorecording");
+            }
+        }
+
+        $this->assign('data', $data);
+        return $this->fetch('pay/pay');
     }
 
     public function setConfig()
@@ -86,15 +108,38 @@ class Pay extends Controller
             'body' => $mssage['body'],
             'out_trade_no' => $mssage['out_trade_no'],
             'total_fee' => $mssage['total_fee'],
-            'trade_type' => 'NATIVE'
+            'trade_type' => 'NATIVE',
         ]);
         return $result;
     }
 
     public function jsApipay()
     {
+//        $this -> getOpenId(input("code"));
+        $id = input("orderid");
+        $data = $this -> getOrderInfo($id);
+        $config = $this -> setConfig();
+        $app = Factory::payment($config);
+        $result = $app->order->unify([
+            'body' => $data["fname"],
+            'out_trade_no' => $data["order_id"],
+            'total_fee' => $data["money"]*100,
+            'trade_type' => 'JSAPI', // 请对应换成你的支付方式对应的值类型
+            'openid' => session("useropen")["openid"],
+        ]);
+        $json = $app ->jssdk->bridgeConfig($result['prepay_id'],false);
+        $this -> assign("date",time());
+        $this -> assign("result",$json);
+        return $this -> fetch("/pay/jsapi");
+    }
 
-
+    function getOpenId($code){
+        $appid = "wx73229bb5e20d94ea";
+        $secret = "1be88e8da232475cc27373db051925e5";
+        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=".$appid."&secret=".$secret."&code=".$code."&grant_type=authorization_code";
+        $data = json_decode(file_get_contents($url),true);
+        session("useropen",$data);
+        return $data;
     }
 
     public function getOrder()
@@ -111,6 +156,7 @@ class Pay extends Controller
     public function getOrderStatus()
     {
         $orderid = input('orderid');
+        cookie('orderid', $orderid);
         return Db::name('orderinfo') -> where('order_id',$orderid) -> value('status');
     }
 
@@ -120,20 +166,87 @@ class Pay extends Controller
         $app = Factory::payment($config);
         $response = $app->handlePaidNotify(function ($message, $fail) {
             // 使用通知里的 "微信支付订单号" 或者 "商户订单号" 去自己的数据库找到订单
-//            Db::name('userinfo') -> where('uid','=','10') -> update(['email'=>$message['out_trade_no']]);
             $order = Db::name('orderinfo') -> where('order_id',$message['out_trade_no']) -> value('status');
-//            Db::name('userinfo') -> where('uid','=','11') -> update(['email'=>$order]);
             if (empty($order) || $order == 1) { // 如果订单不存在 或者 订单已经支付过了
                 return true; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
             }
+            // 修改订单表数据
             Db::name('orderinfo') -> where('order_id',$message['out_trade_no']) -> update(['status'=>1]);
             return true; // 返回处理完成
         });
         $response -> send();
     }
 
+    public function jsapiNotify()
+    {
+
+    }
+
+    public function getWechatOrderInfo()
+    {
+        $orderid = input("orderid");
+        $config = $this -> setConfig();
+        $app = Factory::payment($config);
+        $data = $app->order->queryByOutTradeNumber($orderid);
+        dump($data);
+    }
+
     public function notice()
     {
+        $inviteInfo = cookie('inviteInfo');
+        $orderId = cookie('orderid');
+        if (!empty($inviteInfo)) {
+            // 通过用户推荐,保存推荐信息
+            try {
+                $res = Db::table('orderinfo')->where('order_id', $orderId)->update([
+                    'is_recommend' => 1,
+                    'user_id' => $inviteInfo['user_id'],
+                ]);
+                if ($res == false) {
+                    throw new Exception('保存推荐信息失败');
+                }
+                // 存储用户的推荐余额数据
+                $this->saveUserBalanceByOrderId($orderId);
+            }catch (\Exception $ex) {
+                return $ex->getMessage();
+            }
+        }
         return $this -> fetch("pay/success");
+    }
+
+    /**
+     * 通过订单id存储用户推荐余额
+     * @param $order_id string 订单id
+     * @throws Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    private function saveUserBalanceByOrderId($order_id)
+    {
+        $orderArr = Db::name('orderinfo')->where('order_id', $order_id)->field('user_id, form_id')->find();
+        // 通过表单id获取到报名课程价格
+        $formArr = Db::name('form_info')->where('id', $orderArr['form_id'])->field('fname, money')->find();
+        try {
+            // 存储推荐返利数据和更新用户返利余额
+            $res = Db::name('recommend')->insert([
+                'user_id' => $orderArr['user_id'],  // 推荐人id
+                'order_id' => $order_id,  // 订单id
+                'recommend_user_id' => session('user')['id'], // 被推荐人id(自己本身id)
+                'fname' => $formArr['fname'],  // 报名课程
+                'fprice' => $formArr['money'],  // 课程价格
+                'rebate_price' => $formArr['money']/100,  // 返利价格
+                'create_time' => time(),
+            ]);
+            $balance = Db::name('user')->where('id', $orderArr['user_id'])->value('balance');
+            $userResult = Db::name('user')->where('id', $orderArr['user_id'])->update([
+                'balance' => $balance + ($formArr['money']/100),
+            ]);
+            if (!$res || $userResult === false) {
+                throw new Exception('存储返利数据失败');
+            }
+        }catch (\Exception $ex) {
+            throw new Exception($ex->getMessage());
+        }
     }
 }

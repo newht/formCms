@@ -20,7 +20,7 @@ use think\route\Dispatch;
  */
 class App extends Container
 {
-    const VERSION = '5.1.41 LTS';
+    const VERSION = '5.1.40 LTS';
 
     /**
      * 当前模块路径
@@ -387,7 +387,7 @@ class App extends Container
             } elseif ($this->config('app.auto_bind_module')) {
                 // 入口自动绑定
                 $name = pathinfo($this->request->baseFile(), PATHINFO_FILENAME);
-                if ($name && 'index' != $name && is_dir($this->appPath . $name)) {
+                if ($name && 'view' != $name && is_dir($this->appPath . $name)) {
                     $this->route->bind($name);
                 }
             }
